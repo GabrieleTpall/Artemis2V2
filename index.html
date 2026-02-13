@@ -1,0 +1,4695 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>ARTEMIS II — Gioco Unico (5 Missioni)</title>
+  <style>
+    html,body{height:100%;margin:0;background:#000;overflow:hidden}
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;}
+    #shell{position:fixed;inset:0;}
+    .scene{position:absolute;inset:0;display:none;}
+    .scene.active{display:block;}
+    iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
+  </style>
+</head>
+<body>
+  <div id="shell">
+    <div class="scene" id="scene-intro">
+      <iframe id="frame-intro" sandbox="allow-scripts allow-pointer-lock allow-same-origin" srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;it&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot; /&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot; /&gt;
+  &lt;title&gt;Artemis II – Intro 3 Finestre&lt;/title&gt;
+  &lt;style&gt;
+    html,body{height:100%;margin:0}
+    body{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:
+        radial-gradient(900px 520px at 25% 20%, rgba(120,170,255,.22), transparent 60%),
+        radial-gradient(700px 520px at 75% 80%, rgba(255,180,120,.18), transparent 60%),
+        linear-gradient(135deg, rgba(30,40,90,.35), rgba(20,10,40,.35)),
+        #070914;
+      padding:12px;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:#0b1020;
+    }
+
+    /* finestra più stretta per mobile */
+    .panel{
+      max-width: 420px;
+      width: 100%;
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(0,0,0,0.06);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.20);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* decorazioni colorate */
+    .panel::before{
+      content:&quot;&quot;;
+      position:absolute;
+      inset:-120px -120px auto auto;
+      width: 240px;
+      height: 240px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 30%, rgba(80,170,255,.55), rgba(80,170,255,0));
+      transform: rotate(12deg);
+      pointer-events:none;
+    }
+    .panel::after{
+      content:&quot;&quot;;
+      position:absolute;
+      inset:auto auto -160px -160px;
+      width: 280px;
+      height: 280px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 60% 40%, rgba(255,170,90,.55), rgba(255,170,90,0));
+      pointer-events:none;
+    }
+
+    .hidden{display:none}
+
+    .header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom: 8px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-weight: 900;
+      font-size: 12px;
+      letter-spacing: .3px;
+      color: rgba(11,16,32,0.88);
+      background: rgba(11,16,32,0.06);
+      border: 1px solid rgba(11,16,32,0.08);
+      white-space: nowrap;
+    }
+
+    .logo{
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(80,170,255,.20), rgba(255,170,90,.18));
+      border: 1px solid rgba(11,16,32,0.10);
+      display:grid;
+      place-items:center;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.55);
+      flex: 0 0 auto;
+    }
+
+    /* “disegno” semplice stile Kerbal */
+    svg{display:block}
+    .kStroke{stroke: rgba(11,16,32,0.92); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; fill: none;}
+    .kFill{fill: rgba(11,16,32,0.08); stroke: rgba(11,16,32,0.88); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round;}
+
+    h1{
+      margin: 6px 0 10px;
+      font-size: 18px;
+      font-weight: 950;
+      line-height: 1.15;
+      position: relative;
+      z-index: 1;
+      color: rgba(11,16,32,0.95);
+    }
+
+    p{
+      font-size: 14px;
+      line-height: 1.45;
+      margin: 0 0 10px;
+      color: rgba(11,16,32,0.82);
+      position: relative;
+      z-index: 1;
+    }
+
+    .mission-title{
+      font-weight: 950;
+      margin-top: 10px;
+      font-size: 14px;
+      color: rgba(11,16,32,0.95);
+      position: relative;
+      z-index: 1;
+    }
+
+    .miniCard{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      padding: 10px;
+      border-radius: 14px;
+      background: rgba(11,16,32,0.04);
+      border: 1px solid rgba(11,16,32,0.08);
+      margin-top: 8px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .miniIcon{
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.70);
+      border: 1px solid rgba(11,16,32,0.10);
+      display:grid;
+      place-items:center;
+      flex:0 0 auto;
+    }
+
+    .btnRow{
+      margin-top: 12px;
+      display:flex;
+      gap:10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn{
+      flex:1;
+      padding: 13px;
+      border-radius: 14px;
+      border: 1px solid rgba(11,16,32,0.10);
+      background: linear-gradient(135deg, rgba(80,170,255,.24), rgba(255,170,90,.20));
+      color: rgba(11,16,32,0.92);
+      font-weight: 950;
+      font-size: 15px;
+      cursor: pointer;
+      transition: transform .06s ease, filter .18s ease;
+      touch-action: manipulation;
+    }
+
+    .btn:hover{filter: brightness(1.03)}
+    .btn:active{transform: translateY(1px) scale(0.995)}
+
+    .subnote{
+      font-size: 12px;
+      opacity: .75;
+      margin-top: 6px;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;!-- FINESTRA 1 --&gt;
+&lt;div id=&quot;panel1&quot; class=&quot;panel&quot;&gt;
+  &lt;div class=&quot;header&quot;&gt;
+    &lt;div class=&quot;tag&quot;&gt;ARTEMIS II • INTRO&lt;/div&gt;
+    &lt;div class=&quot;logo&quot; aria-hidden=&quot;true&quot;&gt;
+      &lt;!-- logo: razzo + luna (kerbal‑style) --&gt;
+      &lt;svg width=&quot;26&quot; height=&quot;26&quot; viewBox=&quot;0 0 26 26&quot;&gt;
+        &lt;path class=&quot;kFill&quot; d=&quot;M13 4c3 2 5 5 5 8s-2 6-5 8c-3-2-5-5-5-8s2-6 5-8z&quot;&gt;&lt;/path&gt;
+        &lt;circle class=&quot;kStroke&quot; cx=&quot;18&quot; cy=&quot;8&quot; r=&quot;3&quot;&gt;&lt;/circle&gt;
+        &lt;path class=&quot;kStroke&quot; d=&quot;M7 20l-2 1 1-2&quot;&gt;&lt;/path&gt;
+        &lt;path class=&quot;kStroke&quot; d=&quot;M19 20l2 1-1-2&quot;&gt;&lt;/path&gt;
+      &lt;/svg&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;h1&gt;Benvenuto Nella Missione Artemis II.&lt;/h1&gt;
+
+  &lt;p&gt;
+    Tra pochi giorni la Nasa lancerà la Missione Artemis II, Quattro astronauti viaggeranno a bordo della capsula Orion verso la Luna, compiendo un&#x27;orbita intorno al nostro satellite naturale senza però atterrare sulla sua superficie.
+  &lt;/p&gt;
+
+  &lt;p&gt;
+    Si tratta di un momento storico perché sarà la prima volta dal 1972, dall&#x27;epoca delle missioni Apollo, che esseri umani si spingeranno così lontano dalla Terra. la NASA vuole verificare che tutti i sistemi della capsula Orion e del potente razzo SLS funzionino perfettamente
+  &lt;/p&gt;
+
+  &lt;div class=&quot;btnRow&quot;&gt;
+    &lt;button class=&quot;btn&quot; id=&quot;toPanel2&quot;&gt;Continua&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;subnote&quot;&gt;Suggerimento: pensa come una sala controllo, non come un pilota.&lt;/div&gt;
+&lt;/div&gt;
+
+
+&lt;!-- FINESTRA 2 --&gt;
+&lt;div id=&quot;panel2&quot; class=&quot;panel hidden&quot;&gt;
+  &lt;div class=&quot;header&quot;&gt;
+    &lt;div class=&quot;tag&quot;&gt;GENERAZIONE ARTEMIS&lt;/div&gt;
+    &lt;div class=&quot;logo&quot; aria-hidden=&quot;true&quot;&gt;
+      &lt;!-- logo: checklist + semaforo --&gt;
+      &lt;svg width=&quot;26&quot; height=&quot;26&quot; viewBox=&quot;0 0 26 26&quot;&gt;
+        &lt;rect class=&quot;kFill&quot; x=&quot;6&quot; y=&quot;5&quot; width=&quot;12&quot; height=&quot;16&quot; rx=&quot;3&quot;&gt;&lt;/rect&gt;
+        &lt;path class=&quot;kStroke&quot; d=&quot;M9 10l1.2 1.3L12.8 9&quot;&gt;&lt;/path&gt;
+        &lt;path class=&quot;kStroke&quot; d=&quot;M9 15l1.2 1.3L12.8 14&quot;&gt;&lt;/path&gt;
+        &lt;rect class=&quot;kFill&quot; x=&quot;19&quot; y=&quot;8&quot; width=&quot;3&quot; height=&quot;10&quot; rx=&quot;1.5&quot;&gt;&lt;/rect&gt;
+      &lt;/svg&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;h1&gt;Generazione Artemis&lt;/h1&gt;
+
+  &lt;p&gt;
+    Sei parte della generazione Artemis? Dimostralo!!!
+    Completa le 3 missioni di test del Lancio, preparando il terreno alle prossime: il ritorno umano sulla superficie lunare.
+  &lt;/p&gt;
+
+  &lt;div class=&quot;miniCard&quot;&gt;
+    &lt;div class=&quot;miniIcon&quot; aria-hidden=&quot;true&quot;&gt;
+      &lt;!-- icona: hangar --&gt;
+      &lt;svg width=&quot;22&quot; height=&quot;22&quot; viewBox=&quot;0 0 26 26&quot;&gt;
+        &lt;path class=&quot;kFill&quot; d=&quot;M4 12l9-7 9 7v10H4z&quot;&gt;&lt;/path&gt;
+        &lt;path class=&quot;kStroke&quot; d=&quot;M8 22V14h10v8&quot;&gt;&lt;/path&gt;
+      &lt;/svg&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+      &lt;div class=&quot;mission-title&quot;&gt;Prima Missione: Sviluppo Razzo SLS:&lt;/div&gt;
+      &lt;p&gt;
+        Sei nell’Hangar del Kennedy Space Center devi scegliere correttamente l’equipaggio Ufficiale della Missione e gli strumenti/paylod di bordo
+      &lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;miniCard&quot;&gt;
+    &lt;div class=&quot;miniIcon&quot; aria-hidden=&quot;true&quot;&gt;
+      &lt;!-- icona: rampa --&gt;
+      &lt;svg width=&quot;22&quot; height=&quot;22&quot; viewBox=&quot;0 0 26 26&quot;&gt;
+        &lt;path class=&quot;kStroke&quot; d=&quot;M5 22h16&quot;&gt;&lt;/path&gt;
+        &lt;path class=&quot;kFill&quot; d=&quot;M8 21V10h7v11&quot;&gt;&lt;/path&gt;
+        &lt;path class=&quot;kStroke&quot; d=&quot;M16 21l5-7&quot;&gt;&lt;/path&gt;
+        &lt;circle class=&quot;kStroke&quot; cx=&quot;19&quot; cy=&quot;12&quot; r=&quot;2&quot;&gt;&lt;/circle&gt;
+      &lt;/svg&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+      &lt;div class=&quot;mission-title&quot;&gt;Seconda Missione: Go/NoGo:&lt;/div&gt;
+      &lt;p&gt;
+        Sei sulla rampa 39B del Kennedy Space Center devi eseguire i test pre-lancio e attivare il carburante in tempo
+      &lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;miniCard&quot;&gt;
+    &lt;div class=&quot;miniIcon&quot; aria-hidden=&quot;true&quot;&gt;
+      &lt;!-- icona: lancio --&gt;
+      &lt;svg width=&quot;22&quot; height=&quot;22&quot; viewBox=&quot;0 0 26 26&quot;&gt;
+        &lt;path class=&quot;kFill&quot; d=&quot;M13 4c3 2 5 5 5 8s-2 6-5 8c-3-2-5-5-5-8s2-6 5-8z&quot;&gt;&lt;/path&gt;
+        &lt;path class=&quot;kStroke&quot; d=&quot;M10 20l-2 2&quot;&gt;&lt;/path&gt;
+        &lt;path class=&quot;kStroke&quot; d=&quot;M16 20l2 2&quot;&gt;&lt;/path&gt;
+        &lt;path class=&quot;kStroke&quot; d=&quot;M12 17c1 1 1 2 1 3&quot;&gt;&lt;/path&gt;
+      &lt;/svg&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+      &lt;div class=&quot;mission-title&quot;&gt;Terza Missione: Lancio&lt;/div&gt;
+      &lt;p&gt;
+        Devi portare la Capsula Orion in orbita attorno alla Terra
+      &lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;btnRow&quot;&gt;
+    &lt;button class=&quot;btn&quot; id=&quot;toPanel3&quot;&gt;Continua&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+
+&lt;!-- FINESTRA 3 --&gt;
+&lt;div id=&quot;panel3&quot; class=&quot;panel hidden&quot;&gt;
+  &lt;div class=&quot;header&quot;&gt;
+    &lt;div class=&quot;tag&quot;&gt;INDIZI&lt;/div&gt;
+    &lt;div class=&quot;logo&quot; aria-hidden=&quot;true&quot;&gt;
+      &lt;!-- logo: occhio + antenna (indizi) --&gt;
+      &lt;svg width=&quot;26&quot; height=&quot;26&quot; viewBox=&quot;0 0 26 26&quot;&gt;
+        &lt;path class=&quot;kStroke&quot; d=&quot;M3 13c2.5-4 6-6 10-6s7.5 2 10 6c-2.5 4-6 6-10 6s-7.5-2-10-6z&quot;&gt;&lt;/path&gt;
+        &lt;circle class=&quot;kStroke&quot; cx=&quot;13&quot; cy=&quot;13&quot; r=&quot;2.5&quot;&gt;&lt;/circle&gt;
+        &lt;path class=&quot;kStroke&quot; d=&quot;M20 6c2 1 3 3 3 5&quot;&gt;&lt;/path&gt;
+      &lt;/svg&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;h1&gt;Qualche indizio prima di iniziare&lt;/h1&gt;
+
+  &lt;div class=&quot;miniCard&quot;&gt;
+    &lt;div class=&quot;miniIcon&quot; aria-hidden=&quot;true&quot;&gt;
+      &lt;!-- icona: equipaggio --&gt;
+      &lt;svg width=&quot;22&quot; height=&quot;22&quot; viewBox=&quot;0 0 26 26&quot;&gt;
+        &lt;circle class=&quot;kFill&quot; cx=&quot;9&quot; cy=&quot;11&quot; r=&quot;3&quot;&gt;&lt;/circle&gt;
+        &lt;circle class=&quot;kFill&quot; cx=&quot;17&quot; cy=&quot;11&quot; r=&quot;3&quot;&gt;&lt;/circle&gt;
+        &lt;path class=&quot;kStroke&quot; d=&quot;M5 22c1-4 6-5 8-5s7 1 8 5&quot;&gt;&lt;/path&gt;
+      &lt;/svg&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+      &lt;p&gt;
+        Gli astronauti selezionati dopo un lungo addestramento sono 3 americani e un canadese
+      &lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;miniCard&quot;&gt;
+    &lt;div class=&quot;miniIcon&quot; aria-hidden=&quot;true&quot;&gt;
+      &lt;!-- icona: nanosat + laser --&gt;
+      &lt;svg width=&quot;22&quot; height=&quot;22&quot; viewBox=&quot;0 0 26 26&quot;&gt;
+        &lt;rect class=&quot;kFill&quot; x=&quot;10&quot; y=&quot;9&quot; width=&quot;6&quot; height=&quot;8&quot; rx=&quot;2&quot;&gt;&lt;/rect&gt;
+        &lt;path class=&quot;kStroke&quot; d=&quot;M7 10l3 2&quot;&gt;&lt;/path&gt;
+        &lt;path class=&quot;kStroke&quot; d=&quot;M19 10l-3 2&quot;&gt;&lt;/path&gt;
+        &lt;path class=&quot;kStroke&quot; d=&quot;M16 13h7&quot;&gt;&lt;/path&gt;
+        &lt;path class=&quot;kStroke&quot; d=&quot;M22 13l-3-2&quot;&gt;&lt;/path&gt;
+      &lt;/svg&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+      &lt;p&gt;
+        A bordo di Artemis II ci sarà il primo nanosatellitare interamente sviluppato in Argentina, un nano satellite sviluppato in Corea per misurare le radiazioni spaziali, un nano satellite Tedesco, un sistema di comunicazione laser avanzato ed un esperimento biologico d&#x27;avanguardia
+      &lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;btnRow&quot;&gt;
+    &lt;button class=&quot;btn&quot; id=&quot;startMission&quot;&gt;Inizia Missione&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+
+&lt;script&gt;
+  const p1 = document.getElementById(&#x27;panel1&#x27;);
+  const p2 = document.getElementById(&#x27;panel2&#x27;);
+  const p3 = document.getElementById(&#x27;panel3&#x27;);
+
+  document.getElementById(&#x27;toPanel2&#x27;).onclick = () =&gt; {
+    p1.classList.add(&#x27;hidden&#x27;);
+    p2.classList.remove(&#x27;hidden&#x27;);
+  };
+
+  document.getElementById(&#x27;toPanel3&#x27;).onclick = () =&gt; {
+    p2.classList.add(&#x27;hidden&#x27;);
+    p3.classList.remove(&#x27;hidden&#x27;);
+  };
+
+  document.getElementById(&#x27;startMission&#x27;).onclick = () =&gt; {
+    // Segnalo che l&#x27;intro è conclusa (utile per ricordarlo nel gioco unico)
+    window.dispatchEvent(new CustomEvent(&#x27;intro:done&#x27;));
+
+    // Richiedo al &quot;gioco madre&quot; di navigare alla Missione 2
+    window.dispatchEvent(new CustomEvent(&#x27;nav:to&#x27;, { detail: { scene: &#x27;mission2&#x27; } }));
+  };
+&lt;/script&gt;
+
+
+&lt;script&gt;
+(() =&gt; {
+  const EVENTS = [&#x27;nav:to&#x27;, &#x27;intro:done&#x27;, &#x27;mission2:complete&#x27;, &#x27;mission3:complete&#x27;, &#x27;mission4:complete&#x27;, &#x27;mission:start&#x27;];
+  for (const name of EVENTS) {
+    window.addEventListener(name, (e) =&gt; {
+      try {
+        parent.postMessage({ type: name, detail: e.detail || null }, &quot;*&quot;);
+      } catch (err) {}
+    });
+  }
+})();
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe>
+    </div>
+    <div class="scene" id="scene-mission2">
+      <iframe id="frame-mission2" sandbox="allow-scripts allow-pointer-lock allow-same-origin" srcdoc="" data-srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;it&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot; /&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1, viewport-fit=cover&quot; /&gt;
+  &lt;title&gt;GO / NO-GO – Artemis II (KSP-like)&lt;/title&gt;
+  &lt;style&gt;
+    :root{
+      --bg:#070a0f;
+      --txt:#e9f1ff;
+      --muted:#9fb2cc;
+      --good:#2ee59d;
+      --bad:#ff4d6d;
+      --warn:#ffd166;
+      --accent:#55a6ff;
+      --kspGreen:#82ff8a;
+      --shadow: 0 18px 55px rgba(0,0,0,.55);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%; margin:0; background:radial-gradient(1200px 800px at 70% 20%, #0f1a2a 0%, var(--bg) 55%, #05070c 100%); color:var(--txt); font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;}
+    button{font:inherit}
+
+    .app{
+      height:100dvh;
+      display:flex;
+      flex-direction:column;
+      padding:10px;
+      gap:10px;
+      max-width:980px;
+      margin:0 auto;
+      overscroll-behavior:none;
+      min-height:0;
+    }
+    @supports (height: 100svh){ .app{ height:100svh; } }
+
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:10px 12px;
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:14px;
+      background: linear-gradient(180deg, rgba(16,24,36,.85), rgba(10,14,20,.7));
+      box-shadow: var(--shadow);
+    }
+    .brand{display:flex; flex-direction:column; gap:2px;}
+    .brand .title{font-weight:800; letter-spacing:.4px; line-height:1.05; display:flex; align-items:center; gap:8px;}
+
+    .pill{
+      display:inline-flex; align-items:center; gap:6px;
+      font-size:12px; padding:4px 8px; border-radius:999px;
+      border:1px solid rgba(255,255,255,.1);
+      background: rgba(0,0,0,.25);
+      color:var(--muted);
+    }
+
+    .statusRow{display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:flex-end;}
+    .status{display:flex; flex-direction:column; align-items:flex-end; gap:2px; min-width: 180px;}
+    .status .step{font-size:12px; color:var(--muted);} 
+    .status .big{font-size:14px; font-weight:700;}
+
+    .btn{
+      border:1px solid rgba(255,255,255,.12);
+      background: linear-gradient(180deg, rgba(85,166,255,.22), rgba(85,166,255,.08));
+      color:var(--txt);
+      padding:9px 12px;
+      border-radius:12px;
+      cursor:pointer;
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+      transition: transform .08s ease, filter .12s ease;
+      touch-action: manipulation;
+      user-select:none;
+      font-weight:700;
+    }
+    .btn:active{transform: translateY(1px); filter:brightness(1.1);} 
+    .btn.secondary{background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.03)); font-weight:650;}
+
+    .stage{flex:1; min-height:0; display:grid; grid-template-columns: 310px 1fr; gap:10px;}
+
+    /* Sidebar (desktop: colonna sinistra) */
+    .sidebar{
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:16px;
+      background: linear-gradient(180deg, rgba(16,24,36,.78), rgba(10,14,20,.68));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+      min-height:0;
+    }
+
+    .sidebarHeader{
+      padding:12px 12px 10px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      gap:10px;
+    }
+
+    .sidebarHeader .h{font-weight:900; letter-spacing:.3px;}
+    .sidebarHeader .sub{font-size:12px; color:var(--muted); margin-top:2px;}
+
+    .list{padding:10px; overflow:auto; display:grid; grid-template-columns: 1fr; gap:10px; min-height:0;}
+
+    .card{
+      display:flex;
+      gap:10px;
+      padding:10px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(0,0,0,.25), rgba(0,0,0,.10));
+      cursor: grab;
+      user-select:none;
+      touch-action: pan-y; /* scroll naturale; drag con long-press */
+      position:relative;
+      min-width:0;
+    }
+    .card:active{cursor:grabbing}
+
+    .card .meta{display:flex; flex-direction:column; gap:3px; min-width:0;}
+    .card .name{font-weight:850; font-size:14px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+    .card .role{font-size:12px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+
+    .icon{
+      width:46px; height:46px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.10);
+      flex:0 0 auto;
+      background: rgba(0,0,0,.25);
+      display:grid;
+      place-items:center;
+      overflow:hidden;
+    }
+    .icon img{width:46px; height:46px; display:block}
+
+    .workArea{
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:16px;
+      background: radial-gradient(900px 600px at 50% 30%, rgba(85,166,255,.12), rgba(0,0,0,.08) 60%),
+                  linear-gradient(180deg, rgba(16,24,36,.55), rgba(10,14,20,.65));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+      min-height:0;
+    }
+    canvas{display:block; width:100%; height:100%;}
+
+    .toast{
+      position:absolute;
+      left:50%; top:50%;
+      transform: translate(-50%,-50%);
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.55);
+      backdrop-filter: blur(8px);
+      box-shadow: var(--shadow);
+      max-width: min(520px, calc(100% - 24px));
+      display:none;
+      z-index: 20;
+    }
+    .toast.show{display:block; animation: pop .18s ease-out;}
+    @keyframes pop{from{transform:translate(-50%,-50%) scale(.98); opacity:.6}to{transform:translate(-50%,-50%) scale(1); opacity:1}}
+    .toast .tt{font-weight:950; letter-spacing:.2px}
+    .toast .bd{font-size:13px; color:var(--txt); margin-top:6px; line-height:1.3}
+    .toast .ft{margin-top:10px; display:flex; gap:10px; justify-content:flex-end;}
+
+    /* Slot overlay: gli slot sono DENTRO al razzo (posizionati in JS) */
+    .slotOverlay{position:absolute; inset:0; pointer-events:none; z-index:6;}
+
+    .slot{
+      position:absolute;
+      pointer-events:auto;
+      border-radius:14px;
+      border:2.5px dashed rgba(233,241,255,.40);
+      box-shadow: 0 0 0 1px rgba(0,0,0,.25) inset, 0 10px 24px rgba(0,0,0,.18);
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.24), rgba(0,0,0,.12)),
+        repeating-linear-gradient(45deg, rgba(255,255,255,.07) 0 6px, rgba(255,255,255,0) 6px 12px);
+      backdrop-filter: blur(3px);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color: rgba(233,241,255,.72);
+      font-size:11px;
+      text-align:center;
+      padding:6px;
+      overflow:hidden;
+      transition: border-color .12s ease, box-shadow .12s ease, background .12s ease, transform .12s ease;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .slot.filled{cursor:pointer; border-style: solid; border-color: rgba(130,255,138,.40); background: rgba(130,255,138,.12);} 
+    .slot:not(.filled){cursor:default;}
+    .slot.hot{
+      border-style: solid;
+      border-color: rgba(85,166,255,.70);
+      background: rgba(85,166,255,.12);
+      box-shadow: 0 0 0 3px rgba(85,166,255,.16) inset;
+      transform: translateY(-1px);
+    }
+
+    .slot:not(.filled)::after{
+      content:&quot;+&quot;;
+      font-weight:950;
+      font-size:18px;
+      line-height:1;
+      color: rgba(233,241,255,.55);
+      text-shadow: 0 6px 16px rgba(0,0,0,.55);
+      opacity:.9;
+      pointer-events:none;
+    }
+    .slot .mini{display:flex; align-items:center; gap:8px; min-width:0;}
+    .slot .mini img{width:28px; height:28px; border-radius:10px; border:1px solid rgba(255,255,255,.12);} 
+    .slot .mini .nm{font-size:11px; font-weight:850; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+
+    .modalScrim{
+      position:fixed; inset:0;
+      background: rgba(0,0,0,.65);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:14px;
+      z-index:999;
+    }
+    .modalScrim.show{display:flex;}
+
+    .modal{
+      width:min(680px, 100%);
+      max-height: min(92svh, 92dvh);
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.12);
+      background: linear-gradient(180deg, rgba(16,24,36,.92), rgba(10,14,20,.92));
+      box-shadow: 0 30px 90px rgba(0,0,0,.7);
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+    }
+    .modalHeader{padding:14px 14px 10px; border-bottom:1px solid rgba(255,255,255,.08); display:flex; align-items:flex-start; justify-content:space-between; gap:10px;}
+    .modalHeader .mh{font-weight:950; letter-spacing:.3px; font-size:16px;}
+    .modalBody{padding:14px; color:var(--txt); line-height:1.35; font-size:14px; overflow:auto; -webkit-overflow-scrolling: touch;}
+    .modalFooter{padding:12px 14px; border-top:1px solid rgba(255,255,255,.08); display:flex; gap:10px; justify-content:flex-end; flex-wrap:wrap;}
+
+    .ghost{
+      position:fixed;
+      z-index: 2000;
+      pointer-events:none;
+      transform: translate(-50%,-50%) scale(1.02);
+      width: min(290px, calc(100vw - 24px));
+      opacity:.98;
+      filter: drop-shadow(0 18px 38px rgba(0,0,0,.55));
+    }
+
+    .shake{animation: shake .35s ease-in-out;}
+    @keyframes shake{0%,100%{transform:translateX(0)} 20%{transform:translateX(-8px)} 40%{transform:translateX(8px)} 60%{transform:translateX(-5px)} 80%{transform:translateX(5px)}}
+
+    .footerNote{font-size:11px; color: rgba(159,178,204,.85); padding: 0 6px 6px; text-align:center;}
+
+    /* --- Mobile: opzioni in barra FULL-WIDTH, razzo grande sopra --- */
+    @media (max-width: 860px){
+      .stage{display:flex; flex-direction:column; gap:10px; min-height:0;}
+      .topbar{flex-direction:column; align-items:stretch; gap:10px;}
+      .statusRow{justify-content:space-between}
+      .status{align-items:flex-start; min-width:unset}
+
+      .workArea{order:1; height: min(62svh, 620px); min-height: 360px;}
+      .sidebar{order:2; min-height:0; height: min(34svh, 380px);} 
+      .sidebarHeader{position:sticky; top:0; z-index:5; background: linear-gradient(180deg, rgba(16,24,36,.96), rgba(10,14,20,.88));}
+
+      .list{display:flex; flex-direction:row; gap:10px; overflow-x:auto; overflow-y:hidden; -webkit-overflow-scrolling: touch; scroll-snap-type: x mandatory;}
+      .card{min-width: 240px; max-width: 72vw; scroll-snap-align: start; touch-action: pan-x;}
+      .card .role{font-size:12px;}
+    }
+    @media (max-width: 520px){
+      .app{padding:8px; gap:8px;}
+      .btn{padding:11px 12px; border-radius:14px;}
+      .sidebarHeader{align-items:flex-start;}
+      .statusRow{gap:8px;}
+      .footerNote{display:none;}
+      .workArea{height: min(64svh, 680px); min-height: 340px;}
+      .card{min-width: 220px;}
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div class=&quot;app&quot;&gt;
+    &lt;div class=&quot;topbar&quot;&gt;
+      &lt;div class=&quot;brand&quot;&gt;
+        &lt;div class=&quot;title&quot;&gt;
+          &lt;span style=&quot;display:inline-flex; width:10px; height:10px; border-radius:99px; background:var(--kspGreen); box-shadow:0 0 18px rgba(130,255,138,.55)&quot;&gt;&lt;/span&gt;
+          GO / NO‑GO – Artemis II
+          &lt;span class=&quot;pill&quot;&gt;KSP‑like hangar build&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;pill&quot; id=&quot;subtitle&quot;&gt;Trascina e rilascia. Touch‑friendly. Tocca uno slot riempito per svuotarlo.&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;statusRow&quot;&gt;
+        &lt;div class=&quot;status&quot;&gt;
+          &lt;div class=&quot;step&quot; id=&quot;stepLabel&quot;&gt;Step: Intro&lt;/div&gt;
+          &lt;div class=&quot;big&quot; id=&quot;objectiveLabel&quot;&gt;Obiettivo: capire chi sale su Orion.&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;button class=&quot;btn secondary&quot; id=&quot;resetBtn&quot; title=&quot;Reset run&quot;&gt;Reset&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;stage&quot;&gt;
+      &lt;div class=&quot;sidebar&quot; id=&quot;sidebar&quot;&gt;
+        &lt;div class=&quot;sidebarHeader&quot;&gt;
+          &lt;div&gt;
+            &lt;div class=&quot;h&quot; id=&quot;sidebarTitle&quot;&gt;Astronauti disponibili&lt;/div&gt;
+            &lt;div class=&quot;sub&quot; id=&quot;sidebarSub&quot;&gt;Scegline 4 e trascinali negli slot equipaggio.&lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;pill&quot; id=&quot;sidebarCount&quot;&gt;0 / 4&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;list&quot; id=&quot;list&quot;&gt;&lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class=&quot;workArea&quot; id=&quot;workArea&quot;&gt;
+        &lt;canvas id=&quot;hangar&quot;&gt;&lt;/canvas&gt;
+        &lt;div class=&quot;slotOverlay&quot; id=&quot;slotOverlay&quot;&gt;&lt;/div&gt;
+
+        &lt;div class=&quot;toast&quot; id=&quot;toast&quot;&gt;
+          &lt;div class=&quot;tt&quot; id=&quot;toastTitle&quot;&gt;Info&lt;/div&gt;
+          &lt;div class=&quot;bd&quot; id=&quot;toastBody&quot;&gt;...&lt;/div&gt;
+          &lt;div class=&quot;ft&quot;&gt;
+            &lt;button class=&quot;btn secondary&quot; id=&quot;toastClose&quot;&gt;Chiudi&lt;/button&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;footerNote&quot; id=&quot;footerNote&quot;&gt;Nessuna immagine esterna: tutto vettoriale/SVG inline. Drag&amp;drop con pointer events.&lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Intro / briefing (solo all&#x27;inizio) --&gt;
+  &lt;div class=&quot;modalScrim&quot; id=&quot;introScrim&quot;&gt;
+    &lt;div class=&quot;modal&quot; id=&quot;introModal&quot;&gt;
+      &lt;div class=&quot;modalHeader&quot;&gt;
+        &lt;div&gt;
+          &lt;div class=&quot;mh&quot;&gt;Briefing missione – Artemis II&lt;/div&gt;
+          &lt;div class=&quot;pill&quot; style=&quot;margin-top:6px&quot;&gt;Missione reale: equipaggio ufficiale NASA + payload associati&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;modalBody&quot; id=&quot;introBody&quot;&gt;
+        &lt;b&gt;Scenario:&lt;/b&gt; sei nella catena “GO / NO‑GO” prima del lancio. Il razzo &lt;b&gt;SLS&lt;/b&gt; è in hangar.
+        &lt;br/&gt;&lt;br/&gt;
+        &lt;b&gt;Step 1 – Equipaggio:&lt;/b&gt; scegli i &lt;b&gt;4 astronauti corretti&lt;/b&gt; tra 10 e trascinali negli slot interni alla capsula.
+        &lt;br/&gt;
+        &lt;b&gt;Step 2 – Payload/strumenti:&lt;/b&gt; scegli i &lt;b&gt;5 corretti&lt;/b&gt; tra 7 e trascinali negli slot payload interni al razzo (5 slot totali).
+        &lt;br/&gt;&lt;br/&gt;
+        Se sbagli lo step corrente, &lt;b&gt;torni indietro di uno&lt;/b&gt; (e, tornando all’equipaggio, ricominci da capo).
+        &lt;br/&gt;&lt;br/&gt;
+        &lt;b&gt;Tip mobile:&lt;/b&gt; tocchi uno &lt;b&gt;slot riempito&lt;/b&gt; per svuotarlo.
+      &lt;/div&gt;
+      &lt;div class=&quot;modalFooter&quot;&gt;
+        &lt;button class=&quot;btn secondary&quot; id=&quot;startIntro&quot;&gt;Inizia missione di test&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Missione completata --&gt;
+  &lt;div class=&quot;modalScrim&quot; id=&quot;completeScrim&quot;&gt;
+    &lt;div class=&quot;modal&quot;&gt;
+      &lt;div class=&quot;modalHeader&quot;&gt;&lt;div class=&quot;mh&quot;&gt;MISSIONE COMPLETATA&lt;/div&gt;&lt;/div&gt;
+      &lt;div class=&quot;modalBody&quot;&gt;Configurazione validata. Vai alla rampa di lancio.&lt;/div&gt;
+      &lt;div class=&quot;modalFooter&quot;&gt;&lt;button class=&quot;btn&quot; id=&quot;goLaunch&quot;&gt;Vai alla rampa&lt;/button&gt;&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+&lt;script&gt;
+(() =&gt; {
+  // ---------- Data ----------
+  const astronauts = [
+    { id:&quot;wiseman&quot;, name:&quot;Reid Wiseman&quot;, role:&quot;NASA – USA&quot;, correct:true,  info:&quot;Nazionalità: USA (NASA). Esperienza: missione ISS, ruoli operativi e leadership di equipaggio.&quot; },
+    { id:&quot;glover&quot;,  name:&quot;Victor Glover&quot;, role:&quot;NASA – USA&quot;, correct:true,  info:&quot;Nazionalità: USA (NASA). Esperienza: volo umano in orbita, lunga permanenza e operazioni di volo ad alta responsabilità.&quot; },
+    { id:&quot;koch&quot;,    name:&quot;Christina Koch&quot;, role:&quot;NASA – USA&quot;, correct:true,  info:&quot;Nazionalità: USA (NASA). Esperienza: missioni ISS di lunga durata e attività extraveicolari (EVA).&quot; },
+    { id:&quot;hansen&quot;,  name:&quot;Jeremy Hansen&quot;, role:&quot;CSA – Canada&quot;, correct:true, info:&quot;Nazionalità: Canada (CSA). Esperienza: addestramento avanzato, profilo da pilota militare/test e ruoli di supporto a missioni ISS.&quot; },
+    { id:&quot;mann&quot;,    name:&quot;Nicole Mann&quot;, role:&quot;NASA – USA&quot;, correct:false, info:&quot;Nazionalità: USA (NASA). Esperienza: comandante di missione in orbita, background da pilota collaudatore e operazioni ISS.&quot; },
+    { id:&quot;meir&quot;,    name:&quot;Jessica Meir&quot;, role:&quot;NASA – USA&quot;, correct:false, info:&quot;Nazionalità: USA (NASA). Esperienza: missione ISS con attività extraveicolari e background scientifico (biologia/fisiologia).&quot; },
+    { id:&quot;pesquet&quot;, name:&quot;Thomas Pesquet&quot;, role:&quot;ESA – Francia&quot;, correct:false, info:&quot;Nazionalità: Francia (ESA). Esperienza: missioni ISS, comando e operazioni di bordo; background da pilota.&quot; },
+    { id:&quot;chari&quot;,   name:&quot;Raja Chari&quot;, role:&quot;NASA – USA&quot;, correct:false, info:&quot;Nazionalità: USA (NASA). Esperienza: volo umano, background da pilota collaudatore e gestione sistemi complessi.&quot; },
+    { id:&quot;stjacques&quot;, name:&quot;David Saint‑Jacques&quot;, role:&quot;CSA – Canada&quot;, correct:false, info:&quot;Nazionalità: Canada (CSA). Esperienza: missione ISS, profilo medico/scientifico e ruoli operativi di lunga durata.&quot; },
+    { id:&quot;cristoforetti&quot;, name:&quot;Samantha Cristoforetti&quot;, role:&quot;ESA – Italia&quot;, correct:false, info:&quot;Nazionalità: Italia (ESA). Esperienza: missioni ISS, comando e operazioni di bordo; background da pilota militare.&quot; },
+  ];
+
+  // Strumenti/payload: 7 totali, 5 corretti
+  const instruments = [
+    { id:&quot;avatar&quot;,    name:&quot;AVATAR&quot;, role:&quot;Bio/health payload&quot;, correct:true,  info:&quot;AVATAR: tissue-chips con cellule umane per studiare effetti combinati di radiazioni e microgravità.&quot; },
+    { id:&quot;o2o&quot;,       name:&quot;O2O Laser Comms&quot;, role:&quot;Tech demo&quot;, correct:true, info:&quot;O2O: dimostrazione di comunicazioni ottiche ad alta banda con laser infrarosso.&quot; },
+    { id:&quot;tacheles&quot;,  name:&quot;TACHELES&quot;, role:&quot;CubeSat (Germania)&quot;, correct:true, info:&quot;CubeSat tedesco: misura come l’ambiente spaziale impatta componenti elettronici per sistemi lunari.&quot; },
+    { id:&quot;atenea&quot;,    name:&quot;ATENEA&quot;, role:&quot;CubeSat (Argentina)&quot;, correct:true, info:&quot;CubeSat argentino: obiettivi su radiazione e schermature, test comunicazioni e dati utili.&quot; },
+    { id:&quot;kradcube&quot;,  name:&quot;K‑RadCube&quot;, role:&quot;CubeSat (Corea)&quot;, correct:true, info:&quot;CubeSat coreano: dosimetria con materiali tissue-equivalent per caratterizzare l’ambiente di radiazione.&quot; },
+    { id:&quot;seis&quot;,     name:&quot;SEIS Seismometer&quot;, role:&quot;Sismologia&quot;, correct:false, info:&quot;Sismometro sensibile per misurare vibrazioni del suolo e studiare l’interno di un corpo planetario.&quot; },
+    { id:&quot;radmon&quot;,   name:&quot;RADMON Mk‑IV&quot;, role:&quot;Dosimetria&quot;, correct:false, info:&quot;Monitor di radiazione per misure dose-rate e particelle energetiche; utile per caratterizzare l’ambiente.&quot; },
+  ];
+
+  const REQ_CREW = 4;
+  const CREW_SLOTS = 4;
+  const INSTR_SLOTS = 5;
+  const REQ_INSTR = 5;
+
+  const state = {
+    phase: &quot;intro&quot;, // intro | crew | instruments | complete | pad
+    crewSlots: Array(CREW_SLOTS).fill(null),
+    instrSlots: Array(INSTR_SLOTS).fill(null),
+    toastTimeout: null,
+    dragging: null,
+    crewDeck: [],
+    instrDeck: [],
+    time: 0,
+    raf: 0,
+  };
+
+  // ---------- DOM ----------
+  const listEl = document.getElementById(&quot;list&quot;);
+  const sidebarTitle = document.getElementById(&quot;sidebarTitle&quot;);
+  const sidebarSub = document.getElementById(&quot;sidebarSub&quot;);
+  const sidebarCount = document.getElementById(&quot;sidebarCount&quot;);
+  const stepLabel = document.getElementById(&quot;stepLabel&quot;);
+  const objectiveLabel = document.getElementById(&quot;objectiveLabel&quot;);
+  const resetBtn = document.getElementById(&quot;resetBtn&quot;);
+
+  const toast = document.getElementById(&quot;toast&quot;);
+  const toastTitle = document.getElementById(&quot;toastTitle&quot;);
+  const toastBody = document.getElementById(&quot;toastBody&quot;);
+  const toastClose = document.getElementById(&quot;toastClose&quot;);
+
+  const introScrim = document.getElementById(&quot;introScrim&quot;);
+  const completeScrim = document.getElementById(&quot;completeScrim&quot;);
+  const goLaunchBtn = document.getElementById(&quot;goLaunch&quot;);
+  const startIntro = document.getElementById(&quot;startIntro&quot;);
+  const slotOverlay = document.getElementById(&quot;slotOverlay&quot;);
+
+  // Canvas
+  const cvs = document.getElementById(&quot;hangar&quot;);
+  const ctx = cvs.getContext(&quot;2d&quot;, { alpha: true });
+  let W = 0, H = 0, DPR = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+
+  // ---------- Helpers ----------
+  function uniq(arr){ return Array.from(new Set(arr)); }
+
+  function shuffle(arr){
+    for(let i=arr.length-1;i&gt;0;i--){
+      const j = (Math.random() * (i+1)) | 0;
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+  function makeKerbalFaceSVG(seed, label, accentHue=115, size=46){
+    const h = (seed*47 + accentHue) % 360;
+    const skin = `hsl(${h}, 65%, 58%)`;
+    const dark = `hsl(${h}, 70%, 35%)`;
+    const helmet = `hsl(${(seed*19+210)%360}, 20%, 18%)`;
+    const visor = `rgba(140, 245, 160, .25)`;
+    const eye = `hsl(60, 80%, 92%)`;
+    const pupil = `hsl(0,0%,10%)`;
+    const blush = `rgba(255,120,140,.18)`;
+
+    const svg =
+`&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;${size}&quot; height=&quot;${size}&quot; viewBox=&quot;0 0 46 46&quot;&gt;
+  &lt;defs&gt;
+    &lt;linearGradient id=&quot;g${seed}&quot; x1=&quot;0&quot; y1=&quot;0&quot; x2=&quot;0&quot; y2=&quot;1&quot;&gt;
+      &lt;stop offset=&quot;0&quot; stop-color=&quot;${helmet}&quot; stop-opacity=&quot;1&quot;/&gt;
+      &lt;stop offset=&quot;1&quot; stop-color=&quot;rgba(0,0,0,.9)&quot; stop-opacity=&quot;1&quot;/&gt;
+    &lt;/linearGradient&gt;
+    &lt;radialGradient id=&quot;v${seed}&quot; cx=&quot;35%&quot; cy=&quot;30%&quot; r=&quot;70%&quot;&gt;
+      &lt;stop offset=&quot;0&quot; stop-color=&quot;${visor}&quot; /&gt;
+      &lt;stop offset=&quot;1&quot; stop-color=&quot;rgba(0,0,0,.0)&quot; /&gt;
+    &lt;/radialGradient&gt;
+  &lt;/defs&gt;
+  &lt;rect x=&quot;1.5&quot; y=&quot;1.5&quot; width=&quot;43&quot; height=&quot;43&quot; rx=&quot;12&quot; fill=&quot;rgba(0,0,0,.25)&quot; stroke=&quot;rgba(255,255,255,.12)&quot;/&gt;
+  &lt;path d=&quot;M8 28c0-11 7-18 15-18s15 7 15 18c0 4-2 8-4 10H12c-2-2-4-6-4-10z&quot; fill=&quot;url(#g${seed})&quot;/&gt;
+  &lt;path d=&quot;M14 30c0-8 4.5-13 9-13s9 5 9 13c0 4-1 6-2 7H16c-1-1-2-3-2-7z&quot; fill=&quot;${skin}&quot;/&gt;
+  &lt;ellipse cx=&quot;17.5&quot; cy=&quot;30.5&quot; rx=&quot;4&quot; ry=&quot;2.4&quot; fill=&quot;${blush}&quot;/&gt;
+  &lt;ellipse cx=&quot;28.5&quot; cy=&quot;30.5&quot; rx=&quot;4&quot; ry=&quot;2.4&quot; fill=&quot;${blush}&quot;/&gt;
+  &lt;ellipse cx=&quot;18.5&quot; cy=&quot;26.5&quot; rx=&quot;5&quot; ry=&quot;4.2&quot; fill=&quot;${eye}&quot;/&gt;
+  &lt;ellipse cx=&quot;27.5&quot; cy=&quot;26.5&quot; rx=&quot;5&quot; ry=&quot;4.2&quot; fill=&quot;${eye}&quot;/&gt;
+  &lt;circle cx=&quot;19.8&quot; cy=&quot;27.3&quot; r=&quot;2.2&quot; fill=&quot;${pupil}&quot;/&gt;
+  &lt;circle cx=&quot;26.2&quot; cy=&quot;27.3&quot; r=&quot;2.2&quot; fill=&quot;${pupil}&quot;/&gt;
+  &lt;circle cx=&quot;18.9&quot; cy=&quot;26.3&quot; r=&quot;0.9&quot; fill=&quot;white&quot; opacity=&quot;.85&quot;/&gt;
+  &lt;circle cx=&quot;25.4&quot; cy=&quot;26.3&quot; r=&quot;0.9&quot; fill=&quot;white&quot; opacity=&quot;.85&quot;/&gt;
+  &lt;path d=&quot;M19 33c2.2 1.6 5.8 1.6 8 0&quot; stroke=&quot;${dark}&quot; stroke-width=&quot;2.2&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot;/&gt;
+  &lt;path d=&quot;M10 24c3-8 10-12 13-12 7 0 14 6 15 15-4-5-10-8-15-8-5 0-9 1-13 5z&quot; fill=&quot;url(#v${seed})&quot;/&gt;
+  &lt;text x=&quot;23&quot; y=&quot;44&quot; text-anchor=&quot;middle&quot; font-family=&quot;ui-sans-serif,system-ui&quot; font-size=&quot;7&quot; fill=&quot;rgba(159,178,204,.75)&quot;&gt;${label}&lt;/text&gt;
+&lt;/svg&gt;`;
+    return &quot;data:image/svg+xml;utf8,&quot; + encodeURIComponent(svg);
+  }
+
+  const instrumentIdSet = new Set(instruments.map(x =&gt; x.id));
+
+  function makeInstrumentIconSVG(item, size=46){
+    const stroke = &quot;rgba(233,241,255,.82)&quot;;
+    const stroke2 = &quot;rgba(159,178,204,.75)&quot;;
+    const glow = &quot;rgba(85,166,255,.22)&quot;;
+    const accent = &quot;rgba(130,255,138,.55)&quot;;
+    const warn = &quot;rgba(255,209,102,.65)&quot;;
+
+    const base = (inner) =&gt; `
+&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;${size}&quot; height=&quot;${size}&quot; viewBox=&quot;0 0 46 46&quot;&gt;
+  &lt;defs&gt;
+    &lt;linearGradient id=&quot;bg&quot; x1=&quot;0&quot; y1=&quot;0&quot; x2=&quot;0&quot; y2=&quot;1&quot;&gt;
+      &lt;stop offset=&quot;0&quot; stop-color=&quot;rgba(0,0,0,.35)&quot;/&gt;
+      &lt;stop offset=&quot;1&quot; stop-color=&quot;rgba(0,0,0,.15)&quot;/&gt;
+    &lt;/linearGradient&gt;
+    &lt;radialGradient id=&quot;gl&quot; cx=&quot;35%&quot; cy=&quot;28%&quot; r=&quot;75%&quot;&gt;
+      &lt;stop offset=&quot;0&quot; stop-color=&quot;${glow}&quot;/&gt;
+      &lt;stop offset=&quot;1&quot; stop-color=&quot;rgba(0,0,0,0)&quot;/&gt;
+    &lt;/radialGradient&gt;
+  &lt;/defs&gt;
+  &lt;rect x=&quot;1.5&quot; y=&quot;1.5&quot; width=&quot;43&quot; height=&quot;43&quot; rx=&quot;12&quot; fill=&quot;url(#bg)&quot; stroke=&quot;rgba(255,255,255,.12)&quot;/&gt;
+  &lt;rect x=&quot;4&quot; y=&quot;4&quot; width=&quot;38&quot; height=&quot;38&quot; rx=&quot;11&quot; fill=&quot;url(#gl)&quot; opacity=&quot;.9&quot;/&gt;
+  ${inner}
+&lt;/svg&gt;`;
+
+    const id = item.id;
+
+    if(id === &quot;avatar&quot;){
+      // microfluidic tissue chip + droplets
+      return &quot;data:image/svg+xml;utf8,&quot; + encodeURIComponent(base(`
+  &lt;rect x=&quot;10&quot; y=&quot;12&quot; width=&quot;26&quot; height=&quot;18&quot; rx=&quot;5&quot; fill=&quot;rgba(130,255,138,.10)&quot; stroke=&quot;${stroke}&quot; stroke-width=&quot;2&quot;/&gt;
+  &lt;path d=&quot;M14 17h18&quot; stroke=&quot;${stroke2}&quot; stroke-width=&quot;1.6&quot; stroke-linecap=&quot;round&quot;/&gt;
+  &lt;path d=&quot;M14 21h18&quot; stroke=&quot;${stroke2}&quot; stroke-width=&quot;1.6&quot; stroke-linecap=&quot;round&quot;/&gt;
+  &lt;circle cx=&quot;16&quot; cy=&quot;27&quot; r=&quot;2.4&quot; fill=&quot;${accent}&quot; opacity=&quot;.55&quot;/&gt;
+  &lt;circle cx=&quot;23&quot; cy=&quot;27&quot; r=&quot;1.9&quot; fill=&quot;${accent}&quot; opacity=&quot;.35&quot;/&gt;
+  &lt;circle cx=&quot;30&quot; cy=&quot;27&quot; r=&quot;2.2&quot; fill=&quot;${accent}&quot; opacity=&quot;.45&quot;/&gt;
+  &lt;path d=&quot;M31 8c0 3-4 6-4 9 0 2 1.6 3.5 4 3.5s4-1.5 4-3.5c0-3-4-6-4-9z&quot; fill=&quot;rgba(85,166,255,.28)&quot; stroke=&quot;rgba(233,241,255,.45)&quot; stroke-width=&quot;1&quot;/&gt;
+`));
+    }
+
+    if(id === &quot;o2o&quot;){
+      // laser link + receiver dish
+      return &quot;data:image/svg+xml;utf8,&quot; + encodeURIComponent(base(`
+  &lt;circle cx=&quot;14&quot; cy=&quot;28&quot; r=&quot;8&quot; fill=&quot;rgba(85,166,255,.12)&quot; stroke=&quot;${stroke}&quot; stroke-width=&quot;2&quot;/&gt;
+  &lt;path d=&quot;M10 28c2.3-3 5.7-3 8 0&quot; fill=&quot;none&quot; stroke=&quot;${stroke2}&quot; stroke-width=&quot;1.8&quot; stroke-linecap=&quot;round&quot;/&gt;
+  &lt;path d=&quot;M12 30c1.2-1.4 2.8-1.4 4 0&quot; fill=&quot;none&quot; stroke=&quot;${stroke2}&quot; stroke-width=&quot;1.6&quot; stroke-linecap=&quot;round&quot;/&gt;
+  &lt;circle cx=&quot;31&quot; cy=&quot;17&quot; r=&quot;4.2&quot; fill=&quot;rgba(130,255,138,.12)&quot; stroke=&quot;${stroke}&quot; stroke-width=&quot;2&quot;/&gt;
+  &lt;path d=&quot;M18 26L28 19&quot; stroke=&quot;${warn}&quot; stroke-width=&quot;2.6&quot; stroke-linecap=&quot;round&quot;/&gt;
+  &lt;path d=&quot;M19 22l3 2&quot; stroke=&quot;${warn}&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; opacity=&quot;.8&quot;/&gt;
+  &lt;path d=&quot;M23 20l3 2&quot; stroke=&quot;${warn}&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; opacity=&quot;.6&quot;/&gt;
+`));
+    }
+
+    if(id === &quot;tacheles&quot;){
+      // CubeSat + trails
+      return &quot;data:image/svg+xml;utf8,&quot; + encodeURIComponent(base(`
+  &lt;rect x=&quot;14&quot; y=&quot;14&quot; width=&quot;18&quot; height=&quot;18&quot; rx=&quot;3&quot; fill=&quot;rgba(0,0,0,.18)&quot; stroke=&quot;${stroke}&quot; stroke-width=&quot;2&quot;/&gt;
+  &lt;path d=&quot;M14 20h18&quot; stroke=&quot;${stroke2}&quot; stroke-width=&quot;1.6&quot; opacity=&quot;.9&quot;/&gt;
+  &lt;path d=&quot;M20 14v18&quot; stroke=&quot;${stroke2}&quot; stroke-width=&quot;1.6&quot; opacity=&quot;.9&quot;/&gt;
+  &lt;rect x=&quot;10&quot; y=&quot;16&quot; width=&quot;4&quot; height=&quot;14&quot; rx=&quot;2&quot; fill=&quot;rgba(85,166,255,.18)&quot; stroke=&quot;rgba(233,241,255,.35)&quot; stroke-width=&quot;1&quot;/&gt;
+  &lt;rect x=&quot;32&quot; y=&quot;16&quot; width=&quot;4&quot; height=&quot;14&quot; rx=&quot;2&quot; fill=&quot;rgba(85,166,255,.18)&quot; stroke=&quot;rgba(233,241,255,.35)&quot; stroke-width=&quot;1&quot;/&gt;
+  &lt;path d=&quot;M9 12c4 1 6 3 7 6&quot; stroke=&quot;${warn}&quot; stroke-width=&quot;2&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot; opacity=&quot;.55&quot;/&gt;
+  &lt;path d=&quot;M37 34c-4-1-6-3-7-6&quot; stroke=&quot;${warn}&quot; stroke-width=&quot;2&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot; opacity=&quot;.45&quot;/&gt;
+`));
+    }
+
+    if(id === &quot;atenea&quot;){
+      // CubeSat + shield arc
+      return &quot;data:image/svg+xml;utf8,&quot; + encodeURIComponent(base(`
+  &lt;rect x=&quot;15&quot; y=&quot;15&quot; width=&quot;16&quot; height=&quot;16&quot; rx=&quot;3&quot; fill=&quot;rgba(0,0,0,.18)&quot; stroke=&quot;${stroke}&quot; stroke-width=&quot;2&quot;/&gt;
+  &lt;path d=&quot;M15 21h16&quot; stroke=&quot;${stroke2}&quot; stroke-width=&quot;1.6&quot;/&gt;
+  &lt;path d=&quot;M21 15v16&quot; stroke=&quot;${stroke2}&quot; stroke-width=&quot;1.6&quot;/&gt;
+  &lt;path d=&quot;M9 28c3-8 11-12 19-9&quot; stroke=&quot;${accent}&quot; stroke-width=&quot;2.8&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot; opacity=&quot;.55&quot;/&gt;
+  &lt;path d=&quot;M10 30c3-6 9-9 15-7&quot; stroke=&quot;${accent}&quot; stroke-width=&quot;2&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot; opacity=&quot;.35&quot;/&gt;
+  &lt;circle cx=&quot;33&quot; cy=&quot;14&quot; r=&quot;2.2&quot; fill=&quot;${warn}&quot; opacity=&quot;.7&quot;/&gt;
+  &lt;circle cx=&quot;36&quot; cy=&quot;18&quot; r=&quot;1.6&quot; fill=&quot;${warn}&quot; opacity=&quot;.5&quot;/&gt;
+`));
+    }
+
+    if(id === &quot;kradcube&quot;){
+      // dosimeter + bars
+      return &quot;data:image/svg+xml;utf8,&quot; + encodeURIComponent(base(`
+  &lt;rect x=&quot;12&quot; y=&quot;12&quot; width=&quot;22&quot; height=&quot;22&quot; rx=&quot;6&quot; fill=&quot;rgba(85,166,255,.10)&quot; stroke=&quot;${stroke}&quot; stroke-width=&quot;2&quot;/&gt;
+  &lt;path d=&quot;M16 28v-8&quot; stroke=&quot;${accent}&quot; stroke-width=&quot;3&quot; stroke-linecap=&quot;round&quot; opacity=&quot;.55&quot;/&gt;
+  &lt;path d=&quot;M21 30v-12&quot; stroke=&quot;${accent}&quot; stroke-width=&quot;3&quot; stroke-linecap=&quot;round&quot; opacity=&quot;.38&quot;/&gt;
+  &lt;path d=&quot;M26 27v-6&quot; stroke=&quot;${accent}&quot; stroke-width=&quot;3&quot; stroke-linecap=&quot;round&quot; opacity=&quot;.30&quot;/&gt;
+  &lt;path d=&quot;M31 31v-14&quot; stroke=&quot;${accent}&quot; stroke-width=&quot;3&quot; stroke-linecap=&quot;round&quot; opacity=&quot;.22&quot;/&gt;
+  &lt;path d=&quot;M12 18h22&quot; stroke=&quot;${stroke2}&quot; stroke-width=&quot;1.4&quot; opacity=&quot;.8&quot;/&gt;
+`));
+    }
+
+    if(id === &quot;seis&quot;){
+      // sismometro + onda
+      return &quot;data:image/svg+xml;utf8,&quot; + encodeURIComponent(base(`
+  &lt;rect x=&quot;12&quot; y=&quot;18&quot; width=&quot;22&quot; height=&quot;16&quot; rx=&quot;6&quot; fill=&quot;rgba(255,209,102,.10)&quot; stroke=&quot;${stroke}&quot; stroke-width=&quot;2&quot;/&gt;
+  &lt;path d=&quot;M14 26c3-4 6 4 9 0s6 4 9 0&quot; fill=&quot;none&quot; stroke=&quot;${warn}&quot; stroke-width=&quot;2.6&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;/&gt;
+  &lt;path d=&quot;M20 13h6&quot; stroke=&quot;${stroke2}&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot;/&gt;
+  &lt;path d=&quot;M23 13v5&quot; stroke=&quot;${stroke2}&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot;/&gt;
+  &lt;circle cx=&quot;23&quot; cy=&quot;11&quot; r=&quot;2&quot; fill=&quot;rgba(233,241,255,.7)&quot;/&gt;
+`));
+    }
+
+    // radmon (o fallback): trefoil radiazioni
+    return &quot;data:image/svg+xml;utf8,&quot; + encodeURIComponent(base(`
+  &lt;circle cx=&quot;23&quot; cy=&quot;23&quot; r=&quot;10&quot; fill=&quot;rgba(255,77,109,.10)&quot; stroke=&quot;${stroke}&quot; stroke-width=&quot;2&quot;/&gt;
+  &lt;circle cx=&quot;23&quot; cy=&quot;23&quot; r=&quot;2.2&quot; fill=&quot;rgba(233,241,255,.72)&quot;/&gt;
+  &lt;path d=&quot;M23 13c3 0 6 2.4 6 5.4 0 1.2-.4 2.2-1 3&quot; stroke=&quot;rgba(255,77,109,.75)&quot; stroke-width=&quot;2.8&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot;/&gt;
+  &lt;path d=&quot;M14 27c-1.5-2.6-.6-6.4 2-7.9 1-.6 2.1-.9 3.2-.8&quot; stroke=&quot;rgba(255,77,109,.75)&quot; stroke-width=&quot;2.8&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot;/&gt;
+  &lt;path d=&quot;M32 27c-1.5 2.6-5 3.9-7.7 2.4-1-.6-1.8-1.4-2.2-2.4&quot; stroke=&quot;rgba(255,77,109,.75)&quot; stroke-width=&quot;2.8&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot;/&gt;
+`));
+  }
+
+  function iconForItem(item, idx, size=46){
+    const seed = (idx + 1) * 17 + (item.id.length * 5);
+    if(instrumentIdSet.has(item.id)) return makeInstrumentIconSVG(item, size);
+    return makeKerbalFaceSVG(seed, &quot;&quot;, 115, size);
+  }
+
+  // iconForItem is defined above with support for instrument logos
+
+  function showToast(title, body){
+    toastTitle.textContent = title;
+    toastBody.textContent = body;
+    toast.classList.add(&quot;show&quot;);
+    clearTimeout(state.toastTimeout);
+    state.toastTimeout = setTimeout(()=&gt; toast.classList.remove(&quot;show&quot;), 5200);
+  }
+
+  function openIntro(){ introScrim.classList.add(&quot;show&quot;); }
+  function closeIntro(){ introScrim.classList.remove(&quot;show&quot;); }
+
+  function resetRun(){
+    state.phase = &quot;crew&quot;;
+    state.crewSlots = Array(CREW_SLOTS).fill(null);
+    state.instrSlots = Array(INSTR_SLOTS).fill(null);
+    state.crewDeck = shuffle([...astronauts]);
+    state.instrDeck = shuffle([...instruments]);
+    renderAll();
+  }
+
+  function currentItems(){ return state.phase === &quot;crew&quot; ? state.crewDeck : state.instrDeck; }
+  function slotsArray(){ return state.phase === &quot;crew&quot; ? state.crewSlots : state.instrSlots; }
+  function setSlot(i, item){ if(state.phase === &quot;crew&quot;) state.crewSlots[i]=item; else state.instrSlots[i]=item; }
+  function takenIds(){ return slotsArray().filter(Boolean).map(x =&gt; x.id); }
+
+  // ---------- Sidebar ----------
+  function renderSidebar(){
+    const phase = state.phase;
+    const items = currentItems();
+
+    sidebarTitle.textContent = phase === &quot;crew&quot; ? &quot;Astronauti disponibili&quot; : &quot;Strumenti / payload disponibili&quot;;
+    sidebarSub.textContent = phase === &quot;crew&quot;
+      ? `Scegline ${REQ_CREW} e trascinali negli slot interni.`
+      : `Scegline ${REQ_INSTR} e trascinali negli slot interni (5 slot totali).`;
+
+    const filled = slotsArray().filter(Boolean).length;
+    const goal = phase === &quot;crew&quot; ? REQ_CREW : REQ_INSTR;
+    sidebarCount.textContent = `${filled} / ${goal}`;
+
+    listEl.innerHTML = &quot;&quot;;
+    const taken = new Set(takenIds());
+
+    items.forEach((item, idx) =&gt; {
+      const card = document.createElement(&quot;div&quot;);
+      card.className = &quot;card&quot;;
+
+      const icon = document.createElement(&quot;div&quot;);
+      icon.className = &quot;icon&quot;;
+      const img = document.createElement(&quot;img&quot;);
+      img.alt = item.name;
+      img.draggable = false;
+      img.src = iconForItem(item, idx, 46);
+      icon.appendChild(img);
+
+      const meta = document.createElement(&quot;div&quot;);
+      meta.className = &quot;meta&quot;;
+      const name = document.createElement(&quot;div&quot;);
+      name.className = &quot;name&quot;;
+      name.textContent = item.name;
+      const role = document.createElement(&quot;div&quot;);
+      role.className = &quot;role&quot;;
+      role.textContent = item.role;
+      meta.appendChild(name);
+      meta.appendChild(role);
+
+      if (taken.has(item.id) || state.phase === &quot;complete&quot; || state.phase === &quot;pad&quot;){
+        card.style.opacity = &quot;.45&quot;;
+        card.style.cursor = &quot;not-allowed&quot;;
+      } else {
+        card.addEventListener(&quot;pointerdown&quot;, (e) =&gt; queueDrag(e, item, card));
+      }
+
+      card.appendChild(icon);
+      card.appendChild(meta);
+      listEl.appendChild(card);
+    });
+  }
+
+  // ---------- Slots inside rocket ----------
+  function computeRocketLayout(){
+    const marginTop = Math.max(70, Math.min(120, H * 0.16));
+    const marginBottom = Math.max(70, Math.min(140, H * 0.18));
+    const usableH = Math.max(240, H - marginTop - marginBottom);
+
+    const rocketH = usableH;
+    const coreW = Math.min((W-90)*0.30, rocketH*0.20);
+
+    const x = W*0.56;
+    const yTop = marginTop;
+    return { x, yTop, h: rocketH, coreW };
+  }
+
+  function computeSlotRects(){
+    const r = computeRocketLayout();
+    const isCrew = state.phase === &quot;crew&quot;;
+
+    const capTop = r.yTop + r.h*0.02;
+    const capH = r.h*0.12;
+
+    const coreY = r.yTop + r.h*0.16;
+    const coreH = r.h*0.70;
+
+    if(isCrew){
+      const w = Math.max(54, Math.min(86, r.coreW*0.70));
+      const h = Math.max(44, Math.min(66, capH*0.70));
+      const startX = r.x - (w*2 + 10);
+      const y = capTop + capH*0.40;
+      return [
+        {x: startX + 0*(w+10), y, w, h},
+        {x: startX + 1*(w+10), y, w, h},
+        {x: startX + 2*(w+10), y, w, h},
+        {x: startX + 3*(w+10), y, w, h},
+      ];
+    }
+
+    const w = Math.max(58, Math.min(92, r.coreW*0.86));
+    const h = Math.max(44, Math.min(66, r.coreW*0.62));
+
+    const x = r.x - w/2;
+    const bandY0 = coreY + coreH*0.18;
+    const bandY1 = coreY + coreH*0.78;
+    const span = Math.max(1, (bandY1 - bandY0));
+
+    const out = [];
+    for(let i=0;i&lt;INSTR_SLOTS;i++){
+      const tt = (i/(INSTR_SLOTS-1));
+      out.push({x, y: bandY0 + tt*span - h/2, w, h});
+    }
+    return out;
+  }
+
+  function renderSlots(){
+    const slots = slotsArray();
+    const rects = computeSlotRects();
+
+    slotOverlay.innerHTML = &quot;&quot;;
+
+    rects.forEach((rc, i) =&gt; {
+      const s = document.createElement(&quot;div&quot;);
+      s.className = &quot;slot&quot;;
+      s.dataset.slotIndex = String(i);
+      s.style.left = rc.x + &quot;px&quot;;
+      s.style.top = rc.y + &quot;px&quot;;
+      s.style.width = rc.w + &quot;px&quot;;
+      s.style.height = rc.h + &quot;px&quot;;
+
+      const val = slots[i];
+      if(val){
+        s.classList.add(&quot;filled&quot;);
+        const mini = document.createElement(&quot;div&quot;);
+        mini.className = &quot;mini&quot;;
+        const img = document.createElement(&quot;img&quot;);
+        img.draggable = false;
+        img.src = iconForItem(val, i, 28);
+        img.alt = val.name;
+        const nm = document.createElement(&quot;div&quot;);
+        nm.className = &quot;nm&quot;;
+        nm.textContent = val.name;
+        mini.appendChild(img);
+        mini.appendChild(nm);
+        s.appendChild(mini);
+
+        const clear = (ev) =&gt; {
+          ev.preventDefault();
+          ev.stopPropagation();
+          const cur = slotsArray()[i];
+          if(!cur) return;
+          setSlot(i, null);
+          renderAll();
+          showToast(&quot;Slot svuotato&quot;, &quot;Elemento rimosso. Puoi inserirne un altro.&quot;);
+        };
+        s.addEventListener(&quot;click&quot;, clear);
+        s.addEventListener(&quot;pointerup&quot;, clear);
+      } else {
+        s.textContent = &quot;&quot;;
+        s.title = (state.phase === &quot;crew&quot;) ? `Slot equipaggio ${i+1}` : `Slot payload ${i+1}`;
+      }
+
+      slotOverlay.appendChild(s);
+    });
+  }
+
+  // ---------- HUD ----------
+  function renderHUD(){
+    if(state.phase === &quot;crew&quot;){
+      stepLabel.textContent = &quot;Step: Equipaggio&quot;;
+      objectiveLabel.textContent = `Obiettivo: seleziona il crew ufficiale (${REQ_CREW}).`;
+    } else if(state.phase === &quot;instruments&quot;){
+      stepLabel.textContent = &quot;Step: Strumenti&quot;;
+      objectiveLabel.textContent = `Obiettivo: seleziona ${REQ_INSTR} payload corretti (5 slot).`;
+    } else if(state.phase === &quot;complete&quot;){
+      stepLabel.textContent = &quot;Step: Missione completata&quot;;
+      objectiveLabel.textContent = &quot;Configurazione validata.&quot;;
+    } else if(state.phase === &quot;pad&quot;){
+      stepLabel.textContent = &quot;Step: Rampa di lancio&quot;;
+      objectiveLabel.textContent = &quot;Sei alla rampa. Pronto per la prossima fase.&quot;;
+    } else {
+      stepLabel.textContent = &quot;Step: Intro&quot;;
+      objectiveLabel.textContent = &quot;Obiettivo: capire chi sale su Orion.&quot;;
+    }
+  }
+
+  function renderAll(){
+    renderSidebar();
+    renderSlots();
+    renderHUD();
+    drawHangar(state.time||0);
+  }
+
+  // ---------- Validation ----------
+  function isCorrectCrewSelection(){
+    const picked = state.crewSlots.filter(Boolean).map(x =&gt; x.name);
+    if(picked.length !== REQ_CREW) return false;
+    const got = uniq(picked).sort();
+    const expected = [&quot;Reid Wiseman&quot;,&quot;Victor Glover&quot;,&quot;Christina Koch&quot;,&quot;Jeremy Hansen&quot;].sort();
+    return got.length === expected.length &amp;&amp; got.every((v,i)=&gt;v===expected[i]);
+  }
+
+  function isCorrectInstrumentSelection(){
+    const picked = state.instrSlots.filter(Boolean).map(x =&gt; x.id);
+    if(picked.length !== REQ_INSTR) return false;
+    const correct = instruments.filter(x =&gt; x.correct).map(x =&gt; x.id).sort();
+    const got = uniq(picked).sort();
+    return got.length === correct.length &amp;&amp; got.every((v,i)=&gt;v===correct[i]);
+  }
+
+  function afterDropMaybeAdvance(){
+    if(state.phase === &quot;crew&quot;){
+      if(state.crewSlots.filter(Boolean).length !== REQ_CREW) return;
+      if(isCorrectCrewSelection()){
+        showToast(&quot;Equipaggio confermato&quot;, &quot;Crew ufficiale corretto. Passi alla selezione payload/strumenti.&quot;);
+        // Mescola gli strumenti ogni volta che entri nello step strumenti
+        state.instrDeck = shuffle([...instruments]);
+        state.instrSlots = Array(INSTR_SLOTS).fill(null);
+        state.phase = &quot;instruments&quot;;
+        renderAll();
+      } else {
+        const work = document.getElementById(&quot;workArea&quot;);
+        work.classList.remove(&quot;shake&quot;); void work.offsetWidth; work.classList.add(&quot;shake&quot;);
+        showToast(&quot;NO‑GO&quot;, &quot;Equipaggio errato. Tocca uno slot per svuotarlo e correggi.&quot;);
+      }
+    } else if(state.phase === &quot;instruments&quot;){
+      if(state.instrSlots.filter(Boolean).length !== REQ_INSTR) return;
+      if(isCorrectInstrumentSelection()){
+        state.phase = &quot;complete&quot;;
+        renderAll();
+        completeScrim.classList.add(&quot;show&quot;);
+      } else {
+        const work = document.getElementById(&quot;workArea&quot;);
+        work.classList.remove(&quot;shake&quot;); void work.offsetWidth; work.classList.add(&quot;shake&quot;);
+        showToast(&quot;NO‑GO&quot;, &quot;Selezione strumenti errata. Torni indietro all’equipaggio e ricominci da capo.&quot;);
+        state.phase = &quot;crew&quot;;
+        state.instrSlots = Array(INSTR_SLOTS).fill(null);
+        state.crewSlots = Array(CREW_SLOTS).fill(null);
+        state.crewDeck = shuffle([...astronauts]);
+        state.instrDeck = shuffle([...instruments]);
+        renderAll();
+      }
+    }
+  }
+
+  // ---------- Drag &amp; Drop ----------
+  let dragPrep = null;
+  let lastHotSlot = null;
+
+  function queueDrag(e, item, cardEl){
+    if(state.phase === &quot;complete&quot; || state.phase === &quot;pad&quot;) return;
+    if (takenIds().includes(item.id)) return;
+    if(e.button !== undefined &amp;&amp; e.button !== 0) return;
+
+    const startX = e.clientX;
+    const startY = e.clientY;
+    const delay = 170;
+
+    dragPrep = { item, cardEl, pointerId: e.pointerId, startX, startY, active: true, timer: 0 };
+
+    const cancel = () =&gt; {
+      if(!dragPrep || !dragPrep.active) return;
+      dragPrep.active = false;
+      clearTimeout(dragPrep.timer);
+      dragPrep = null;
+      window.removeEventListener(&quot;pointermove&quot;, onPrepMove);
+      window.removeEventListener(&quot;pointerup&quot;, onPrepEnd);
+      window.removeEventListener(&quot;pointercancel&quot;, onPrepEnd);
+    };
+
+    const onPrepMove = (ev) =&gt; {
+      if(!dragPrep || !dragPrep.active) return;
+      const dx = ev.clientX - startX;
+      const dy = ev.clientY - startY;
+      if(Math.hypot(dx,dy) &gt; 8) cancel();
+    };
+
+    const onPrepEnd = () =&gt; cancel();
+
+    window.addEventListener(&quot;pointermove&quot;, onPrepMove, {passive:true});
+    window.addEventListener(&quot;pointerup&quot;, onPrepEnd, {passive:true});
+    window.addEventListener(&quot;pointercancel&quot;, onPrepEnd, {passive:true});
+
+    dragPrep.timer = setTimeout(() =&gt; {
+      if(!dragPrep || !dragPrep.active) return;
+      cancel();
+      startDrag(e, item, cardEl);
+    }, delay);
+  }
+
+  function startDrag(e, item, cardEl){
+    if(state.phase === &quot;complete&quot; || state.phase === &quot;pad&quot;) return;
+    if (takenIds().includes(item.id)) return;
+
+    e.preventDefault();
+    cardEl.setPointerCapture?.(e.pointerId);
+
+    const ghost = cardEl.cloneNode(true);
+    ghost.classList.add(&quot;ghost&quot;);
+    ghost.style.width = Math.min(cardEl.getBoundingClientRect().width, window.innerWidth - 24) + &quot;px&quot;;
+    document.body.appendChild(ghost);
+
+    state.dragging = { item, ghost };
+    moveGhost(e);
+
+    window.addEventListener(&quot;pointermove&quot;, onDragMove, {passive:false});
+    window.addEventListener(&quot;pointerup&quot;, onDragEnd, {passive:false});
+    window.addEventListener(&quot;pointercancel&quot;, onDragEnd, {passive:false});
+  }
+
+  function moveGhost(e){
+    if(!state.dragging) return;
+    const g = state.dragging.ghost;
+    g.style.left = e.clientX + &quot;px&quot;;
+    g.style.top  = e.clientY + &quot;px&quot;;
+  }
+
+  function findSlotUnderPoint(x,y){
+    const slotEls = Array.from(document.querySelectorAll(&quot;.slot&quot;));
+    for(const s of slotEls){
+      const r = s.getBoundingClientRect();
+      if(x&gt;=r.left &amp;&amp; x&lt;=r.right &amp;&amp; y&gt;=r.top &amp;&amp; y&lt;=r.bottom) return s;
+    }
+    return null;
+  }
+
+  function onDragMove(e){
+    if(!state.dragging) return;
+    e.preventDefault();
+    moveGhost(e);
+
+    const slotEl = findSlotUnderPoint(e.clientX, e.clientY);
+    if(lastHotSlot &amp;&amp; lastHotSlot !== slotEl) lastHotSlot.classList.remove(&quot;hot&quot;);
+    if(slotEl){
+      slotEl.classList.add(&quot;hot&quot;);
+      lastHotSlot = slotEl;
+    } else {
+      lastHotSlot = null;
+    }
+  }
+
+  function onDragEnd(e){
+    if(!state.dragging) return;
+    e.preventDefault();
+
+    const { item, ghost } = state.dragging;
+    state.dragging = null;
+
+    const slotEl = findSlotUnderPoint(e.clientX, e.clientY);
+    if(lastHotSlot){ lastHotSlot.classList.remove(&quot;hot&quot;); lastHotSlot = null; }
+    ghost.remove();
+
+    window.removeEventListener(&quot;pointermove&quot;, onDragMove);
+    window.removeEventListener(&quot;pointerup&quot;, onDragEnd);
+    window.removeEventListener(&quot;pointercancel&quot;, onDragEnd);
+
+    if(!slotEl) return;
+
+    const idx = parseInt(slotEl.dataset.slotIndex, 10);
+    const slots = slotsArray();
+    if(slots[idx]) return;
+    if(takenIds().includes(item.id)) return;
+
+    if(state.phase === &quot;crew&quot;){
+      if(slots.filter(Boolean).length &gt;= REQ_CREW) return;
+    } else if(state.phase === &quot;instruments&quot;){
+      if(slots.filter(Boolean).length &gt;= REQ_INSTR) return;
+    }
+
+    setSlot(idx, item);
+    renderAll();
+    showToast(state.phase === &quot;crew&quot; ? &quot;Scheda astronauta&quot; : &quot;Scheda strumento&quot;, item.info);
+    afterDropMaybeAdvance();
+  }
+
+  // ---------- Canvas drawing ----------
+  function resizeCanvas(){
+    const r = cvs.getBoundingClientRect();
+    W = Math.floor(r.width);
+    H = Math.floor(r.height);
+    cvs.width = Math.floor(W * DPR);
+    cvs.height = Math.floor(H * DPR);
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+    renderSlots();
+    drawHangar(state.time||0);
+  }
+
+  function roundRect(x, y, w, h, r, fill, stroke){
+    r = Math.min(r, w/2, h/2);
+    ctx.beginPath();
+    ctx.moveTo(x+r, y);
+    ctx.arcTo(x+w, y, x+w, y+h, r);
+    ctx.arcTo(x+w, y+h, x, y+h, r);
+    ctx.arcTo(x, y+h, x, y, r);
+    ctx.arcTo(x, y, x+w, y, r);
+    if(fill) ctx.fill();
+    if(stroke) ctx.stroke();
+  }
+
+  function drawBooster(cx, topY, w, h){
+    const x = cx - w/2;
+    const y = topY;
+
+    const grad = ctx.createLinearGradient(x,0,x+w,0);
+    grad.addColorStop(0,&quot;rgba(255,255,255,.94)&quot;);
+    grad.addColorStop(.38,&quot;rgba(238,246,255,.84)&quot;);
+    grad.addColorStop(.70,&quot;rgba(205,220,238,.78)&quot;);
+    grad.addColorStop(1,&quot;rgba(165,185,210,.74)&quot;);
+    ctx.fillStyle = grad;
+    roundRect(x,y,w,h,w*0.35,true,false);
+
+    ctx.strokeStyle = &quot;rgba(25,35,50,.16)&quot;;
+    ctx.lineWidth = 1;
+    for(let i=0;i&lt;8;i++){
+      const yy = y + (i+1)*(h/9);
+      ctx.beginPath();
+      ctx.moveTo(x+w*0.12, yy);
+      ctx.lineTo(x+w*0.88, yy);
+      ctx.stroke();
+    }
+
+    ctx.fillStyle = &quot;rgba(30,38,52,.16)&quot;;
+    ctx.fillRect(x+w*0.18, y+h*0.18, w*0.64, h*0.045);
+    ctx.fillRect(x+w*0.18, y+h*0.66, w*0.64, h*0.045);
+
+    ctx.fillStyle = &quot;rgba(32,40,52,.92)&quot;;
+    ctx.beginPath();
+    ctx.moveTo(cx - w*0.20, y+h);
+    ctx.lineTo(cx + w*0.20, y+h);
+    ctx.lineTo(cx + w*0.12, y+h + w*0.22);
+    ctx.lineTo(cx - w*0.12, y+h + w*0.22);
+    ctx.closePath();
+    ctx.fill();
+
+    const hi = ctx.createLinearGradient(x,0,x+w,0);
+    hi.addColorStop(0,&quot;rgba(255,255,255,.0)&quot;);
+    hi.addColorStop(.25,&quot;rgba(255,255,255,.22)&quot;);
+    hi.addColorStop(.55,&quot;rgba(255,255,255,.0)&quot;);
+    ctx.fillStyle = hi;
+    roundRect(x+w*0.18, y+h*0.05, w*0.12, h*0.90, 10, true, false);
+  }
+
+  function drawEngines(cx, yBase, coreW, engineH){
+    const bellW = coreW*0.20;
+    const gap = coreW*0.07;
+    const startX = cx - (bellW*1.5 + gap);
+    for(let i=0;i&lt;4;i++){
+      const x = startX + i*(bellW + gap);
+      ctx.fillStyle = &quot;rgba(30,38,50,.9)&quot;;
+      roundRect(x, yBase- engineH*0.25, bellW, engineH*0.25, 6, true, false);
+
+      ctx.fillStyle = &quot;rgba(25,30,40,.92)&quot;;
+      ctx.beginPath();
+      ctx.moveTo(x + bellW*0.20, yBase);
+      ctx.lineTo(x + bellW*0.80, yBase);
+      ctx.lineTo(x + bellW*0.65, yBase + engineH*0.60);
+      ctx.lineTo(x + bellW*0.35, yBase + engineH*0.60);
+      ctx.closePath();
+      ctx.fill();
+
+      const g = ctx.createRadialGradient(x+bellW*0.5, yBase+engineH*0.62, 0, x+bellW*0.5, yBase+engineH*0.62, bellW*0.9);
+      g.addColorStop(0,&quot;rgba(255,209,102,.18)&quot;);
+      g.addColorStop(1,&quot;rgba(0,0,0,0)&quot;);
+      ctx.fillStyle = g;
+      ctx.fillRect(x - bellW, yBase, bellW*3, engineH);
+    }
+  }
+
+  function drawOrion(cx, yTop, coreW, capH, totalH){
+    const adapterW = coreW*0.88;
+    const adapterH = totalH*0.055;
+    const ax = cx - adapterW/2;
+    const ay = yTop + capH*0.62;
+    ctx.fillStyle = &quot;rgba(210,220,235,.75)&quot;;
+    roundRect(ax, ay, adapterW, adapterH, 10, true, false);
+
+    const capW = coreW*0.72;
+    const capX = cx - capW/2;
+    const capY = yTop + capH*0.05;
+    const capH2 = capH*0.62;
+
+    const grad = ctx.createLinearGradient(capX,0,capX+capW,0);
+    grad.addColorStop(0,&quot;rgba(245,248,255,.88)&quot;);
+    grad.addColorStop(.55,&quot;rgba(220,232,250,.80)&quot;);
+    grad.addColorStop(1,&quot;rgba(170,190,215,.74)&quot;);
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    ctx.moveTo(cx, capY);
+    ctx.lineTo(capX, capY + capH2);
+    ctx.lineTo(capX+capW, capY + capH2);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.fillStyle = &quot;rgba(10,12,16,.9)&quot;;
+    roundRect(capX+capW*0.12, capY+capH2*0.78, capW*0.76, capH2*0.22, 14, true, false);
+
+    const lasH = capH*0.34;
+    const lasW = capW*0.22;
+    const lx = cx - lasW/2;
+    const ly = capY - lasH*0.82;
+    ctx.fillStyle = &quot;rgba(235,242,255,.82)&quot;;
+    roundRect(lx, ly, lasW, lasH, 10, true, false);
+
+    ctx.fillStyle = &quot;rgba(255,255,255,.75)&quot;;
+    ctx.beginPath();
+    ctx.moveTo(cx, ly - lasH*0.25);
+    ctx.lineTo(lx, ly + lasH*0.1);
+    ctx.lineTo(lx+lasW, ly + lasH*0.1);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  function drawSRBNose(cx, y, w, h){
+    const x = cx - w/2;
+    ctx.fillStyle = &quot;rgba(235,242,255,.86)&quot;;
+    ctx.beginPath();
+    ctx.moveTo(cx, y - h);
+    ctx.lineTo(x + w*0.15, y);
+    ctx.lineTo(x + w*0.85, y);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  function drawTowerMicrolights(towerX, towerY, towerW, towerH, armY, armLen, coreW, t){
+    for(let i=0;i&lt;14;i++){
+      const yy = towerY + (i+1)*towerH/16;
+      const blink = 0.25 + 0.75*Math.abs(Math.sin(t*0.004 + i*0.7));
+      ctx.fillStyle = `rgba(130,255,138,${0.10*blink})`;
+      ctx.beginPath(); ctx.arc(towerX + towerW*0.12, yy, 2.3, 0, Math.PI*2); ctx.fill();
+      ctx.fillStyle = `rgba(255,77,109,${0.06*blink})`;
+      ctx.beginPath(); ctx.arc(towerX + towerW*0.88, yy-6, 1.8, 0, Math.PI*2); ctx.fill();
+    }
+    for(let i=0;i&lt;8;i++){
+      const xx = towerX + towerW - 10 + (i+1)*armLen/10;
+      const blink = 0.30 + 0.70*Math.abs(Math.sin(t*0.005 + i*0.9));
+      ctx.fillStyle = `rgba(255,209,102,${0.08*blink})`;
+      ctx.beginPath(); ctx.arc(xx, armY + coreW*0.10, 2.0, 0, Math.PI*2); ctx.fill();
+    }
+  }
+
+  function drawCoreDetails(coreX, coreY, coreW, coreH, t){
+    ctx.strokeStyle = &quot;rgba(0,0,0,.16)&quot;;
+    ctx.lineWidth = 1;
+    for(let i=0;i&lt;6;i++){
+      const yy = coreY + coreH*(0.12 + i*0.13);
+      ctx.beginPath();
+      ctx.moveTo(coreX+coreW*0.14, yy);
+      ctx.lineTo(coreX+coreW*0.86, yy);
+      ctx.stroke();
+    }
+    for(let i=0;i&lt;10;i++){
+      const yy = coreY + coreH*(0.18 + i*0.07);
+      const blink = 0.35 + 0.65*Math.abs(Math.sin(t*0.004 + i*0.8));
+      ctx.fillStyle = `rgba(130,255,138,${0.05*blink})`;
+      ctx.beginPath(); ctx.arc(coreX+coreW*0.20, yy, 1.8, 0, Math.PI*2); ctx.fill();
+    }
+  }
+
+  function drawOrionDetails(cx, yTop, coreW, capH, totalH, t){
+    const capY = yTop + capH*0.05;
+    const lasH = capH*0.34;
+    const blink = 0.35 + 0.65*Math.abs(Math.sin(t*0.006));
+    ctx.fillStyle = `rgba(85,166,255,${0.08*blink})`;
+    ctx.beginPath(); ctx.arc(cx, capY - lasH*0.80, 10, 0, Math.PI*2); ctx.fill();
+  }
+
+  function drawLaunchPad(t){
+    const padX = W*0.78;
+    const padY = H*0.76;
+    ctx.fillStyle = &quot;rgba(60,70,85,.9)&quot;;
+    roundRect(padX-120, padY, 240, 40, 8, true, false);
+    ctx.fillStyle = &quot;rgba(255,140,60,.15)&quot;;
+    roundRect(padX-140, padY+38, 280, 10, 6, true, false);
+
+    const blink = 0.4 + 0.6*Math.abs(Math.sin(t*0.004));
+    ctx.fillStyle = `rgba(255,77,109,${0.2*blink})`;
+    ctx.beginPath(); ctx.arc(padX-100, padY+10, 4, 0, Math.PI*2); ctx.fill();
+  }
+
+  function drawSLS(r, t=0){
+    const { x, yTop, h, coreW } = r;
+    const boosterW = coreW*0.54;
+    const gap = coreW*0.14;
+    const bodyH = h*0.84;
+    const engineH = h*0.08;
+    const capH = h*0.08;
+
+    const towerX = x - coreW*1.78;
+    const towerW = coreW*0.52;
+    const towerY = yTop + h*0.03;
+    const towerH = h*0.90;
+
+    ctx.fillStyle = &quot;rgba(20,28,42,.94)&quot;;
+    roundRect(towerX, towerY, towerW, towerH, 12, true, false);
+    ctx.strokeStyle = &quot;rgba(255,255,255,.10)&quot;;
+    ctx.lineWidth = 2;
+    roundRect(towerX, towerY, towerW, towerH, 12, false, true);
+
+    ctx.strokeStyle = &quot;rgba(159,178,204,.18)&quot;;
+    ctx.lineWidth = 1;
+    for(let i=0;i&lt;16;i++){
+      const yy = towerY + i*(towerH/16);
+      ctx.beginPath(); ctx.moveTo(towerX+10, yy); ctx.lineTo(towerX+towerW-10, yy+20); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(towerX+towerW-10, yy); ctx.lineTo(towerX+10, yy+20); ctx.stroke();
+    }
+
+    ctx.fillStyle = &quot;rgba(35,48,70,.92)&quot;;
+    for(const tf of [0.28, 0.52, 0.70]){
+      const py = towerY + towerH*tf;
+      roundRect(towerX + towerW*0.10, py, towerW*0.80, coreW*0.08, 10, true, false);
+    }
+
+    const armY = yTop + h*0.22;
+    const armLen = coreW*1.10;
+    ctx.fillStyle = &quot;rgba(32,44,64,.94)&quot;;
+    roundRect(towerX + towerW - 10, armY, armLen, coreW*0.20, 10, true, false);
+
+    ctx.fillStyle = &quot;rgba(0,0,0,.34)&quot;;
+    ctx.beginPath(); ctx.ellipse(x, yTop + h*0.92, coreW*1.25, coreW*0.34, 0, 0, Math.PI*2); ctx.fill();
+
+    const boosterH = bodyH*0.97;
+    const leftB = x - (coreW/2 + gap + boosterW/2);
+    const rightB = x + (coreW/2 + gap + boosterW/2);
+    drawBooster(leftB, yTop + capH*0.8, boosterW, boosterH);
+    drawBooster(rightB, yTop + capH*0.8, boosterW, boosterH);
+    drawSRBNose(leftB, yTop + capH*0.80, boosterW, capH*0.90);
+    drawSRBNose(rightB, yTop + capH*0.80, boosterW, capH*0.90);
+    drawTowerMicrolights(towerX, towerY, towerW, towerH, armY, armLen, coreW, t);
+
+    const coreX = x - coreW/2;
+    const coreY = yTop + capH*0.6;
+    const coreH = bodyH;
+
+    const coreGrad = ctx.createLinearGradient(coreX,0,coreX+coreW,0);
+    coreGrad.addColorStop(0, &quot;rgba(255,255,255,.96)&quot;);
+    coreGrad.addColorStop(0.30,&quot;rgba(240,248,255,.88)&quot;);
+    coreGrad.addColorStop(0.62,&quot;rgba(215,230,246,.82)&quot;);
+    coreGrad.addColorStop(1, &quot;rgba(175,195,220,.78)&quot;);
+    ctx.fillStyle = coreGrad;
+    roundRect(coreX, coreY, coreW, coreH, coreW*0.18, true, false);
+
+    const orange = ctx.createLinearGradient(coreX,0,coreX+coreW,0);
+    orange.addColorStop(0, &quot;rgba(255,155,70,.44)&quot;);
+    orange.addColorStop(0.5, &quot;rgba(255,140,60,.58)&quot;);
+    orange.addColorStop(1, &quot;rgba(210,115,45,.42)&quot;);
+    ctx.fillStyle = orange;
+    roundRect(coreX, coreY + coreH*0.37, coreW, coreH*0.20, coreW*0.12, true, false);
+
+    drawEngines(x, coreY + coreH, coreW, engineH);
+    drawCoreDetails(coreX, coreY, coreW, coreH, t);
+    drawOrion(x, yTop, coreW, capH, h);
+    drawOrionDetails(x, yTop, coreW, capH, h, t);
+  }
+
+  function drawHangar(t=0){
+    if(!W || !H) return;
+
+    const atPad = (state.phase === &quot;pad&quot;);
+    const shiftX = atPad ? (W*0.30) : 0; // pad statico: posizione finale senza animazione
+
+    ctx.clearRect(0,0,W,H);
+
+    const grd = ctx.createLinearGradient(0,0,0,H);
+    grd.addColorStop(0, &quot;rgba(18,30,52,0.98)&quot;);
+    grd.addColorStop(0.50, &quot;rgba(9,12,18,0.90)&quot;);
+    grd.addColorStop(1, &quot;rgba(5,6,9,0.98)&quot;);
+    ctx.fillStyle = grd;
+    ctx.fillRect(0,0,W,H);
+
+    const floorY = H*0.80;
+
+    ctx.fillStyle = &quot;rgba(0,0,0,.18)&quot;;
+    for(let i=0;i&lt;6;i++){
+      const bx = (i+0.15)*W/6;
+      const bw = W/7;
+      const by = 44 + (i%2)*16;
+      const bh = floorY - by - 26;
+      roundRect(bx, by, bw, bh, 14, true, false);
+    }
+
+    ctx.fillStyle = &quot;rgba(255,255,255,.05)&quot;;
+    roundRect(W*0.08, H*0.12, W*0.84, 14, 8, true, false);
+    ctx.fillStyle = &quot;rgba(0,0,0,.18)&quot;;
+    roundRect(W*0.08, H*0.12+10, W*0.84, 4, 4, true, false);
+
+    const panelW = Math.max(22, Math.min(48, W/18));
+    for(let xx=10; xx&lt;W-10; xx+=panelW){
+      ctx.fillStyle = &quot;rgba(255,255,255,.035)&quot;;
+      ctx.fillRect(xx, 14, panelW-2, H*0.70);
+      ctx.fillStyle = &quot;rgba(0,0,0,.10)&quot;;
+      ctx.fillRect(xx+panelW-4, 14, 2, H*0.70);
+    }
+
+    for(let i=0;i&lt;7;i++){
+      const lx = (i+0.5)*W/7;
+      const g = ctx.createRadialGradient(lx, H*0.10, 0, lx, H*0.10, W*0.20);
+      g.addColorStop(0, &quot;rgba(120,180,255,.22)&quot;);
+      g.addColorStop(0.55, &quot;rgba(85,166,255,.07)&quot;);
+      g.addColorStop(1, &quot;rgba(0,0,0,0)&quot;);
+      ctx.fillStyle = g;
+      ctx.fillRect(0,0,W,H*0.55);
+
+      const blink = 0.35 + 0.65*Math.abs(Math.sin((t*0.002) + i*0.9));
+      ctx.fillStyle = `rgba(130,255,138,${0.10*blink})`;
+      ctx.beginPath(); ctx.arc(lx, H*0.14, 10, 0, Math.PI*2); ctx.fill();
+    }
+
+    const fg = ctx.createLinearGradient(0,floorY,0,H);
+    fg.addColorStop(0, &quot;rgba(22,28,36,.95)&quot;);
+    fg.addColorStop(1, &quot;rgba(0,0,0,.98)&quot;);
+    ctx.fillStyle = fg;
+    ctx.fillRect(0,floorY,W,H-floorY);
+
+    ctx.strokeStyle = &quot;rgba(159,178,204,.10)&quot;;
+    ctx.lineWidth = 1;
+    const step = Math.max(22, Math.min(44, W/18));
+    for(let xx=0; xx&lt;=W; xx+=step){ ctx.beginPath(); ctx.moveTo(xx, floorY); ctx.lineTo(xx, H); ctx.stroke(); }
+    for(let yy=floorY; yy&lt;=H; yy+=step){ ctx.beginPath(); ctx.moveTo(0, yy); ctx.lineTo(W, yy); ctx.stroke(); }
+
+    ctx.strokeStyle = &quot;rgba(255,255,255,.08)&quot;;
+    ctx.lineWidth = 2;
+    ctx.strokeRect(12,12,W-24,H-24);
+
+    const rocket = computeRocketLayout();
+    ctx.save();
+    ctx.translate(shiftX, 0);
+    drawSLS(rocket, t);
+    ctx.restore();
+
+    if(atPad) drawLaunchPad(t);
+
+    const vg = ctx.createRadialGradient(W*0.5,H*0.45, W*0.15, W*0.5,H*0.45, W*0.82);
+    vg.addColorStop(0, &quot;rgba(0,0,0,0)&quot;);
+    vg.addColorStop(1, &quot;rgba(0,0,0,.62)&quot;);
+    ctx.fillStyle = vg;
+    ctx.fillRect(0,0,W,H);
+  }
+
+  // ---------- Tests ----------
+  function runTests(){
+    console.assert(instruments.length === 7, &quot;TEST: instruments should be 7 total&quot;);
+    console.assert(instruments.filter(i=&gt;i.correct).length === 5, &quot;TEST: instruments correct should be 5&quot;);
+    console.assert(INSTR_SLOTS === REQ_INSTR, &quot;TEST: INSTR_SLOTS should match REQ_INSTR&quot;);
+
+    state.phase = &quot;crew&quot;;
+    state.crewSlots = [
+      astronauts.find(a=&gt;a.id===&quot;wiseman&quot;),
+      astronauts.find(a=&gt;a.id===&quot;glover&quot;),
+      astronauts.find(a=&gt;a.id===&quot;koch&quot;),
+      astronauts.find(a=&gt;a.id===&quot;hansen&quot;),
+    ];
+    console.assert(isCorrectCrewSelection() === true, &quot;TEST: crew should be correct&quot;);
+
+    state.crewSlots = [
+      astronauts.find(a=&gt;a.id===&quot;wiseman&quot;),
+      astronauts.find(a=&gt;a.id===&quot;glover&quot;),
+      astronauts.find(a=&gt;a.id===&quot;koch&quot;),
+      astronauts.find(a=&gt;a.id===&quot;mann&quot;),
+    ];
+    console.assert(isCorrectCrewSelection() === false, &quot;TEST: crew should be wrong&quot;);
+
+    state.phase = &quot;instruments&quot;;
+    state.instrSlots = Array(INSTR_SLOTS).fill(null);
+    const correct5 = instruments.filter(i=&gt;i.correct).slice(0, REQ_INSTR);
+    for(let i=0;i&lt;REQ_INSTR;i++) state.instrSlots[i] = correct5[i];
+    console.assert(isCorrectInstrumentSelection() === true, &quot;TEST: payload should be correct&quot;);
+
+    state.instrSlots = Array(INSTR_SLOTS).fill(null);
+    const wrong = instruments
+      .filter(i=&gt;i.correct)
+      .slice(0, REQ_INSTR-1)
+      .concat(instruments.find(i=&gt;i.id===&quot;radmon&quot;));
+    for(let i=0;i&lt;REQ_INSTR;i++) state.instrSlots[i] = wrong[i];
+    console.assert(isCorrectInstrumentSelection() === false, &quot;TEST: payload should be wrong&quot;);
+
+    state.phase = &quot;intro&quot;;
+    state.crewSlots = Array(CREW_SLOTS).fill(null);
+    state.instrSlots = Array(INSTR_SLOTS).fill(null);
+  }
+
+  // ---------- Wire up UI ----------
+  toastClose.addEventListener(&quot;click&quot;, () =&gt; toast.classList.remove(&quot;show&quot;));
+  resetBtn.addEventListener(&quot;click&quot;, () =&gt; resetRun());
+  startIntro.addEventListener(&quot;click&quot;, () =&gt; { closeIntro(); resetRun(); });
+  introScrim.addEventListener(&quot;click&quot;, () =&gt; { /* locked */ });
+
+  goLaunchBtn?.addEventListener(&quot;click&quot;, ()=&gt;{
+    completeScrim.classList.remove(&quot;show&quot;);
+
+    // Segnalo che la missione 2 è completata
+    window.dispatchEvent(new CustomEvent(&#x27;mission2:complete&#x27;));
+
+    // Chiedo al gioco principale di aprire la missione 3
+    window.dispatchEvent(new CustomEvent(&#x27;nav:to&#x27;, {
+      detail: { scene: &#x27;mission3&#x27; }
+    }));
+  });
+
+  function init(){
+    openIntro();
+    resizeCanvas();
+    resetRun();
+
+    try{ runTests(); } catch(e){ console.warn(&quot;Tests failed:&quot;, e); }
+
+    const loop = (ts) =&gt; {
+      state.time = ts;
+      drawHangar(ts);
+      renderSlots();
+      state.raf = requestAnimationFrame(loop);
+    };
+    state.raf = requestAnimationFrame(loop);
+
+    window.addEventListener(&quot;resize&quot;, () =&gt; {
+      DPR = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+      resizeCanvas();
+    });
+  }
+
+  init();
+})();
+&lt;/script&gt;
+
+&lt;script&gt;
+(() =&gt; {
+  const EVENTS = [&#x27;nav:to&#x27;, &#x27;intro:done&#x27;, &#x27;mission2:complete&#x27;, &#x27;mission3:complete&#x27;, &#x27;mission4:complete&#x27;, &#x27;mission:start&#x27;];
+  for (const name of EVENTS) {
+    window.addEventListener(name, (e) =&gt; {
+      try {
+        parent.postMessage({ type: name, detail: e.detail || null }, &quot;*&quot;);
+      } catch (err) {}
+    });
+  }
+})();
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe>
+    </div>
+    <div class="scene" id="scene-mission3">
+      <iframe id="frame-mission3" sandbox="allow-scripts allow-pointer-lock allow-same-origin" srcdoc="" data-srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;it&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot; /&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no&quot; /&gt;
+  &lt;title&gt;Artemis GO / NO-GO - Launch Authority (Mobile)&lt;/title&gt;
+  &lt;style&gt;
+    :root{
+      --bg:#07101f;
+      --panel:#0d182e;
+      --text:#e9eef7;
+      --muted:#a9b6cc;
+      --line:rgba(255,255,255,.10);
+      --btnRed:#d62f2f;
+      --btnGreen:#1fa957;
+      --btnText:#ffffff;
+      --shadow: rgba(0,0,0,.35);
+    }
+    html,body{height:100%;margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;}
+    #wrap{height:100%;display:flex;flex-direction:column;align-items:stretch;}
+    canvas{width:100%;height:100%;display:block;background:linear-gradient(#061022,#07101f 55%, #050b16);}
+
+    .hud{position:fixed; inset:0; pointer-events:none;display:flex; flex-direction:column;}
+    .topBar{pointer-events:none;padding:10px 12px 0 12px;display:flex; align-items:flex-start; justify-content:space-between;gap:10px;}
+    .pill{pointer-events:none;background:rgba(13,24,46,.72);border:1px solid var(--line);box-shadow:0 10px 30px var(--shadow);border-radius:999px;padding:8px 12px;font-size:12px;color:var(--muted);letter-spacing:.2px;backdrop-filter: blur(6px);-webkit-backdrop-filter: blur(6px);white-space:nowrap;}
+    .pill strong{color:var(--text); font-weight:650;}
+
+    .centerStack{flex:1;display:flex; flex-direction:column;justify-content:flex-end;padding:0 12px 14px 12px;gap:10px;}
+    .comm{pointer-events:none;background:rgba(13,24,46,.86);border:1px solid var(--line);border-radius:16px;box-shadow:0 14px 40px var(--shadow);padding:12px 12px 10px 12px;backdrop-filter: blur(8px);-webkit-backdrop-filter: blur(8px);}
+    .commHeader{display:flex; align-items:center; justify-content:space-between;font-size:12px;letter-spacing:.6px;color:var(--muted);text-transform:uppercase;margin-bottom:6px;}
+    .commBody{font-size:15px;line-height:1.25;color:var(--text);min-height:52px;display:flex;align-items:flex-start;white-space:pre-line;}
+
+    .timerBig{pointer-events:none;font-variant-numeric:tabular-nums;display:flex; justify-content:center; align-items:center;margin:0 auto;width:72px; height:72px;border-radius:18px;border:1px solid var(--line);background:rgba(10,19,38,.78);box-shadow:0 10px 30px var(--shadow);font-size:36px;font-weight:750;color:var(--text);}
+
+    .btnRow{pointer-events:auto;display:flex;gap:10px;}
+    button{flex:1;border:0;border-radius:16px;padding:14px 12px;font-size:18px;font-weight:800;letter-spacing:.2px;color:var(--btnText);box-shadow:0 14px 30px var(--shadow);transform:translateZ(0);touch-action:manipulation;}
+    #btnHold{ background:linear-gradient(#e13a3a, var(--btnRed)); }
+    #btnGo{ background:linear-gradient(#27be66, var(--btnGreen)); }
+    button:active{ transform: translateY(1px); filter:brightness(.98); }
+
+    .overlay{position:fixed; inset:0;display:none;background:rgba(2,6,12,.72);backdrop-filter: blur(6px);-webkit-backdrop-filter: blur(6px);color:var(--text);align-items:center;justify-content:center;padding:18px;text-align:center;z-index:10;}
+    .card{width:min(520px, 100%);background:rgba(13,24,46,.92);border:1px solid var(--line);border-radius:18px;box-shadow:0 18px 60px var(--shadow);padding:16px 14px;}
+    .title{font-size:18px;font-weight:850;margin:0 0 8px 0;letter-spacing:.2px;}
+    .sub{font-size:14px;color:var(--muted);line-height:1.35;margin:0 0 12px 0;white-space:pre-line;}
+    .small{font-size:12px;color:var(--muted);margin:12px 0 0 0;}
+    .card .btnRow{ margin-top:12px; }
+    #btnRestart{ background:linear-gradient(#2a77ff,#1d55c8); }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div id=&quot;wrap&quot;&gt;
+    &lt;canvas id=&quot;c&quot;&gt;&lt;/canvas&gt;
+
+    &lt;div class=&quot;hud&quot; aria-hidden=&quot;true&quot;&gt;
+      &lt;div class=&quot;topBar&quot;&gt;
+        &lt;div class=&quot;pill&quot;&gt;&lt;strong&gt;ARTEMIS&lt;/strong&gt; GO / NO-GO&lt;/div&gt;
+        &lt;div class=&quot;pill&quot;&gt;Hold inutili: &lt;strong id=&quot;holdCount&quot;&gt;0&lt;/strong&gt;/2&lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class=&quot;centerStack&quot;&gt;
+        &lt;div class=&quot;timerBig&quot; id=&quot;decisionTimer&quot;&gt;5&lt;/div&gt;
+
+        &lt;div class=&quot;comm&quot;&gt;
+          &lt;div class=&quot;commHeader&quot;&gt;
+            &lt;span&gt;HOUSTON&lt;/span&gt;
+            &lt;span id=&quot;phaseLabel&quot;&gt;COMUNICAZIONI&lt;/span&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;commBody&quot; id=&quot;commText&quot;&gt;Tocca &quot;IGNORA&quot; o &quot;BLOCCA&quot; entro 5 secondi.&lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;btnRow&quot;&gt;
+          &lt;button id=&quot;btnHold&quot;&gt;BLOCCA&lt;/button&gt;
+          &lt;button id=&quot;btnGo&quot;&gt;IGNORA&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;overlay&quot; id=&quot;overlay&quot;&gt;
+      &lt;div class=&quot;card&quot;&gt;
+        &lt;p class=&quot;title&quot; id=&quot;ovTitle&quot;&gt;Missione&lt;/p&gt;
+        &lt;p class=&quot;sub&quot; id=&quot;ovBody&quot;&gt;-&lt;/p&gt;
+        &lt;div class=&quot;btnRow&quot;&gt;
+          &lt;button id=&quot;btnRestart&quot;&gt;RIPROVA&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;p class=&quot;small&quot;&gt;Nessun audio. Messaggi senza suggerimenti. Pulsanti: BLOCCA rosso, IGNORA verde.&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;script&gt;
+  (function(){
+    &quot;use strict&quot;;
+
+    // NOTE: teniamo il codice e le stringhe in ASCII per evitare problemi in preview basati su document.write().
+
+    // 5 da BLOCCARE, 5 da IGNORARE (tutti usati ogni run, ordine casuale)
+    var MSG_BLOCK = [
+      { id:&quot;H2_LEAK&quot;,    text:&quot;Propulsione segnala perdita di idrogeno nel booster principale.&quot; },
+      { id:&quot;ORION_P&quot;,    text:&quot;Capsula Orion in perdita di pressione.&quot; },
+      { id:&quot;LIGHTNING&quot;,  text:&quot;Attivita elettrica rilevata entro 10 km dall&#x27;area di lancio.&quot; },
+      { id:&quot;ICE&quot;,        text:&quot;Accumulo di ghiaccio sui serbatoi criogenici.&quot; },
+      { id:&quot;COMMS_LOSS&quot;, text:&quot;Perdita delle telecomunicazioni con la capsula Orion.&quot; }
+    ];
+
+    var MSG_IGNORE = [
+      { id:&quot;TEMP_OSC&quot;,   text:&quot;Oscillazioni termiche del propellente entro limiti operativi.&quot; },
+      { id:&quot;TEL_DELAY&quot;,  text:&quot;Ritardo nella telemetria da stazione secondaria.&quot; },
+      { id:&quot;RAIN&quot;,       text:&quot;Pioggia rilevata sull&#x27;area di lancio.&quot; },
+      { id:&quot;TRUMP&quot;,      text:&quot;Avviso social: Trump propone riduzione del budget NASA durante trasmissione in diretta.&quot; },
+      { id:&quot;BIRDS&quot;,      text:&quot;Presenza di volatili nell&#x27;area di lancio.&quot; }
+    ];
+
+    var INTRO_TITLE = &quot;Missione Artemis - GO / NO-GO&quot;;
+    var INTRO_BODY = &quot;Sei il responsabile del lancio.\n\nRiceverai 10 comunicazioni da Houston.\nPer ogni messaggio devi decidere entro 5 secondi se BLOCCARE o IGNORARE.\n\n- Se blocchi correttamente un problema grave, i tecnici intervengono.\n- Se ignori un problema grave, il razzo esplode.\n- Se blocchi inutilmente 2 volte, perdi la finestra di lancio.&quot;;
+
+    var canvas = document.getElementById(&quot;c&quot;);
+    var ctx = canvas.getContext(&quot;2d&quot;, { alpha:false });
+    var commText = document.getElementById(&quot;commText&quot;);
+    var phaseLabel = document.getElementById(&quot;phaseLabel&quot;);
+    var decisionTimerEl = document.getElementById(&quot;decisionTimer&quot;);
+    var holdCountEl = document.getElementById(&quot;holdCount&quot;);
+    var btnHold = document.getElementById(&quot;btnHold&quot;);
+    var btnGo = document.getElementById(&quot;btnGo&quot;);
+
+    var overlay = document.getElementById(&quot;overlay&quot;);
+    var ovTitle = document.getElementById(&quot;ovTitle&quot;);
+    var ovBody = document.getElementById(&quot;ovBody&quot;);
+    var btnRestart = document.getElementById(&quot;btnRestart&quot;);
+
+    function clamp(v,a,b){ return Math.max(a, Math.min(b, v)); }
+    function lerp(a,b,t){ return a + (b-a)*t; }
+    function rand(a,b){ return a + Math.random()*(b-a); }
+    function shuffle(arr){
+      for (var i=arr.length-1;i&gt;0;i--){
+        var j = (Math.random()*(i+1))|0;
+        var tmp = arr[i]; arr[i]=arr[j]; arr[j]=tmp;
+      }
+      return arr;
+    }
+
+    var MODE = {
+      INTRO:&quot;INTRO&quot;,
+      DECIDE:&quot;DECIDE&quot;,
+      TECHS:&quot;TECHS&quot;,
+      SUCCESS_COUNTDOWN:&quot;SUCCESS_COUNTDOWN&quot;,
+      LAUNCH:&quot;LAUNCH&quot;,
+      EXPLODE_COUNTDOWN:&quot;EXPLODE_COUNTDOWN&quot;,
+      EXPLOSION:&quot;EXPLOSION&quot;,
+      FAIL:&quot;FAIL&quot;
+    };
+
+    var state = {
+      mode: MODE.INTRO,
+      w:0,h:0,dpr:1,
+      t:0,
+      sequence:[],
+      msgIndex:0,
+      currentMsg:null,
+      decisionTimeLeft:5,
+      holdWrongCount:0,
+      successCountdown:5,
+      explodeCountdown:5,
+      steamPuffs:[],
+      particles:[],
+      rocket:{ y:0, vel:0, launched:false },
+      rocketBroken:false,
+      debris:[],
+      flash:0,
+      overlayKind:&quot;intro&quot; // intro | success | fail
+    };
+
+    function fitCanvas(){
+      var dpr = Math.max(1, Math.min(3, window.devicePixelRatio || 1));
+      var w = Math.floor(window.innerWidth * dpr);
+      var h = Math.floor(window.innerHeight * dpr);
+      if (canvas.width !== w || canvas.height !== h){ canvas.width=w; canvas.height=h; }
+      ctx.imageSmoothingEnabled = true;
+      ctx.lineJoin = &quot;round&quot;;
+      ctx.lineCap = &quot;round&quot;;
+      state.dpr = dpr;
+      state.w = w; state.h = h;
+    }
+    window.addEventListener(&quot;resize&quot;, fitCanvas, { passive:true });
+
+    function buildSequence(){
+      var all = MSG_BLOCK.concat(MSG_IGNORE);
+      return shuffle(all.slice());
+    }
+
+    function setMode(m){
+      state.mode = m;
+      if (m === MODE.DECIDE) phaseLabel.textContent = &quot;DECISIONE&quot;;
+      else if (m === MODE.TECHS) phaseLabel.textContent = &quot;HOLD&quot;;
+      else if (m === MODE.SUCCESS_COUNTDOWN) phaseLabel.textContent = &quot;T-5&quot;;
+      else if (m === MODE.EXPLODE_COUNTDOWN) phaseLabel.textContent = &quot;T-5&quot;;
+      else if (m === MODE.LAUNCH) phaseLabel.textContent = &quot;LANCIO&quot;;
+      else if (m === MODE.EXPLOSION) phaseLabel.textContent = &quot;ANOMALIA&quot;;
+      else phaseLabel.textContent = &quot;COMUNICAZIONI&quot;;
+    }
+
+    function showOverlay(kind, title, body){
+      state.overlayKind = kind;
+      ovTitle.textContent = title;
+      ovBody.textContent = body;
+      if (kind === &quot;intro&quot;) btnRestart.textContent = &quot;Inizia Missione&quot;;
+      else if (kind === &quot;success&quot;) btnRestart.textContent = &quot;Continua prossima missione&quot;;
+      else btnRestart.textContent = &quot;RIPROVA&quot;;
+      overlay.style.display = &quot;flex&quot;;
+    }
+
+    function hideOverlay(){
+      overlay.style.display = &quot;none&quot;;
+    }
+
+    function isCritical(msg){
+      for (var i=0;i&lt;MSG_BLOCK.length;i++) if (MSG_BLOCK[i].id === msg.id) return true;
+      return false;
+    }
+
+    function startGame(){
+      hideOverlay();
+      state.t = 0;
+      state.sequence = buildSequence();
+      state.msgIndex = 0;
+      state.currentMsg = state.sequence[state.msgIndex];
+      state.decisionTimeLeft = 5;
+      state.holdWrongCount = 0;
+      holdCountEl.textContent = &quot;0&quot;;
+      state.successCountdown = 5;
+      state.explodeCountdown = 5;
+      state.particles.length = 0;
+      state.steamPuffs.length = 0;
+      state.debris.length = 0;
+      state.flash = 0;
+      state.rocketBroken = false;
+      state.rocket.launched = false;
+      state.rocket.vel = 0;
+      state.rocket.y = 0;
+
+      commText.textContent = &quot;Pronto. Attendi comunicazione da Houston.&quot;;
+      decisionTimerEl.textContent = &quot;5&quot;;
+
+      setMode(MODE.INTRO);
+      state._introWait = 0.7;
+    }
+
+    function nextMessage(){
+      state.msgIndex++;
+      if (state.msgIndex &gt;= state.sequence.length){
+        state.successCountdown = 5;
+        setMode(MODE.SUCCESS_COUNTDOWN);
+        commText.textContent = &quot;HOUSTON:\nSequenza completata. Avvio conto alla rovescia finale.&quot;;
+        state._cdTick = 0;
+        return;
+      }
+      state.currentMsg = state.sequence[state.msgIndex];
+      state.decisionTimeLeft = 5;
+      decisionTimerEl.textContent = &quot;5&quot;;
+      commText.textContent = &quot;HOUSTON:\n&quot; + state.currentMsg.text;
+      setMode(MODE.DECIDE);
+    }
+
+    function onHold(){
+      if (state.mode !== MODE.DECIDE) return;
+      var crit = isCritical(state.currentMsg);
+      if (crit){
+        setMode(MODE.TECHS);
+        commText.textContent = &quot;HOUSTON:\nHold confermato.\nSquadre tecniche al lavoro.&quot;;
+        state._techWait = 2.2;
+      } else {
+        state.holdWrongCount++;
+        holdCountEl.textContent = String(state.holdWrongCount);
+        if (state.holdWrongCount &gt;= 2){
+          setMode(MODE.FAIL);
+          commText.textContent = &quot;HOUSTON:\nFinestra di lancio scaduta.&quot;;
+          state._failWait = 0.7;
+          state._failReason = &quot;Finestra di lancio mancata per hold inutili.&quot;;
+        } else {
+          setMode(MODE.TECHS);
+          commText.textContent = &quot;HOUSTON:\nHold non necessario registrato.&quot;;
+          state._techWait = 1.8;
+        }
+      }
+    }
+
+    function onGo(){
+      if (state.mode !== MODE.DECIDE) return;
+      var crit = isCritical(state.currentMsg);
+      if (crit){
+        setMode(MODE.EXPLODE_COUNTDOWN);
+        state.explodeCountdown = 5;
+        state._cdTick = 0;
+        commText.textContent = &quot;HOUSTON:\nComando ricevuto. Proseguo.&quot;;
+      } else {
+        nextMessage();
+      }
+    }
+
+    // Overlay button behavior: start or restart.
+    btnRestart.addEventListener(&quot;click&quot;, function(){
+      // Se è overlay di successo → vai alla Missione 4
+      if (state.overlayKind === &quot;success&quot;) {
+        window.dispatchEvent(new CustomEvent(&#x27;mission3:complete&#x27;));
+        window.dispatchEvent(new CustomEvent(&#x27;nav:to&#x27;, { detail: { scene: &#x27;mission4&#x27; } }));
+        return;
+      }
+      // Se è intro o fail → restart normale
+      startGame();
+    }, { passive:true });
+
+    btnHold.addEventListener(&quot;click&quot;, onHold, { passive:true });
+    btnGo.addEventListener(&quot;click&quot;, onGo, { passive:true });
+
+    // DRAW HELPERS
+    function roundRect(x,y,w,h,r){
+      r = Math.min(r, w/2, h/2);
+      ctx.beginPath();
+      ctx.moveTo(x+r,y);
+      ctx.arcTo(x+w,y,x+w,y+h,r);
+      ctx.arcTo(x+w,y+h,x,y+h,r);
+      ctx.arcTo(x,y+h,x,y,r);
+      ctx.arcTo(x,y,x+w,y,r);
+      ctx.closePath();
+    }
+
+    function drawSky(w,h){
+      ctx.fillStyle = &quot;#07101f&quot;;
+      ctx.fillRect(0,0,w,h);
+      var g = ctx.createLinearGradient(0,0,0,h);
+      g.addColorStop(0, &quot;rgba(255,255,255,0.03)&quot;);
+      g.addColorStop(0.55, &quot;rgba(255,255,255,0.00)&quot;);
+      g.addColorStop(1, &quot;rgba(0,0,0,0.25)&quot;);
+      ctx.fillStyle = g;
+      ctx.fillRect(0,0,w,h);
+
+      var starCount = Math.floor((w*h)/(700*700));
+      ctx.save();
+      ctx.globalAlpha = 0.65;
+      for (var i=0;i&lt;starCount;i++){
+        var x = (Math.sin(i*999 + 1.23)*0.5 + 0.5) * w;
+        var y = (Math.sin(i*777 + 9.87)*0.5 + 0.5) * (h*0.65);
+        var r = 0.8 + (i%3)*0.5;
+        ctx.fillStyle = (i%7===0) ? &quot;rgba(255,245,230,0.8)&quot; : &quot;rgba(210,225,255,0.7)&quot;;
+        ctx.beginPath();
+        ctx.arc(x,y,r,0,Math.PI*2);
+        ctx.fill();
+      }
+      ctx.restore();
+
+      ctx.save();
+      ctx.globalAlpha = 0.18;
+      ctx.fillStyle = &quot;rgba(200,220,255,0.25)&quot;;
+      ctx.fillRect(0, h*0.62, w, h*0.02);
+      ctx.restore();
+    }
+
+    function drawGround(w,h){
+      var gy = h*0.78;
+      ctx.fillStyle = &quot;#050b16&quot;;
+      ctx.fillRect(0,gy,w,h-gy);
+
+      var padW = w*0.72;
+      var padH = h*0.11;
+      var padX = (w-padW)/2;
+      var padY = gy - padH*0.35;
+
+      ctx.save();
+      ctx.fillStyle = &quot;rgba(10,19,38,0.95)&quot;;
+      roundRect(padX,padY,padW,padH,18);
+      ctx.fill();
+
+      ctx.strokeStyle = &quot;rgba(255,255,255,0.08)&quot;;
+      ctx.lineWidth = Math.max(2, w*0.002);
+      roundRect(padX,padY,padW,padH,18);
+      ctx.stroke();
+
+      ctx.strokeStyle = &quot;rgba(255,255,255,0.05)&quot;;
+      ctx.lineWidth = Math.max(1, w*0.0015);
+      for (var i=1;i&lt;=6;i++){
+        var xx = lerp(padX+padW*0.06, padX+padW*0.94, i/7);
+        ctx.beginPath();
+        ctx.moveTo(xx, padY+padH*0.18);
+        ctx.lineTo(xx, padY+padH*0.82);
+        ctx.stroke();
+      }
+      ctx.restore();
+
+      return { padX:padX, padY:padY, padW:padW, padH:padH, gy:gy };
+    }
+
+    function drawTower(w,h,pad){
+      var baseY = pad.padY + pad.padH*0.05;
+      var towerH = h*0.55;
+      var towerW = w*0.09;
+      var x = pad.padX + pad.padW*0.72;
+      var y = baseY - towerH*0.92;
+
+      ctx.save();
+      ctx.fillStyle = &quot;rgba(255,255,255,0.06)&quot;;
+      roundRect(x,y,towerW,towerH,14);
+      ctx.fill();
+
+      ctx.strokeStyle = &quot;rgba(255,255,255,0.10)&quot;;
+      ctx.lineWidth = Math.max(2, w*0.0018);
+      for (var i=0;i&lt;9;i++){
+        var yy = lerp(y+towerH*0.08, y+towerH*0.92, i/8);
+        ctx.beginPath();
+        ctx.moveTo(x+towerW*0.12, yy);
+        ctx.lineTo(x+towerW*0.88, yy);
+        ctx.stroke();
+      }
+
+      ctx.fillStyle = &quot;rgba(255,255,255,0.08)&quot;;
+      roundRect(x - towerW*1.2, y + towerH*0.35, towerW*1.35, towerH*0.09, 14);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function drawSLS(w,h,pad){
+      var centerX = w*0.5;
+      var baseY = pad.padY + pad.padH*0.1 + state.rocket.y;
+
+      var rocketH = h*0.62;
+      var coreW = w*0.072;
+      var srbW  = w*0.040;
+      var gap   = w*0.014;
+
+      var srbH = rocketH*0.86;
+      var srbTop = baseY - srbH;
+      var leftX = centerX - coreW*0.5 - gap - srbW;
+      var rightX= centerX + coreW*0.5 + gap;
+
+      drawSRB(leftX, srbTop, srbW, srbH);
+      drawSRB(rightX, srbTop, srbW, srbH);
+
+      var coreH = rocketH*0.88;
+      var coreTop = baseY - coreH;
+      drawCore(centerX - coreW/2, coreTop, coreW, coreH);
+
+      var upperH = rocketH*0.10;
+      var upperW = coreW*0.86;
+      drawUpper(centerX - upperW/2, coreTop - upperH*0.85, upperW, upperH*0.85);
+
+      drawOrion(centerX, coreTop - upperH*0.95, rocketH);
+      drawEngines(centerX, baseY, coreW, rocketH);
+      drawPadDetails(centerX, baseY, coreW, pad);
+
+      spawnSteam(centerX - coreW*0.65, coreTop + coreH*0.42, w, h);
+    }
+
+    function drawSRB(x,y,w,h){
+      var r = w*0.45;
+      var bandH = h*0.028;
+      var outline = Math.max(2.0, w*0.032);
+      ctx.save();
+
+      ctx.fillStyle = &quot;#eef2fb&quot;;
+      ctx.strokeStyle = &quot;rgba(0,0,0,0.40)&quot;;
+      ctx.lineWidth = outline;
+      roundRect(x, y + r*0.22, w, h - r*0.22, w*0.42);
+      ctx.fill(); ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(x + w*0.14, y + r*0.38);
+      ctx.quadraticCurveTo(x + w*0.50, y - r*0.62, x + w*0.86, y + r*0.38);
+      ctx.closePath();
+      ctx.fill(); ctx.stroke();
+
+      ctx.fillStyle = &quot;rgba(0,0,0,0.24)&quot;;
+      var bands = [0.22,0.44,0.66,0.84];
+      for (var i=0;i&lt;bands.length;i++){
+        var p = bands[i];
+        var yy = y + (h - r*0.22)*p;
+        roundRect(x + w*0.10, yy, w*0.80, bandH, bandH*0.7);
+        ctx.fill();
+      }
+
+      var nozH = h*0.08;
+      var nozY = y + h - nozH*0.45;
+      ctx.fillStyle = &quot;#5a647a&quot;;
+      ctx.strokeStyle = &quot;rgba(0,0,0,0.42)&quot;;
+      ctx.lineWidth = outline;
+      ctx.beginPath();
+      ctx.moveTo(x + w*0.19, nozY);
+      ctx.quadraticCurveTo(x + w*0.50, nozY + nozH*1.05, x + w*0.81, nozY);
+      ctx.closePath();
+      ctx.fill(); ctx.stroke();
+
+      ctx.globalAlpha = 0.16;
+      ctx.fillStyle = &quot;#ffffff&quot;;
+      roundRect(x + w*0.14, y + r*0.65, w*0.14, h*0.74, w*0.35);
+      ctx.fill();
+
+      ctx.restore();
+    }
+
+    function drawCore(x,y,w,h){
+      var outline = Math.max(2.0, w*0.030);
+      ctx.save();
+      ctx.fillStyle = &quot;#d07a2a&quot;;
+      ctx.strokeStyle = &quot;rgba(0,0,0,0.38)&quot;;
+      ctx.lineWidth = outline;
+      roundRect(x,y,w,h,w*0.22);
+      ctx.fill(); ctx.stroke();
+
+      var g = ctx.createLinearGradient(x,0,x+w,0);
+      g.addColorStop(0, &quot;rgba(0,0,0,0.22)&quot;);
+      g.addColorStop(0.35, &quot;rgba(0,0,0,0.00)&quot;);
+      g.addColorStop(1, &quot;rgba(0,0,0,0.18)&quot;);
+      ctx.fillStyle = g;
+      roundRect(x,y,w,h,w*0.22);
+      ctx.fill();
+
+      ctx.fillStyle = &quot;rgba(240,245,255,0.55)&quot;;
+      roundRect(x + w*0.10, y + h*0.03, w*0.80, h*0.06, h*0.03);
+      ctx.fill();
+
+      ctx.fillStyle = &quot;rgba(0,0,0,0.10)&quot;;
+      roundRect(x + w*0.08, y + h*0.42, w*0.84, h*0.06, h*0.03);
+      ctx.fill();
+
+      ctx.strokeStyle = &quot;rgba(255,255,255,0.07)&quot;;
+      ctx.lineWidth = Math.max(1.5, w*0.03);
+      for (var i=1;i&lt;=4;i++){
+        var xx = lerp(x+w*0.18, x+w*0.82, i/5);
+        ctx.beginPath();
+        ctx.moveTo(xx, y + h*0.08);
+        ctx.lineTo(xx, y + h*0.92);
+        ctx.stroke();
+      }
+
+      ctx.globalAlpha = 0.20;
+      ctx.fillStyle = &quot;#ffd7b0&quot;;
+      roundRect(x + w*0.12, y + h*0.06, w*0.18, h*0.88, w*0.35);
+      ctx.fill();
+
+      ctx.restore();
+    }
+
+    function drawUpper(x,y,w,h){
+      var outline = Math.max(2.0, w*0.032);
+      ctx.save();
+      ctx.fillStyle = &quot;#bfc7d8&quot;;
+      ctx.strokeStyle = &quot;rgba(0,0,0,0.38)&quot;;
+      ctx.lineWidth = outline;
+      roundRect(x,y,w,h,w*0.38);
+      ctx.fill(); ctx.stroke();
+      ctx.fillStyle = &quot;rgba(0,0,0,0.12)&quot;;
+      roundRect(x + w*0.08, y + h*0.18, w*0.84, h*0.20, h*0.2);
+      ctx.fill();
+      ctx.globalAlpha = 0.18;
+      ctx.fillStyle = &quot;#ffffff&quot;;
+      roundRect(x + w*0.12, y + h*0.10, w*0.16, h*0.80, w*0.38);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function drawOrion(cx,yTop,rocketH){
+      ctx.save();
+      var smH = rocketH*0.06;
+      var smW = rocketH*0.055;
+      var cmH = rocketH*0.07;
+      var cmW = smW*0.92;
+      var lasH = rocketH*0.09;
+      var lasW = cmW*0.38;
+
+      var smY = yTop - smH*0.1;
+      var cmY = smY - cmH*0.92;
+      var lasY= cmY - lasH*0.92;
+
+      var outline = Math.max(2.0, rocketH*0.008);
+      ctx.strokeStyle = &quot;rgba(0,0,0,0.38)&quot;;
+      ctx.lineWidth = outline;
+
+      ctx.fillStyle = &quot;#808aa1&quot;;
+      roundRect(cx - smW/2, smY, smW, smH, smW*0.25);
+      ctx.fill(); ctx.stroke();
+
+      ctx.fillStyle = &quot;#d9dde7&quot;;
+      ctx.beginPath();
+      ctx.moveTo(cx - cmW*0.52, cmY + cmH*0.78);
+      ctx.quadraticCurveTo(cx, cmY - cmH*0.45, cx + cmW*0.52, cmY + cmH*0.78);
+      ctx.closePath();
+      ctx.fill(); ctx.stroke();
+
+      ctx.fillStyle = &quot;rgba(0,0,0,0.22)&quot;;
+      roundRect(cx - cmW*0.55, cmY + cmH*0.68, cmW*1.10, cmH*0.16, cmH*0.10);
+      ctx.fill();
+
+      ctx.fillStyle = &quot;#f0f3fa&quot;;
+      roundRect(cx - lasW/2, lasY, lasW, lasH, lasW*0.35);
+      ctx.fill(); ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(cx - lasW*0.42, lasY + lasH*0.20);
+      ctx.quadraticCurveTo(cx, lasY - lasH*0.45, cx + lasW*0.42, lasY + lasH*0.20);
+      ctx.closePath();
+      ctx.fill(); ctx.stroke();
+
+      ctx.restore();
+    }
+
+    function drawEngines(cx,baseY,coreW,rocketH){
+      ctx.save();
+      var bellW = coreW*0.20;
+      var bellH = rocketH*0.05;
+      var y = baseY - bellH*0.15;
+      var offsets = [-0.22,0.00,0.22,-0.11];
+      var outline = Math.max(2.0, coreW*0.045);
+
+      for (var i=0;i&lt;4;i++){
+        var x = cx + offsets[i]*coreW;
+        ctx.fillStyle = &quot;#4f5769&quot;;
+        ctx.strokeStyle = &quot;rgba(0,0,0,0.38)&quot;;
+        ctx.lineWidth = outline;
+        ctx.beginPath();
+        ctx.moveTo(x - bellW*0.55, y - bellH*0.15);
+        ctx.quadraticCurveTo(x, y + bellH*0.85, x + bellW*0.55, y - bellH*0.15);
+        ctx.closePath();
+        ctx.fill(); ctx.stroke();
+        ctx.fillStyle = &quot;rgba(255,255,255,0.08)&quot;;
+        ctx.beginPath();
+        ctx.arc(x - bellW*0.15, y + bellH*0.25, bellW*0.18, 0, Math.PI*2);
+        ctx.fill();
+      }
+      ctx.restore();
+    }
+
+    function drawPadDetails(cx,baseY,coreW,pad){
+      ctx.save();
+      ctx.fillStyle = &quot;rgba(255,255,255,0.10)&quot;;
+      ctx.strokeStyle = &quot;rgba(0,0,0,0.35)&quot;;
+      ctx.lineWidth = Math.max(2, coreW*0.06);
+      for (var k=0;k&lt;2;k++){
+        var s = (k===0) ? -1 : 1;
+        var x = cx + s*(coreW*0.85);
+        var yy = baseY - pad.padH*0.02;
+        roundRect(x - coreW*0.22, yy, coreW*0.44, pad.padH*0.12, 10);
+        ctx.fill(); ctx.stroke();
+      }
+      ctx.globalAlpha = 0.22;
+      ctx.fillStyle = &quot;#000&quot;;
+      roundRect(cx - pad.padW*0.16, baseY + pad.padH*0.02, pad.padW*0.32, pad.padH*0.20, 14);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    // STEAM
+    function spawnSteam(x,y,w,h){
+      if (Math.random() &lt; 0.18){
+        state.steamPuffs.push({
+          x:x, y:y,
+          vx: rand(-0.08,0.08) * w*0.002,
+          vy: rand(-0.35,-0.18) * h*0.002,
+          r: rand(10,26) * state.dpr,
+          a: rand(0.08,0.16),
+          life: rand(0.9,1.5)
+        });
+      }
+    }
+
+    function updateSteam(dt){
+      for (var i=state.steamPuffs.length-1;i&gt;=0;i--){
+        var p = state.steamPuffs[i];
+        p.life -= dt;
+        p.x += p.vx * dt * 60;
+        p.y += p.vy * dt * 60;
+        p.r *= (1 + dt*0.35);
+        p.a *= (1 - dt*0.55);
+        if (p.life &lt;= 0 || p.a &lt; 0.01) state.steamPuffs.splice(i,1);
+      }
+    }
+
+    function drawSteam(){
+      ctx.save();
+      for (var i=0;i&lt;state.steamPuffs.length;i++){
+        var p = state.steamPuffs[i];
+        ctx.globalAlpha = p.a;
+        ctx.fillStyle = &quot;rgba(230,240,255,1)&quot;;
+        ctx.beginPath();
+        ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        ctx.fill();
+      }
+      ctx.restore();
+    }
+
+    // PARTICLES + EXPLOSION + DEBRIS
+    function spawnExplosion(x,y,power){
+      var count = Math.floor(160 + power*0.22);
+      for (var i=0;i&lt;count;i++){
+        var a = rand(0, Math.PI*2);
+        var sp = rand(0.7,1.9) * power * 0.012;
+        state.particles.push({
+          x:x, y:y,
+          vx: Math.cos(a)*sp,
+          vy: Math.sin(a)*sp - rand(0.3,1.1),
+          r: rand(2,8) * state.dpr,
+          life: rand(0.7,1.5),
+          kind: (Math.random()&lt;0.68) ? &quot;fire&quot; : &quot;smoke&quot;
+        });
+      }
+    }
+
+    function makeDebris(){
+      state.debris.length = 0;
+      state.rocketBroken = true;
+
+      var w = state.w, h = state.h;
+      var gy = h*0.78;
+      var padH = h*0.11;
+      var padY = gy - padH*0.35;
+      var centerX = w*0.5;
+      var baseY = padY + padH*0.1 + state.rocket.y;
+
+      var rocketH = h*0.62;
+      var coreW = w*0.072;
+      var srbW  = w*0.040;
+      var gap   = w*0.014;
+      var srbH = rocketH*0.86;
+      var coreH = rocketH*0.88;
+
+      function pushPiece(kind, x, y, pw, ph, vx, vy, vr){
+        state.debris.push({ kind:kind, x:x, y:y, pw:pw, ph:ph, vx:vx, vy:vy, r: rand(-0.7,0.7), vr:vr, life:2.6 });
+      }
+
+      pushPiece(&quot;core&quot;, centerX - coreW*0.10, baseY - coreH*0.70, coreW*0.75, coreH*0.22, -0.6, -1.5, -0.05);
+      pushPiece(&quot;core&quot;, centerX + coreW*0.08, baseY - coreH*0.44, coreW*0.55, coreH*0.30,  0.9, -1.7,  0.07);
+      pushPiece(&quot;core&quot;, centerX - coreW*0.02, baseY - coreH*0.18, coreW*0.90, coreH*0.18, -0.1, -1.0,  0.06);
+
+      var leftX = centerX - coreW*0.5 - gap - srbW;
+      var rightX= centerX + coreW*0.5 + gap;
+      pushPiece(&quot;srb&quot;, leftX + srbW*0.40, baseY - srbH*0.55, srbW*0.95, srbH*0.38, -1.5, -1.2, -0.10);
+      pushPiece(&quot;srb&quot;, rightX+ srbW*0.55, baseY - srbH*0.52, srbW*0.95, srbH*0.40,  1.6, -1.25, 0.11);
+
+      state.flash = 1.0;
+      spawnExplosion(centerX, baseY - rocketH*0.55, Math.min(w,h)*2.4);
+    }
+
+    function updateDebris(dt){
+      if (!state.rocketBroken) return;
+      var g = 0.030;
+      for (var i=state.debris.length-1;i&gt;=0;i--){
+        var d = state.debris[i];
+        d.life -= dt;
+        d.vy += g * dt * 60;
+        d.x += d.vx * dt * 60;
+        d.y += d.vy * dt * 60;
+        d.r += d.vr * dt * 60;
+        if (d.life &lt;= 0) state.debris.splice(i,1);
+      }
+      state.flash = Math.max(0, state.flash - dt*1.8);
+    }
+
+    function drawDebris(){
+      if (!state.rocketBroken) return;
+      ctx.save();
+      for (var i=0;i&lt;state.debris.length;i++){
+        var d = state.debris[i];
+        var alpha = clamp(d.life/2.6, 0, 1);
+        ctx.globalAlpha = 0.95*alpha;
+        ctx.translate(d.x, d.y);
+        ctx.rotate(d.r);
+
+        if (d.kind === &quot;core&quot;){
+          ctx.fillStyle = &quot;#cf7a2a&quot;;
+          ctx.strokeStyle = &quot;rgba(0,0,0,0.48)&quot;;
+          ctx.lineWidth = Math.max(2, d.pw*0.06);
+          roundRect(-d.pw/2, -d.ph/2, d.pw, d.ph, Math.min(d.pw,d.ph)*0.18);
+          ctx.fill(); ctx.stroke();
+          ctx.globalAlpha *= 0.55;
+          ctx.fillStyle = &quot;rgba(0,0,0,0.16)&quot;;
+          roundRect(-d.pw*0.40, -d.ph*0.10, d.pw*0.80, d.ph*0.20, d.ph*0.10);
+          ctx.fill();
+        } else {
+          ctx.fillStyle = &quot;#eef2fb&quot;;
+          ctx.strokeStyle = &quot;rgba(0,0,0,0.48)&quot;;
+          ctx.lineWidth = Math.max(2, d.pw*0.06);
+          roundRect(-d.pw/2, -d.ph/2, d.pw, d.ph, Math.min(d.pw,d.ph)*0.30);
+          ctx.fill(); ctx.stroke();
+          ctx.globalAlpha *= 0.60;
+          ctx.fillStyle = &quot;rgba(0,0,0,0.20)&quot;;
+          roundRect(-d.pw*0.42, -d.ph*0.10, d.pw*0.84, d.ph*0.20, d.ph*0.10);
+          ctx.fill();
+        }
+
+        ctx.setTransform(1,0,0,1,0,0);
+      }
+      ctx.restore();
+
+      if (state.flash &gt; 0){
+        ctx.save();
+        ctx.globalAlpha = 0.65 * state.flash;
+        ctx.fillStyle = &quot;rgba(255,255,255,1)&quot;;
+        ctx.fillRect(0,0,state.w,state.h);
+        ctx.restore();
+      }
+    }
+
+    function updateParticles(dt){
+      for (var i=state.particles.length-1;i&gt;=0;i--){
+        var p = state.particles[i];
+        p.life -= dt;
+        p.vy += 0.018 * dt * 60;
+        p.x += p.vx * dt * 60;
+        p.y += p.vy * dt * 60;
+        p.r *= (1 + dt*0.15);
+        if (p.life &lt;= 0) state.particles.splice(i,1);
+      }
+    }
+
+    function drawParticles(){
+      ctx.save();
+      for (var i=0;i&lt;state.particles.length;i++){
+        var p = state.particles[i];
+        var alpha = clamp(p.life, 0, 1);
+        if (p.kind === &quot;fire&quot;){ ctx.globalAlpha = alpha*0.85; ctx.fillStyle = &quot;rgba(255,170,70,1)&quot;; }
+        else { ctx.globalAlpha = alpha*0.28; ctx.fillStyle = &quot;rgba(210,225,255,1)&quot;; }
+        ctx.beginPath();
+        ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        ctx.fill();
+      }
+      ctx.restore();
+    }
+
+    function update(dt){
+      updateSteam(dt);
+      updateParticles(dt);
+      updateDebris(dt);
+
+      if (state.mode === MODE.INTRO){
+        state._introWait -= dt;
+        if (state._introWait &lt;= 0){
+          state.currentMsg = state.sequence[0];
+          commText.textContent = &quot;HOUSTON:\n&quot; + state.currentMsg.text;
+          setMode(MODE.DECIDE);
+          state.decisionTimeLeft = 5;
+          decisionTimerEl.textContent = &quot;5&quot;;
+        }
+        return;
+      }
+
+      if (state.mode === MODE.DECIDE){
+        state.decisionTimeLeft -= dt;
+        var shown = Math.max(0, Math.ceil(state.decisionTimeLeft));
+        decisionTimerEl.textContent = String(clamp(shown, 0, 5));
+        if (state.decisionTimeLeft &lt;= 0){
+          setMode(MODE.FAIL);
+          commText.textContent = &quot;HOUSTON:\nTempo di decisione troppo lungo.\nFinestra di lancio persa.&quot;;
+          state._failWait = 0.8;
+          state._failReason = &quot;Finestra di lancio mancata per tempo di decisione eccessivo.&quot;;
+        }
+        return;
+      }
+
+      if (state.mode === MODE.TECHS){
+        decisionTimerEl.textContent = &quot;-&quot;;
+        state._techWait -= dt;
+        if (state._techWait &lt;= 0) nextMessage();
+        return;
+      }
+
+      if (state.mode === MODE.SUCCESS_COUNTDOWN){
+        decisionTimerEl.textContent = &quot;-&quot;;
+        state._cdTick += dt;
+        if (state._cdTick &gt;= 1.0){
+          state._cdTick = 0;
+          state.successCountdown--;
+          phaseLabel.textContent = &quot;T-&quot; + state.successCountdown;
+          commText.textContent = &quot;HOUSTON:\nT-&quot; + state.successCountdown;
+          if (state.successCountdown &lt;= 0){
+            setMode(MODE.LAUNCH);
+            commText.textContent = &quot;HOUSTON:\nAccensione. Decollo.&quot;;
+            state.rocket.launched = true;
+            state.rocket.vel = -state.h * 0.0022;
+            state._launchTime = 0;
+            spawnExplosion(state.w*0.5, state.h*0.78, Math.min(state.w,state.h)*1.6);
+          }
+        }
+        return;
+      }
+
+      if (state.mode === MODE.EXPLODE_COUNTDOWN){
+        decisionTimerEl.textContent = &quot;-&quot;;
+        state._cdTick += dt;
+        if (state._cdTick &gt;= 1.0){
+          state._cdTick = 0;
+          state.explodeCountdown--;
+          phaseLabel.textContent = &quot;T-&quot; + state.explodeCountdown;
+          commText.textContent = &quot;HOUSTON:\nT-&quot; + state.explodeCountdown;
+          if (state.explodeCountdown &lt;= 0){
+            setMode(MODE.EXPLOSION);
+            commText.textContent = &quot;HOUSTON:\nGuasto catastrofico.&quot;;
+            makeDebris();
+            state._boomWait = 1.4;
+          }
+        }
+        return;
+      }
+
+      if (state.mode === MODE.EXPLOSION){
+        decisionTimerEl.textContent = &quot;-&quot;;
+        state._boomWait -= dt;
+        if (state._boomWait &lt;= 0){
+          setMode(MODE.FAIL);
+          state._failWait = 0.2;
+          state._failReason = &quot;Esplosione: problema grave ignorato.&quot;;
+        }
+        return;
+      }
+
+      if (state.mode === MODE.LAUNCH){
+        decisionTimerEl.textContent = &quot;-&quot;;
+        state._launchTime += dt;
+        state.rocket.vel = lerp(state.rocket.vel, -state.h*0.0065, clamp(state._launchTime/2.2, 0, 1));
+        state.rocket.y += state.rocket.vel * dt * 60;
+        if (Math.random() &lt; 0.45){
+          spawnExplosion(state.w*0.5, state.h*0.79, Math.min(state.w,state.h)*0.55);
+        }
+        if (state.rocket.y &lt; -state.h*0.65){
+          setMode(MODE.FAIL);
+          showOverlay(&quot;success&quot;, &quot;Missione completata&quot;, &quot;Decisioni corrette.\nLancio eseguito.&quot;);
+        }
+        return;
+      }
+
+      if (state.mode === MODE.FAIL){
+        decisionTimerEl.textContent = &quot;-&quot;;
+        state._failWait -= dt;
+        if (state._failWait &lt;= 0 &amp;&amp; overlay.style.display !== &quot;flex&quot;){
+          showOverlay(&quot;fail&quot;, &quot;Missione fallita&quot;, state._failReason || &quot;Sessione terminata.&quot;);
+        }
+      }
+    }
+
+    function render(){
+      var w = state.w, h = state.h;
+      drawSky(w,h);
+      var pad = drawGround(w,h);
+      drawTower(w,h,pad);
+      if (!state.rocketBroken &amp;&amp; state.mode !== MODE.EXPLOSION){
+        drawSLS(w,h,pad);
+      }
+      drawDebris();
+      drawSteam();
+      drawParticles();
+    }
+
+    // LOOP
+    var last = performance.now();
+    function tick(now){
+      var dt = Math.min(0.033, (now - last)/1000);
+      last = now;
+      state.t += dt;
+      fitCanvas();
+      update(dt);
+      render();
+      requestAnimationFrame(tick);
+    }
+
+    // --- TESTS (non bloccanti) ---
+    function runTests(){
+      try {
+        var seq = buildSequence();
+        console.assert(seq.length === 10, &quot;TEST: sequence deve avere 10 messaggi&quot;);
+        var ids = {};
+        for (var i=0;i&lt;seq.length;i++){ ids[seq[i].id] = true; }
+        console.assert(Object.keys(ids).length === 10, &quot;TEST: ids devono essere tutti unici (10)&quot;);
+        console.assert(isCritical(MSG_BLOCK[0]) === true, &quot;TEST: un messaggio critico deve essere critical&quot;);
+        console.assert(isCritical(MSG_IGNORE[0]) === false, &quot;TEST: un messaggio innocuo NON deve essere critical&quot;);
+
+        // Extra test: no U+2028/U+2029
+        function hasBadSeparators(s){ return /\u2028|\u2029/.test(s); }
+        console.assert(!hasBadSeparators(INTRO_BODY), &quot;TEST: no U+2028/U+2029 in intro&quot;);
+        console.assert(!hasBadSeparators(MSG_BLOCK[2].text), &quot;TEST: no U+2028/U+2029 nei messaggi&quot;);
+
+        // Extra test: overlay labels
+        showOverlay(&quot;intro&quot;, &quot;T&quot;, &quot;B&quot;);
+        console.assert(btnRestart.textContent === &quot;Inizia Missione&quot;, &quot;TEST: label intro corretta&quot;);
+        showOverlay(&quot;success&quot;, &quot;T&quot;, &quot;B&quot;);
+        console.assert(btnRestart.textContent === &quot;Continua prossima missione&quot;, &quot;TEST: label success corretta&quot;);
+        showOverlay(&quot;fail&quot;, &quot;T&quot;, &quot;B&quot;);
+        console.assert(btnRestart.textContent === &quot;RIPROVA&quot;, &quot;TEST: label fail corretta&quot;);
+        hideOverlay();
+
+        console.log(&quot;[Tests] OK&quot;);
+      } catch (e) {
+        console.warn(&quot;[Tests] FAIL&quot;, e);
+      }
+    }
+
+    // Init
+    fitCanvas();
+    runTests();
+    showOverlay(&quot;intro&quot;, INTRO_TITLE, INTRO_BODY + &quot;\n\nPronto a decidere?&quot;);
+    // Non parte finche non premi il pulsante.
+    requestAnimationFrame(tick);
+
+  })();
+  &lt;/script&gt;
+
+&lt;script&gt;
+(() =&gt; {
+  const EVENTS = [&#x27;nav:to&#x27;, &#x27;intro:done&#x27;, &#x27;mission2:complete&#x27;, &#x27;mission3:complete&#x27;, &#x27;mission4:complete&#x27;, &#x27;mission:start&#x27;];
+  for (const name of EVENTS) {
+    window.addEventListener(name, (e) =&gt; {
+      try {
+        parent.postMessage({ type: name, detail: e.detail || null }, &quot;*&quot;);
+      } catch (err) {}
+    });
+  }
+})();
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe>
+    </div>
+    <div class="scene" id="scene-mission4">
+      <iframe id="frame-mission4" sandbox="allow-scripts allow-pointer-lock allow-same-origin" srcdoc="" data-srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;it&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot; /&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no&quot; /&gt;
+  &lt;title&gt;SLS Launch Dodge — Mobile Arcade&lt;/title&gt;
+  &lt;style&gt;
+    :root{
+      --ui:#e9eefc;
+      --ui2:rgba(233,238,252,.75);
+      --glass:rgba(255,255,255,.08);
+      --glass2:rgba(255,255,255,.12);
+      --accent:#7aa6ff;
+    }
+    html,body{height:100%;margin:0;background:radial-gradient(1200px 800px at 50% 20%, #0c1333 0%, #060814 40%, #04050b 100%);color:var(--ui);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;overflow:hidden}
+    .wrap{position:fixed;inset:0;display:grid;place-items:center;touch-action:none}
+    canvas{width:100vw;height:100vh;display:block;touch-action:none}
+
+    .hud{
+      position:fixed;left:0;top:0;right:0;pointer-events:none;
+      padding:10px 12px;
+      display:flex;gap:10px;align-items:flex-start;justify-content:flex-end;
+      z-index:5;
+    }
+    .pill{
+      pointer-events:none;
+      background:linear-gradient(180deg,var(--glass2),var(--glass));
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:14px;
+      padding:10px 12px;
+      backdrop-filter: blur(10px);
+      box-shadow:0 10px 30px rgba(0,0,0,.35);
+      min-width: 152px;
+    }
+    .pill b{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ui2)}
+    .pill .v{font-size:18px;font-weight:800;margin-top:2px}
+    .pill .s{font-size:12px;color:var(--ui2);margin-top:2px}
+
+    .toast{
+      position:fixed;left:50%;top:12px;transform:translateX(-50%);
+      background:linear-gradient(180deg,rgba(20,30,60,.72),rgba(12,16,30,.55));
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:18px;
+      padding:10px 12px;
+      width:min(520px, calc(100vw - 24px));
+      backdrop-filter: blur(12px);
+      box-shadow:0 18px 60px rgba(0,0,0,.45);
+      pointer-events:auto;
+      display:none;
+      z-index:10;
+    }
+    .toast.show{display:block}
+    .toast .row{display:flex;align-items:center;gap:10px}
+    .toast .title{font-weight:900;letter-spacing:.02em}
+    .toast .desc{font-size:12px;color:var(--ui2);margin-top:2px}
+    .btns{margin-left:auto;display:flex;gap:8px}
+
+    button{
+      pointer-events:auto;
+      border:1px solid rgba(255,255,255,.18);
+      background:linear-gradient(180deg,rgba(255,255,255,.14),rgba(255,255,255,.06));
+      color:var(--ui);
+      border-radius:14px;
+      padding:10px 12px;
+      font-weight:800;
+      cursor:pointer;
+      box-shadow:0 10px 30px rgba(0,0,0,.25);
+      -webkit-tap-highlight-color: transparent;
+    }
+    button:active{transform:translateY(1px)}
+    .primary{border-color:rgba(122,166,255,.55);background:linear-gradient(180deg,rgba(122,166,255,.26),rgba(122,166,255,.12))}
+
+    .centerOverlay{
+      position:fixed;inset:0;display:grid;place-items:center;
+      background:radial-gradient(900px 600px at 50% 30%, rgba(20,35,90,.38), rgba(0,0,0,.62));
+      backdrop-filter: blur(12px);
+      padding:16px;
+      z-index:20;
+      opacity:1;
+      transition: opacity .35s ease;
+    }
+    .card{
+      width:min(520px, calc(100vw - 44px));
+      background:linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.06));
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:20px;
+      padding:14px 12px;
+      box-shadow:0 22px 80px rgba(0,0,0,.55);
+      user-select:none;
+    }
+    .h1{font-size:22px;font-weight:950;letter-spacing:.02em}
+    .p{margin-top:10px;color:var(--ui2);line-height:1.45;font-size:13px}
+    .footerBtns{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap}
+    .kbd{font-family:ui-monospace, SFMono-Regular, Menlo, monospace;font-weight:800;color:var(--ui)}
+
+    /* banda laterale piccola: Houston */
+    .comm{
+      position:fixed;
+      right:10px;
+      top:62px;
+      width:min(168px, 46vw);
+      padding:8px 10px;
+      border-radius:16px;
+      background:linear-gradient(180deg,rgba(20,30,60,.62),rgba(12,16,30,.40));
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow:0 18px 60px rgba(0,0,0,.45);
+      backdrop-filter: blur(12px);
+      pointer-events:none;
+      opacity:0;
+      transform: translateX(12px);
+      transition: opacity .22s ease, transform .22s ease;
+      z-index:9;
+    }
+    .comm.show{opacity:1;transform: translateX(0)}
+    .commInner{font-size:12px;line-height:1.35;color:rgba(233,238,252,.86);font-weight:900;letter-spacing:.01em}
+
+    @media (max-width:520px){
+      .pill{min-width: 132px}
+      .pill .v{font-size:16px}
+      .comm{width:min(160px, 52vw)}
+      .commInner{font-size:11.5px}
+      .card{width:min(480px, calc(100vw - 44px))}
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div class=&quot;wrap&quot;&gt;
+    &lt;canvas id=&quot;c&quot;&gt;&lt;/canvas&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;hud&quot;&gt;
+    &lt;div class=&quot;pill&quot;&gt;
+      &lt;b&gt;Quota&lt;/b&gt;
+      &lt;div class=&quot;v&quot; id=&quot;hudAlt&quot;&gt;0 km&lt;/div&gt;
+      
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;comm&quot; id=&quot;comm&quot;&gt;&lt;div class=&quot;commInner&quot; id=&quot;commInner&quot;&gt;&lt;/div&gt;&lt;/div&gt;
+
+  &lt;div class=&quot;toast&quot; id=&quot;toast&quot;&gt;
+    &lt;div class=&quot;row&quot;&gt;
+      &lt;div&gt;
+        &lt;div class=&quot;title&quot; id=&quot;toastTitle&quot;&gt;Separazione richiesta&lt;/div&gt;
+        &lt;div class=&quot;desc&quot; id=&quot;toastDesc&quot;&gt;Sganciare booster laterali: finestra di 2.6s&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;btns&quot;&gt;
+        &lt;button class=&quot;primary&quot; id=&quot;btnSep&quot;&gt;SGANCIA&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;centerOverlay&quot; id=&quot;overlay&quot;&gt;
+    &lt;div class=&quot;card&quot;&gt;
+      &lt;div class=&quot;h1&quot;&gt;SLS Launch Dodge — “GO/NO-GO Arcade”&lt;/div&gt;
+      &lt;div class=&quot;p&quot; id=&quot;overlayCopy&quot;&gt;
+        Trascina il razzo con il dito (o col mouse) per schivare &lt;b&gt;rocce&lt;/b&gt; e &lt;b&gt;pezzi di satellite&lt;/b&gt;.&lt;br&gt;
+        Quando appare un messaggio di separazione, premi &lt;span class=&quot;kbd&quot;&gt;SGANCIA&lt;/span&gt; entro la finestra giusta.
+      &lt;/div&gt;
+      &lt;div class=&quot;footerBtns&quot;&gt;
+        &lt;button class=&quot;primary&quot; id=&quot;btnStart&quot;&gt;AVVIA LANCIO&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+&lt;script&gt;
+(() =&gt; {
+  &quot;use strict&quot;;
+
+  // ===== Canvas setup =====
+  const canvas = document.getElementById(&#x27;c&#x27;);
+  const ctx = canvas.getContext(&#x27;2d&#x27;, { alpha: true });
+  let W=0, H=0, DPR=1;
+
+  function resize(){
+    DPR = Math.max(1, Math.min(2.5, window.devicePixelRatio || 1));
+    W = Math.floor(window.innerWidth * DPR);
+    H = Math.floor(window.innerHeight * DPR);
+    canvas.width = W;
+    canvas.height = H;
+  }
+  window.addEventListener(&#x27;resize&#x27;, resize, {passive:true});
+  resize();
+
+  // ===== UI refs =====
+  const overlay = document.getElementById(&#x27;overlay&#x27;);
+  const overlayCopy = document.getElementById(&#x27;overlayCopy&#x27;);
+  const btnStart = document.getElementById(&#x27;btnStart&#x27;);
+
+  const toast = document.getElementById(&#x27;toast&#x27;);
+  const toastTitle = document.getElementById(&#x27;toastTitle&#x27;);
+  const toastDesc  = document.getElementById(&#x27;toastDesc&#x27;);
+  const btnSep = document.getElementById(&#x27;btnSep&#x27;);
+
+  const comm = document.getElementById(&#x27;comm&#x27;);
+  const commInner = document.getElementById(&#x27;commInner&#x27;);
+
+  const hudAlt = document.getElementById(&#x27;hudAlt&#x27;);
+  
+  // ===== Helpers =====
+  const clamp = (v,a,b)=&gt;Math.max(a,Math.min(b,v));
+  const lerp  = (a,b,t)=&gt;a+(b-a)*t;
+  const rand  = (a,b)=&gt;a+Math.random()*(b-a);
+  const now   = ()=&gt;performance.now()/1000;
+
+  function roundRectPath(g, x,y,w,h,r){
+    r = Math.min(r, w*0.5, h*0.5);
+    g.beginPath();
+    g.moveTo(x+r,y);
+    g.arcTo(x+w,y,x+w,y+h,r);
+    g.arcTo(x+w,y+h,x,y+h,r);
+    g.arcTo(x,y+h,x,y,r);
+    g.arcTo(x,y,x+w,y,r);
+    g.closePath();
+  }
+
+  function drawGlowCircle(g, x,y, r, a){
+    g.save();
+    g.globalAlpha = a;
+    const grad = g.createRadialGradient(x,y,0, x,y,r);
+    grad.addColorStop(0, &#x27;rgba(160,190,255,0.35)&#x27;);
+    grad.addColorStop(0.4,&#x27;rgba(80,120,255,0.16)&#x27;);
+    grad.addColorStop(1,&#x27;rgba(0,0,0,0)&#x27;);
+    g.fillStyle = grad;
+    g.beginPath(); g.arc(x,y,r,0,Math.PI*2); g.fill();
+    g.restore();
+  }
+
+  // ===== Game state =====
+  const STATE = { INTRO:0, PAD:1, ASCENT:2, SEPARATION:3, CAPSULE:4, GAMEOVER:5 };
+  let state = STATE.INTRO;
+
+  // ===== Progression =====
+  let t0 = 0;
+  let elapsed = 0;
+  let altitude = 0; // 0..500 km
+  let speed = 0;
+
+  // Post-core: solo capsula Orion per 15s a difficoltà massima
+  let capsuleMode = false;
+  let capsuleStart = 0;
+  let capsuleEnd = 0;
+  let capsuleStartAlt = 0; // quota al momento dello sgancio del core (per arrivare a 500km al termine)
+
+  // Cinematic orbit insertion
+  let orbitCine = false;
+  let orbitStart = 0;
+  let orbitEnd = 0;
+
+  // SLS configuration
+  const rocket = {
+    x: 0, y: 0,
+    targetX: 0,
+    w: 0, h: 0,
+    hitR: 0,
+    hasSRB: true,
+    coreSeparated: false,
+    shake: 0,
+    plume: 0,
+    padY: 0,
+  };
+
+  // debris pool
+  const MAX_DEBRIS = 80;
+  const debris = [];
+  for(let i=0;i&lt;MAX_DEBRIS;i++){
+    debris.push({active:false, x:0,y:0, vx:0, vy:0, r:10, spin:0, ang:0, kind:0});
+  }
+
+  // particles
+  const MAX_PART = 180;
+  const parts = [];
+  for(let i=0;i&lt;MAX_PART;i++){
+    parts.push({active:false, x:0,y:0, vx:0, vy:0, life:0, t:0, s:1, kind:0});
+  }
+
+  // detached boosters
+  const boosters = []; // {x,y,vx,vy,rot,vr, kind:&#x27;SRB_L&#x27;|&#x27;SRB_R&#x27;|&#x27;CORE&#x27;, life}
+
+  function setRocketSize(){
+    const base = Math.min(W,H);
+    rocket.h = base * 0.46;
+    rocket.w = rocket.h * 0.22;
+    rocket.hitR = rocket.w * 0.20;
+    if(capsuleMode) rocket.hitR *= 0.6;
+    rocket.padY = H * 0.84;
+  }
+  setRocketSize();
+
+  function spawnBooster(kind, x,y, dir){
+    boosters.push({
+      kind, x,y,
+      vx: dir*rand(0.18,0.34)*W*0.001,
+      vy: rand(-0.05,0.12)*H*0.001,
+      rot: rand(-0.3,0.3),
+      vr: rand(-1.2,1.2),
+      life: 7.5,
+    });
+  }
+
+  function spawnParticles(kind, x,y, n, spd){
+    for(let i=0;i&lt;n;i++){
+      const p = parts.find(pp=&gt;!pp.active);
+      if(!p) return;
+      const a = rand(0, Math.PI*2);
+      const s = rand(0.3,1.0)*spd;
+      p.active=true;
+      p.kind=kind;
+      p.x=x; p.y=y;
+      p.vx=Math.cos(a)*s + rand(-0.05,0.05)*W*0.001;
+      p.vy=Math.sin(a)*s + rand(-0.10,0.10)*H*0.001;
+      p.life=rand(0.6,1.6);
+      p.t=0;
+      p.s=rand(0.6,1.3);
+    }
+  }
+
+  // separation prompts
+  let sepPending = false;
+  let sepType = null; // &#x27;SRB&#x27; or &#x27;CORE&#x27;
+  let sepWindow = 0;
+  let sepDeadline = 0;
+  let sepShownAt = 0;
+
+  // spawn tuning
+  let spawnAcc = 0;
+  let spawnRate = 0.85;
+
+  // control
+  let pointerDown = false;
+  let pointerId = null;
+  let pointerOffsetX = 0;
+
+  // ===== HUD =====
+  function updateHud(){
+    const alt = Math.floor(Math.min(altitude, 500));
+    if(hudAlt) hudAlt.textContent = `${alt} km`;
+      }
+
+  // ===== Houston comms (banda laterale) =====
+  const HOUSTON = [
+    &quot;Houston: Telemetria nominale. Prosegui.&quot;,
+    &quot;Houston: Guidance green. Continua ascesa.&quot;,
+    &quot;Houston: Tieni il centro, piccoli detriti in arrivo.&quot;,
+    &quot;Houston: Booster sep a breve. Stand by.&quot;,
+    &quot;Houston: Nav update ricevuto. Traiettoria ok.&quot;,
+    &quot;Houston: Systems green. Nessuna anomalia.&quot;,
+    &quot;Houston: Debris field ahead. Evita e mantieni rotta.&quot;,
+    &quot;Houston: Orion comm check. Loud and clear.&quot;,
+    &quot;Houston: Max-Q passato. Buon lavoro.&quot;,
+    &quot;Houston: Attenzione: frammenti di satellite sopra.&quot;
+  ];
+  let commTimer = 0;
+  let commHideTimer = 0;
+
+  function scheduleComm(){ commTimer = now() + rand(4.0, 8.5); }
+  function showComm(msg){
+    if(!commInner || !comm) return;
+    commInner.textContent = msg;
+    comm.classList.add(&#x27;show&#x27;);
+    if(commHideTimer) clearTimeout(commHideTimer);
+    commHideTimer = setTimeout(()=&gt; comm.classList.remove(&#x27;show&#x27;), 2400);
+  }
+  scheduleComm();
+
+  // ===== Input =====
+  function clientToCanvasX(cx){ return cx * DPR; }
+
+  function onPointerDown(e){
+    if(state===STATE.INTRO || state===STATE.GAMEOVER) return;
+    pointerDown = true;
+    pointerId = e.pointerId;
+    const x = clientToCanvasX(e.clientX);
+    pointerOffsetX = rocket.x - x;
+  }
+
+  function onPointerMove(e){
+    if(!pointerDown || e.pointerId!==pointerId) return;
+    const x = clientToCanvasX(e.clientX);
+    rocket.targetX = x + pointerOffsetX;
+  }
+
+  function onPointerUp(e){
+    if(e.pointerId!==pointerId) return;
+    pointerDown=false;
+    pointerId=null;
+  }
+
+  canvas.addEventListener(&#x27;pointerdown&#x27;, onPointerDown);
+  window.addEventListener(&#x27;pointermove&#x27;, onPointerMove, {passive:true});
+  window.addEventListener(&#x27;pointerup&#x27;, onPointerUp, {passive:true});
+  window.addEventListener(&#x27;pointercancel&#x27;, onPointerUp, {passive:true});
+
+  // ===== Toast (separation) =====
+  function showToast(type){
+    sepPending = true;
+    sepType = type;
+    state = STATE.SEPARATION;
+
+    sepShownAt = now();
+    sepWindow = type===&#x27;SRB&#x27; ? 2.6 : 2.2;
+    sepDeadline = sepShownAt + sepWindow;
+
+    toastTitle.textContent = (type===&#x27;SRB&#x27;)
+      ? &#x27;MESSAGGIO: SGANCIARE BOOSTER LATERALI&#x27;
+      : &#x27;MESSAGGIO: SGANCIARE BOOSTER PRINCIPALE (CORE)&#x27;;
+    toastDesc.textContent = (type===&#x27;SRB&#x27;)
+      ? &#x27;Finestra operativa: ~2.6s. Troppo presto o tardi = instabilità.&#x27;
+      : &#x27;Finestra operativa: ~2.2s. Troppo tardi = traiettoria non nominale.&#x27;;
+
+    toast.classList.add(&#x27;show&#x27;);
+    rocket.shake = 0.6;
+  }
+
+  function hideToast(){
+    toast.classList.remove(&#x27;show&#x27;);
+    sepPending = false;
+    sepType = null;
+  }
+
+  // ===== Overlays =====
+  let gameOverText = &#x27;Collisione.&#x27;;
+
+  function showOverlay(title, html, buttonLabel){
+    overlay.style.display = &#x27;grid&#x27;;
+    overlay.style.opacity = &#x27;0&#x27;;
+    overlay.querySelector(&#x27;.h1&#x27;).textContent = title;
+    overlayCopy.innerHTML = html;
+    btnStart.textContent = buttonLabel;
+    requestAnimationFrame(()=&gt;{ overlay.style.opacity = &#x27;1&#x27;; });
+  }
+
+  function getSuccessHtml(){
+    return `Missione compiuta.&lt;br&gt;La capsula Orion è in orbita attorno alla terra.`;
+  }
+
+  function endGame(txt){
+    gameOverText = txt || &#x27;Missione fallita.&#x27;;
+    state = STATE.GAMEOVER;
+    hideToast();
+    spawnParticles(2, rocket.x, rocket.y-rocket.h*0.18, 70, 1.5);
+    rocket.shake = 1.8;
+
+    setTimeout(() =&gt; {
+      showOverlay(&#x27;FINE CORSA&#x27;, `${gameOverText}`, &#x27;RIPROVA&#x27;);
+    }, 220);
+  }
+
+  function failSep(reason){
+    spawnParticles(2, rocket.x, rocket.y-rocket.h*0.2, 42, 1.2);
+    rocket.shake = 1.4;
+    endGame(`Separazione fallita: ${reason}`);
+  }
+
+  function doSeparation(){
+    if(!sepPending) return;
+    const t = now();
+
+    const ok = (t &lt;= sepDeadline + 0.22);
+    const tooEarly = (t - sepShownAt) &lt; 0.12;
+
+    if(tooEarly){ failSep(&#x27;Troppo presto: comando non armato.&#x27;); return; }
+    if(!ok){ failSep(&#x27;Troppo tardi: separazione non nominale.&#x27;); return; }
+
+    // success
+    spawnParticles(1, rocket.x, rocket.y-rocket.h*0.15, 26, 0.9);
+    rocket.shake = 1.0;
+
+    if(sepType===&#x27;SRB&#x27; &amp;&amp; rocket.hasSRB){
+      const off = rocket.w*0.85;
+      spawnBooster(&#x27;SRB_L&#x27;, rocket.x - off, rocket.y - rocket.h*0.05, -1);
+      spawnBooster(&#x27;SRB_R&#x27;, rocket.x + off, rocket.y - rocket.h*0.05, +1);
+      rocket.hasSRB = false;
+
+      spawnRate += 0.45; // leggero aumento difficoltà dopo separazione SRB
+      speed += 0.18;
+      altitude = Math.min(500, altitude + 8);
+      hideToast();
+      state = STATE.ASCENT;
+
+    } else if(sepType===&#x27;CORE&#x27; &amp;&amp; !rocket.coreSeparated){
+      spawnBooster(&#x27;CORE&#x27;, rocket.x, rocket.y - rocket.h*0.08, rand(-1,1));
+      rocket.coreSeparated = true;
+
+      capsuleMode = true;
+      capsuleStart = now();
+      capsuleEnd = capsuleStart + 15;
+      capsuleStartAlt = 460;
+
+      spawnRate = Math.max(spawnRate + 0.75, 2.6);
+      speed += 0.30;
+      // al momento dello sgancio del core vogliamo essere in quota ~460km
+      altitude = 460;
+
+      hideToast();
+      state = STATE.CAPSULE;
+
+    } else {
+      hideToast();
+      state = STATE.ASCENT;
+    }
+
+    updateHud();
+  }
+  btnSep.addEventListener(&#x27;click&#x27;, doSeparation);
+
+  // ===== Debris spawning =====
+  function allocDebris(){
+    return debris.find(d=&gt;!d.active) || null;
+  }
+
+  function forceSpawnDebris(){
+    const d = allocDebris();
+    if(!d) return;
+
+    d.active = true;
+    d.kind = (Math.random() &lt; 0.60) ? 0 : 2; // 0 rock, 2 satellite chunk
+    d.r = (d.kind===0 ? rand(16,34) : rand(18,32)) * DPR;
+
+    d.x = rand(d.r, W - d.r);
+    d.y = -rand(60, 160)*DPR;
+
+    const stageMulBase = capsuleMode ? 0.85 : (rocket.coreSeparated ? 1.55 : (rocket.hasSRB ? 1.05 : 1.25));
+    const stageMul = (!rocket.hasSRB &amp;&amp; !rocket.coreSeparated &amp;&amp; !capsuleMode) ? (stageMulBase*1.10) : stageMulBase; // più cattivo subito dopo SRB
+    const baseVy = (0.26 + rand(0,0.18)) * stageMul;
+
+    d.vy = baseVy * (H*0.001) * (1.0 + elapsed*0.02);
+    if(capsuleMode) d.vy *= 0.35;
+    d.vx = rand(-0.12, 0.12) * (W*0.001) * (1.0 + elapsed*0.01);
+
+    d.spin = rand(-2.2, 2.2);
+    d.ang = rand(0, Math.PI*2);
+  }
+
+  // ===== Collision =====
+  function collides(d){
+    const dx = d.x - rocket.x;
+    const dy = d.y - (rocket.y - rocket.h*0.10);
+    const r = d.r + rocket.hitR;
+    return (dx*dx + dy*dy) &lt;= r*r;
+  }
+
+  // ===== Background =====
+  const stars = Array.from({length: 120}, () =&gt; ({
+    x: Math.random(), y: Math.random(),
+    s: Math.random()*0.9 + 0.1,
+    tw: Math.random()*1.7 + 0.2,
+  }));
+
+  function drawEarth(t, a){
+    const R = Math.min(W,H)*0.58;
+    const ex = W*0.64;
+    const ey = H*1.10;
+
+    ctx.save();
+    ctx.globalAlpha = 0.55*a;
+    const glow = ctx.createRadialGradient(ex, ey, R*0.70, ex, ey, R*1.12);
+    glow.addColorStop(0,&#x27;rgba(120,170,255,0.22)&#x27;);
+    glow.addColorStop(0.55,&#x27;rgba(80,140,255,0.12)&#x27;);
+    glow.addColorStop(1,&#x27;rgba(0,0,0,0)&#x27;);
+    ctx.fillStyle = glow;
+    ctx.beginPath(); ctx.arc(ex, ey, R*1.12, 0, Math.PI*2); ctx.fill();
+    ctx.restore();
+
+    const body = ctx.createRadialGradient(ex-R*0.30, ey-R*0.52, R*0.18, ex, ey, R);
+    body.addColorStop(0,&#x27;rgba(60,120,255,0.78)&#x27;);
+    body.addColorStop(0.45,&#x27;rgba(25,70,190,0.90)&#x27;);
+    body.addColorStop(1,&#x27;rgba(5,10,25,0.98)&#x27;);
+    ctx.save();
+    ctx.globalAlpha = 0.92*a;
+    ctx.fillStyle = body;
+    ctx.beginPath(); ctx.arc(ex, ey, R, 0, Math.PI*2); ctx.fill();
+    ctx.restore();
+
+    ctx.save();
+    ctx.globalAlpha = 0.20*a;
+    ctx.fillStyle = &#x27;rgba(255,255,255,1)&#x27;;
+    for(let i=0;i&lt;12;i++){
+      const ph = i*0.55;
+      const ang = (t*0.14 + ph);
+      const rx = ex + Math.cos(ang)*R*0.58;
+      const ry = ey + Math.sin(ang)*R*0.30;
+      ctx.beginPath();
+      ctx.ellipse(rx, ry, R*rand(0.06,0.13), R*rand(0.03,0.08), rand(-0.7,0.7), 0, Math.PI*2);
+      ctx.fill();
+    }
+    ctx.restore();
+
+    ctx.save();
+    ctx.globalAlpha = 0.95*a;
+    const atm = ctx.createRadialGradient(ex, ey, R*0.90, ex, ey, R*1.05);
+    atm.addColorStop(0,&#x27;rgba(120,180,255,0)&#x27;);
+    atm.addColorStop(0.70,&#x27;rgba(120,180,255,0.0)&#x27;);
+    atm.addColorStop(0.84,&#x27;rgba(120,180,255,0.10)&#x27;);
+    atm.addColorStop(0.94,&#x27;rgba(120,180,255,0.22)&#x27;);
+    atm.addColorStop(1,&#x27;rgba(120,180,255,0.0)&#x27;);
+    ctx.fillStyle = atm;
+    ctx.beginPath(); ctx.arc(ex, ey, R*1.05, 0, Math.PI*2); ctx.fill();
+    ctx.restore();
+  }
+
+  function drawBackground(t){
+    ctx.save();
+    ctx.clearRect(0,0,W,H);
+
+    const atm = ctx.createRadialGradient(W*0.5, H*1.1, 0, W*0.5, H*1.1, Math.max(W,H)*0.95);
+    atm.addColorStop(0, &#x27;rgba(60,120,255,0.20)&#x27;);
+    atm.addColorStop(0.35,&#x27;rgba(25,70,190,0.10)&#x27;);
+    atm.addColorStop(0.8,&#x27;rgba(10,15,35,0.0)&#x27;);
+    ctx.fillStyle = atm;
+    ctx.fillRect(0,0,W,H);
+
+    for(const s of stars){
+      const px = s.x*W;
+      const py = s.y*H;
+      const tw = 0.55 + 0.45*Math.sin(t*s.tw + s.x*7.1);
+      ctx.globalAlpha = 0.35 + 0.55*tw;
+      ctx.fillStyle = &#x27;rgba(230,240,255,1)&#x27;;
+      const rr = (s.s*1.8 + (rocket.coreSeparated?0.4:0))*DPR;
+      ctx.fillRect(px, py, rr, rr);
+    }
+    ctx.globalAlpha = 1;
+
+    drawGlowCircle(ctx, W*0.18, H*0.22, Math.min(W,H)*0.23, 0.35);
+    drawGlowCircle(ctx, W*0.78, H*0.35, Math.min(W,H)*0.20, 0.28);
+
+    if(orbitCine){
+      const u = clamp((now()-orbitStart) / Math.max(0.001, (orbitEnd-orbitStart)), 0, 1);
+      const ease = u&lt;0.5 ? 2*u*u : 1 - Math.pow(-2*u+2,2)/2;
+      drawEarth(t, ease);
+    }
+
+    ctx.restore();
+  }
+
+  // ===== Pad + tower arm separation =====
+  function drawPad(){
+    const yGround = rocket.padY + rocket.h*0.15;
+    ctx.save();
+
+    const haze = ctx.createLinearGradient(0, yGround-80*DPR, 0, yGround+140*DPR);
+    haze.addColorStop(0,&#x27;rgba(255,255,255,0)&#x27;);
+    haze.addColorStop(0.35,&#x27;rgba(120,150,255,0.06)&#x27;);
+    haze.addColorStop(1,&#x27;rgba(0,0,0,0.55)&#x27;);
+    ctx.fillStyle = haze;
+    ctx.fillRect(0, yGround-90*DPR, W, 240*DPR);
+
+    ctx.fillStyle = &#x27;rgba(10,14,24,0.85)&#x27;;
+    ctx.fillRect(0, yGround, W, H-yGround);
+
+    ctx.fillStyle = &#x27;rgba(255,255,255,0.07)&#x27;;
+    ctx.fillRect(W*0.08, yGround-18*DPR, W*0.84, 18*DPR);
+
+    const tx = W*0.18, tw = W*0.06, th = rocket.h*0.95;
+    ctx.fillStyle = &#x27;rgba(255,255,255,0.10)&#x27;;
+    roundRectPath(ctx, tx, yGround-th, tw, th, 10*DPR); ctx.fill();
+
+    ctx.strokeStyle = &#x27;rgba(255,255,255,0.12)&#x27;;
+    ctx.lineWidth = 2*DPR;
+    for(let i=0;i&lt;10;i++){
+      const yy = (yGround-th) + (i/10)*th;
+      ctx.beginPath();
+      ctx.moveTo(tx, yy);
+      ctx.lineTo(tx+tw, yy);
+      ctx.stroke();
+    }
+
+    const armY = rocket.y - rocket.h*0.27;
+    const armLen = W*0.20;
+    const gap = 14*DPR;
+    ctx.fillStyle = &#x27;rgba(255,255,255,0.10)&#x27;;
+    roundRectPath(ctx, tx+tw, armY-8*DPR, armLen, 16*DPR, 10*DPR); ctx.fill();
+
+    ctx.fillStyle = &#x27;rgba(0,0,0,0.55)&#x27;;
+    ctx.fillRect(tx+tw+armLen-gap, armY-10*DPR, gap, 20*DPR);
+    ctx.fillStyle = &#x27;rgba(255,255,255,0.14)&#x27;;
+    ctx.fillRect(tx+tw+armLen-gap, armY-10*DPR, 2*DPR, 20*DPR);
+    ctx.fillRect(tx+tw+armLen-2*DPR, armY-10*DPR, 2*DPR, 20*DPR);
+
+    ctx.fillStyle = &#x27;rgba(255,255,255,0.10)&#x27;;
+    ctx.fillRect(tx+tw+armLen, armY-14*DPR, 10*DPR, 28*DPR);
+
+    ctx.restore();
+  }
+
+  // ===== Rocket drawing =====
+  function drawSLS(x,y,w,h, opts){
+    const hasSRB = opts.hasSRB;
+    const jitter = opts.shake ? (Math.sin(now()*32)*opts.shake + Math.sin(now()*19)*opts.shake*0.6) * DPR : 0;
+    x += jitter;
+    const yTop = y - h;
+    const cx = x;
+
+    ctx.save();
+
+    // Flames
+    if(opts.plume &gt; 0){
+      const p = opts.plume;
+      const plumeH = h*0.22*(0.85+p*0.35);
+      const plumeW = w*0.55*(0.85+p*0.25);
+
+      const gx = ctx.createRadialGradient(cx, y+plumeH*0.08, 2*DPR, cx, y+plumeH*0.25, plumeW);
+      gx.addColorStop(0, &#x27;rgba(255,255,255,0.85)&#x27;);
+      gx.addColorStop(0.25,&#x27;rgba(255,210,120,0.58)&#x27;);
+      gx.addColorStop(0.55,&#x27;rgba(255,120,60,0.22)&#x27;);
+      gx.addColorStop(1,&#x27;rgba(0,0,0,0)&#x27;);
+      ctx.fillStyle = gx;
+      ctx.beginPath();
+      ctx.ellipse(cx, y+plumeH*0.20, plumeW, plumeH, 0, 0, Math.PI*2);
+      ctx.fill();
+
+      if(hasSRB){
+        const off = w*0.76;
+        for(const sgn of [-1,1]){
+          const sx = cx + sgn*off;
+          const gg = ctx.createRadialGradient(sx, y+plumeH*0.10, 2*DPR, sx, y+plumeH*0.28, plumeW*0.72);
+          gg.addColorStop(0,&#x27;rgba(255,255,255,0.75)&#x27;);
+          gg.addColorStop(0.32,&#x27;rgba(255,200,110,0.50)&#x27;);
+          gg.addColorStop(0.72,&#x27;rgba(255,120,60,0.18)&#x27;);
+          gg.addColorStop(1,&#x27;rgba(0,0,0,0)&#x27;);
+          ctx.fillStyle = gg;
+          ctx.beginPath();
+          ctx.ellipse(sx, y+plumeH*0.24, plumeW*0.70, plumeH*0.92, 0, 0, Math.PI*2);
+          ctx.fill();
+        }
+      }
+    }
+
+    const bodyW = w*0.56;
+    const bodyX = cx - bodyW/2;
+
+    const upperH = h*0.20;
+    const upperY = yTop + h*0.05;
+
+    const coreH = h*0.52;
+    const coreY = upperY + upperH;
+
+    const skirtH = h*0.13;
+    const skirtY = coreY + coreH;
+
+    // nose
+    const noseH = h*0.09;
+    const noseGrad = ctx.createLinearGradient(bodyX, yTop, bodyX+bodyW, yTop);
+    noseGrad.addColorStop(0,&#x27;rgba(255,255,255,0.75)&#x27;);
+    noseGrad.addColorStop(0.5,&#x27;rgba(255,255,255,0.95)&#x27;);
+    noseGrad.addColorStop(1,&#x27;rgba(255,255,255,0.70)&#x27;);
+    ctx.fillStyle = noseGrad;
+    ctx.beginPath();
+    ctx.moveTo(cx, yTop);
+    ctx.lineTo(bodyX+bodyW, yTop + noseH);
+    ctx.lineTo(bodyX, yTop + noseH);
+    ctx.closePath();
+    ctx.fill();
+
+    // upper stage
+    const upperGrad = ctx.createLinearGradient(bodyX, upperY, bodyX+bodyW, upperY);
+    upperGrad.addColorStop(0,&#x27;rgba(255,255,255,0.72)&#x27;);
+    upperGrad.addColorStop(0.45,&#x27;rgba(255,255,255,0.92)&#x27;);
+    upperGrad.addColorStop(1,&#x27;rgba(255,255,255,0.70)&#x27;);
+    ctx.fillStyle = upperGrad;
+    roundRectPath(ctx, bodyX, upperY, bodyW, upperH, bodyW*0.32);
+    ctx.fill();
+
+    // core orange
+    const orangeGrad = ctx.createLinearGradient(bodyX, coreY, bodyX+bodyW, coreY);
+    orangeGrad.addColorStop(0,&#x27;rgba(205,112,40,0.70)&#x27;);
+    orangeGrad.addColorStop(0.5,&#x27;rgba(232,130,50,0.96)&#x27;);
+    orangeGrad.addColorStop(1,&#x27;rgba(185,95,30,0.72)&#x27;);
+    ctx.fillStyle = orangeGrad;
+    roundRectPath(ctx, bodyX, coreY, bodyW, coreH, bodyW*0.22);
+    ctx.fill();
+
+    // skirt
+    const skirtGrad = ctx.createLinearGradient(bodyX, skirtY, bodyX+bodyW, skirtY);
+    skirtGrad.addColorStop(0,&#x27;rgba(240,245,255,0.62)&#x27;);
+    skirtGrad.addColorStop(0.5,&#x27;rgba(255,255,255,0.88)&#x27;);
+    skirtGrad.addColorStop(1,&#x27;rgba(235,240,255,0.62)&#x27;);
+    ctx.fillStyle = skirtGrad;
+    roundRectPath(ctx, bodyX, skirtY, bodyW, skirtH, bodyW*0.18);
+    ctx.fill();
+
+    // SRBs
+    if(hasSRB){
+      const srbW = w*0.22;
+      const srbH = h*0.66;
+      const srbY = upperY + upperH*0.08;
+      const off = bodyW*0.78 + srbW*0.55;
+
+      for(const sgn of [-1,1]){
+        const sx = cx + sgn*off - srbW/2;
+        const g = ctx.createLinearGradient(sx, srbY, sx+srbW, srbY);
+        g.addColorStop(0,&#x27;rgba(250,252,255,0.62)&#x27;);
+        g.addColorStop(0.55,&#x27;rgba(255,255,255,0.90)&#x27;);
+        g.addColorStop(1,&#x27;rgba(240,245,255,0.62)&#x27;);
+        ctx.fillStyle=g;
+        roundRectPath(ctx, sx, srbY, srbW, srbH, srbW*0.50);
+        ctx.fill();
+        ctx.fillStyle=&#x27;rgba(0,0,0,0.25)&#x27;;
+        ctx.fillRect(sx, srbY+srbH*0.12, srbW, srbH*0.06);
+        ctx.fillRect(sx, srbY+srbH*0.48, srbW, srbH*0.06);
+        ctx.fillRect(sx, srbY+srbH*0.80, srbW, srbH*0.06);
+      }
+    }
+
+    ctx.restore();
+  }
+
+  function drawOrionCapsule(x,y,w,h, shake){
+    const jitter = shake ? (Math.sin(now()*32)*shake + Math.sin(now()*19)*shake*0.6) * DPR : 0;
+    x += jitter;
+
+    ctx.save();
+    const capH = h*0.34;
+    const capW = w*0.42;
+    const capY = y - capH*0.55;
+
+    // service module
+    const smH = capH*0.34;
+    const smW = capW*0.98;
+    const smY = capY + capH*0.62;
+    const smGrad = ctx.createLinearGradient(x-smW/2, smY, x+smW/2, smY);
+    smGrad.addColorStop(0,&#x27;rgba(245,248,255,0.50)&#x27;);
+    smGrad.addColorStop(0.5,&#x27;rgba(255,255,255,0.78)&#x27;);
+    smGrad.addColorStop(1,&#x27;rgba(235,242,255,0.50)&#x27;);
+    ctx.fillStyle = smGrad;
+    roundRectPath(ctx, x-smW/2, smY, smW, smH, smW*0.18);
+    ctx.fill();
+
+    // capsule
+    const capGrad = ctx.createLinearGradient(x-capW/2, capY, x+capW/2, capY);
+    capGrad.addColorStop(0,&#x27;rgba(255,255,255,0.68)&#x27;);
+    capGrad.addColorStop(0.5,&#x27;rgba(255,255,255,0.92)&#x27;);
+    capGrad.addColorStop(1,&#x27;rgba(240,245,255,0.68)&#x27;);
+    ctx.fillStyle = capGrad;
+    ctx.beginPath();
+    ctx.moveTo(x, capY);
+    ctx.lineTo(x+capW/2, capY+capH*0.62);
+    ctx.lineTo(x+capW*0.36, capY+capH);
+    ctx.lineTo(x-capW*0.36, capY+capH);
+    ctx.lineTo(x-capW/2, capY+capH*0.62);
+    ctx.closePath();
+    ctx.fill();
+
+    // heatshield
+    ctx.fillStyle=&#x27;rgba(20,22,30,0.55)&#x27;;
+    ctx.beginPath();
+    ctx.ellipse(x, capY+capH*0.98, capW*0.38, capH*0.10, 0, 0, Math.PI*2);
+    ctx.fill();
+
+    // window
+    ctx.fillStyle=&#x27;rgba(0,0,0,0.35)&#x27;;
+    ctx.beginPath();
+    ctx.ellipse(x, capY+capH*0.40, capW*0.12, capH*0.10, 0, 0, Math.PI*2);
+    ctx.fill();
+
+    ctx.restore();
+  }
+
+  function drawDetachedBooster(b){
+    ctx.save();
+    ctx.translate(b.x, b.y);
+    ctx.rotate(b.rot);
+
+    const base = rocket.w;
+    if(b.kind===&#x27;SRB_L&#x27; || b.kind===&#x27;SRB_R&#x27;){
+      const w = base*0.22;
+      const h = rocket.h*0.62;
+      const g = ctx.createLinearGradient(-w/2, -h/2, w/2, -h/2);
+      g.addColorStop(0,&#x27;rgba(245,248,255,0.55)&#x27;);
+      g.addColorStop(0.5,&#x27;rgba(255,255,255,0.85)&#x27;);
+      g.addColorStop(1,&#x27;rgba(235,240,255,0.55)&#x27;);
+      ctx.fillStyle=g;
+      roundRectPath(ctx, -w/2, -h/2, w, h, w*0.48);
+      ctx.fill();
+    } else {
+      const w = base*0.60;
+      const h = rocket.h*0.55;
+      const g = ctx.createLinearGradient(-w/2, -h/2, w/2, -h/2);
+      g.addColorStop(0,&#x27;rgba(205,112,40,0.55)&#x27;);
+      g.addColorStop(0.5,&#x27;rgba(232,130,50,0.90)&#x27;);
+      g.addColorStop(1,&#x27;rgba(185,95,30,0.55)&#x27;);
+      ctx.fillStyle=g;
+      roundRectPath(ctx, -w/2, -h/2, w, h, w*0.16);
+      ctx.fill();
+    }
+
+    ctx.restore();
+  }
+
+  function drawDebris(d){
+    ctx.save();
+    ctx.translate(d.x, d.y);
+    ctx.rotate(d.ang);
+
+    ctx.shadowColor = &#x27;rgba(190,220,255,0.32)&#x27;;
+    ctx.shadowBlur = 16*DPR;
+
+    if(d.kind===0){
+      const r = d.r;
+      ctx.fillStyle=&#x27;rgba(235,245,255,0.30)&#x27;;
+      ctx.beginPath();
+      ctx.moveTo(-r*1.00, -r*0.10);
+      ctx.lineTo(-r*0.55, -r*0.95);
+      ctx.lineTo(r*0.15, -r*0.85);
+      ctx.lineTo(r*0.95, -r*0.25);
+      ctx.lineTo(r*0.85, r*0.35);
+      ctx.lineTo(r*0.25, r*0.95);
+      ctx.lineTo(-r*0.75, r*0.70);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.shadowBlur = 0;
+      ctx.strokeStyle=&#x27;rgba(255,255,255,0.30)&#x27;;
+      ctx.lineWidth=3*DPR;
+      ctx.stroke();
+
+      ctx.globalAlpha=0.55;
+      ctx.fillStyle=&#x27;rgba(0,0,0,0.30)&#x27;;
+      for(let i=0;i&lt;4;i++){
+        const cx = rand(-r*0.45, r*0.45);
+        const cy = rand(-r*0.35, r*0.35);
+        const rx = rand(r*0.10, r*0.22);
+        const ry = rand(r*0.08, r*0.18);
+        ctx.beginPath();
+        ctx.ellipse(cx, cy, rx, ry, rand(-1,1), 0, Math.PI*2);
+        ctx.fill();
+      }
+      ctx.globalAlpha=1;
+
+    } else {
+      const busW = d.r*1.05;
+      const busH = d.r*0.78;
+
+      ctx.fillStyle = &#x27;rgba(120,170,255,0.18)&#x27;;
+      roundRectPath(ctx, -busW*2.2, -busH*0.38, busW*1.7, busH*0.76, busH*0.22);
+      ctx.fill();
+      roundRectPath(ctx, busW*0.5, -busH*0.38, busW*1.7, busH*0.76, busH*0.22);
+      ctx.fill();
+
+      ctx.shadowBlur = 0;
+      ctx.strokeStyle=&#x27;rgba(255,255,255,0.20)&#x27;;
+      ctx.lineWidth=3*DPR;
+      roundRectPath(ctx, -busW*2.2, -busH*0.38, busW*1.7, busH*0.76, busH*0.22);
+      ctx.stroke();
+      roundRectPath(ctx, busW*0.5, -busH*0.38, busW*1.7, busH*0.76, busH*0.22);
+      ctx.stroke();
+
+      const bodyGrad = ctx.createLinearGradient(-busW/2, -busH/2, busW/2, busH/2);
+      bodyGrad.addColorStop(0,&#x27;rgba(255,255,255,0.28)&#x27;);
+      bodyGrad.addColorStop(0.5,&#x27;rgba(245,252,255,0.18)&#x27;);
+      bodyGrad.addColorStop(1,&#x27;rgba(0,0,0,0.20)&#x27;);
+      ctx.fillStyle = bodyGrad;
+      roundRectPath(ctx, -busW/2, -busH/2, busW, busH, busH*0.25);
+      ctx.fill();
+
+      ctx.strokeStyle=&#x27;rgba(255,255,255,0.26)&#x27;;
+      ctx.lineWidth=3*DPR;
+      ctx.stroke();
+    }
+
+    ctx.restore();
+  }
+
+  function drawParticle(p){
+    ctx.save();
+    ctx.globalAlpha = Math.max(0, 1 - (p.t/p.life));
+    const r = (3.5 + p.s*5.5)*DPR;
+    ctx.fillStyle = (p.kind===1) ? &#x27;rgba(255,220,140,0.28)&#x27; : (p.kind===2) ? &#x27;rgba(255,90,100,0.20)&#x27; : &#x27;rgba(220,240,255,0.16)&#x27;;
+    ctx.beginPath();
+    ctx.ellipse(p.x, p.y, r, r*0.75, 0, 0, Math.PI*2);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  // ===== Render =====
+  function render(t){
+    drawBackground(t);
+
+    if(!orbitCine){
+      const streaks = clamp(speed*0.55, 0, 3.4);
+      ctx.save();
+      ctx.globalAlpha = 0.10 + 0.08*streaks;
+      ctx.strokeStyle = &#x27;rgba(230,240,255,0.25)&#x27;;
+      ctx.lineWidth = 2*DPR;
+      for(let i=0;i&lt;Math.floor(10 + streaks*10);i++){
+        const x = rand(0,W);
+        const y = rand(0,H);
+        const len = rand(40, 120)*DPR*(0.6+streaks*0.25);
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.lineTo(x, y + len);
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    if(state===STATE.PAD || (state!==STATE.GAMEOVER &amp;&amp; altitude &lt; 22)){
+      drawPad();
+    }
+
+    if(!orbitCine){
+      for(const d of debris){
+        if(d.active) drawDebris(d);
+      }
+    }
+
+    for(const p of parts){
+      if(p.active) drawParticle(p);
+    }
+
+    if(!orbitCine){
+      for(const b of boosters){
+        drawDetachedBooster(b);
+      }
+    }
+
+    if(state!==STATE.INTRO){
+      if(orbitCine){
+        const u = clamp((now()-orbitStart) / Math.max(0.001,(orbitEnd-orbitStart)), 0, 1);
+        const ease = u&lt;0.5 ? 2*u*u : 1 - Math.pow(-2*u+2,2)/2;
+        const sx = lerp(rocket.x, W*0.70, ease);
+        const sy = lerp(rocket.y, H*0.44, ease);
+        const rot = lerp(0.08, -0.06, ease) + Math.sin(now()*1.9)*0.02*(1-ease);
+        ctx.save();
+        ctx.translate(sx, sy);
+        ctx.rotate(rot);
+        ctx.translate(-sx, -sy);
+        drawOrionCapsule(sx, sy, rocket.w*lerp(1.0,0.82,ease), rocket.h*lerp(1.0,0.82,ease), rocket.shake*0.15);
+        ctx.restore();
+
+        // orbit trail
+        ctx.save();
+        ctx.globalAlpha = 0.08 + 0.22*ease;
+        ctx.strokeStyle = &#x27;rgba(180,210,255,0.22)&#x27;;
+        ctx.lineWidth = 3*DPR;
+        ctx.beginPath();
+        ctx.arc(W*0.64, H*1.10, Math.min(W,H)*0.58*1.02, -1.72, -1.18);
+        ctx.stroke();
+        ctx.globalAlpha = 0.10 + 0.28*ease;
+        ctx.lineWidth = 1.5*DPR;
+        ctx.beginPath();
+        ctx.arc(W*0.64, H*1.10, Math.min(W,H)*0.58*1.06, -1.72, -1.18);
+        ctx.stroke();
+        ctx.restore();
+
+      } else if(capsuleMode){
+        drawOrionCapsule(rocket.x, rocket.y, rocket.w, rocket.h, rocket.shake);
+
+      } else {
+        drawSLS(rocket.x, rocket.y, rocket.w, rocket.h, {
+          hasSRB: rocket.hasSRB,
+          shake: rocket.shake,
+          plume: rocket.plume,
+        });
+      }
+    }
+
+    if(sepPending){
+      const remain = clamp((sepDeadline - now()) / sepWindow, 0, 1);
+      const cx = W*0.5;
+      const cy = H*0.18;
+      const R = Math.min(W,H)*0.07;
+      ctx.save();
+      ctx.lineWidth = 10*DPR;
+      ctx.strokeStyle = &#x27;rgba(255,255,255,0.12)&#x27;;
+      ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI*2); ctx.stroke();
+      ctx.strokeStyle = remain &gt; 0.35 ? &#x27;rgba(67,255,154,0.35)&#x27; : &#x27;rgba(255,77,87,0.40)&#x27;;
+      ctx.beginPath(); ctx.arc(cx, cy, R, -Math.PI/2, -Math.PI/2 + Math.PI*2*remain); ctx.stroke();
+      ctx.restore();
+    }
+  }
+
+  // ===== Progression triggers =====
+  function maybeTriggerSeparation(){
+    if(sepPending || capsuleMode || orbitCine) return;
+    if(rocket.hasSRB &amp;&amp; elapsed &gt; 13 &amp;&amp; altitude &gt; 18){
+      showToast(&#x27;SRB&#x27;);
+      return;
+    }
+    if(!rocket.hasSRB &amp;&amp; !rocket.coreSeparated &amp;&amp; elapsed &gt; 28 &amp;&amp; altitude &gt; 55){
+      showToast(&#x27;CORE&#x27;);
+      return;
+    }
+  }
+
+  // ===== Reset =====
+  function resetGame(){
+    setRocketSize();
+
+    state = STATE.PAD;
+    t0 = now();
+    elapsed = 0;
+    altitude = 0;
+    speed = 0;
+
+    spawnAcc = 0;
+    spawnRate = 0.85;
+
+    capsuleMode = false;
+    capsuleStart = 0;
+    capsuleEnd = 0;
+    capsuleStartAlt = 0;
+
+    orbitCine = false;
+    orbitStart = 0;
+    orbitEnd = 0;
+
+    rocket.x = W*0.5;
+    rocket.targetX = rocket.x;
+    rocket.y = rocket.padY;
+    rocket.hasSRB = true;
+    rocket.coreSeparated = false;
+    rocket.shake = 0;
+    rocket.plume = 0;
+
+    sepPending = false;
+    sepType = null;
+
+    for(const d of debris) d.active=false;
+    for(const p of parts) p.active=false;
+    boosters.length = 0;
+
+    if(comm) comm.classList.remove(&#x27;show&#x27;);
+    scheduleComm();
+
+    updateHud();
+  }
+
+  // ===== Main loop =====
+  let lastT = now();
+  function tick(){
+    const t = now();
+    const dt = Math.min(0.033, t - lastT);
+    lastT = t;
+
+    if(state!==STATE.INTRO){
+      elapsed = t - t0;
+    }
+
+    // PAD
+    if(state===STATE.PAD){
+      rocket.targetX = clamp(rocket.targetX, rocket.w*0.8, W-rocket.w*0.8);
+      rocket.x = lerp(rocket.x, rocket.targetX, 0.18);
+
+      rocket.plume = lerp(rocket.plume, 0.0, 0.08);
+      rocket.shake = lerp(rocket.shake, 0.0, 0.08);
+
+      if(elapsed &gt; 0.35){
+        rocket.plume = lerp(rocket.plume, 1.0, 0.10);
+        rocket.shake = lerp(rocket.shake, 0.65, 0.08);
+      }
+      if(elapsed &gt; 1.6){
+        state = STATE.ASCENT;
+      }
+      speed = lerp(speed, 0.35, 0.04);
+      altitude = lerp(altitude, 3.2, 0.025);
+    }
+
+    // ASCENT / SEPARATION / CAPSULE
+    if(!orbitCine &amp;&amp; (state===STATE.ASCENT || state===STATE.SEPARATION || state===STATE.CAPSULE)){
+      rocket.targetX = clamp(rocket.targetX, rocket.w*0.8, W-rocket.w*0.8);
+      rocket.x = lerp(rocket.x, rocket.targetX, 0.20);
+
+      const baseY = H*(rocket.coreSeparated ? 0.72 : 0.76);
+      rocket.y = lerp(rocket.y, baseY, 0.06);
+
+      const stageBoost = capsuleMode ? 1.05 : (rocket.coreSeparated ? 1.55 : (rocket.hasSRB ? 1.10 : 1.28));
+      const targetSpd = (0.55 + elapsed*0.035) * stageBoost;
+      speed = lerp(speed, targetSpd, 0.03);
+
+      // quota: progressiva. In capsule-mode deve arrivare a 500km ESATTAMENTE a fine timer (15s).
+      if(capsuleMode){
+        const u = clamp((now() - capsuleStart) / 15, 0, 1);
+        altitude = capsuleStartAlt + (500 - capsuleStartAlt) * u;
+      } else {
+        altitude += (speed*dt*9.5);
+        // Evita di &quot;toccare&quot; 500km prima della fase capsula: lasciamo margine.
+        if(altitude &gt; 460) altitude = 460;
+        // progressione più lenta e stabile
+        if(altitude &lt; 0) altitude = 0;
+      }
+
+      rocket.plume = lerp(rocket.plume, capsuleMode ? 0.10 : 1.0, 0.06);
+      rocket.shake = lerp(rocket.shake, sepPending ? 0.8 : 0.35, 0.05);
+
+      spawnRate = clamp(spawnRate + dt*0.010, 0.4, capsuleMode ? 1.2 : 3.4);
+      const orbitBonus = capsuleMode ? 1.05 : (rocket.coreSeparated ? 0.20 : 0.0);
+
+      spawnAcc += dt * (spawnRate + orbitBonus);
+      const cap = capsuleMode ? 1.2 : 2.6;
+      while(spawnAcc &gt; 1){
+        spawnAcc -= 1;
+        forceSpawnDebris();
+        if(elapsed &gt; 22 &amp;&amp; Math.random() &lt; (capsuleMode ? 0.0 : 0.32)) forceSpawnDebris();
+        if(elapsed &gt; 32 &amp;&amp; Math.random() &lt; (capsuleMode ? 0.0 : 0.28)) forceSpawnDebris();
+        if(spawnRate &gt; cap) break;
+      }
+
+      maybeTriggerSeparation();
+
+      if(sepPending &amp;&amp; t &gt; sepDeadline + 0.25){
+        failSep(&#x27;timeout: nessun comando.&#x27;);
+      }
+
+      // End capsule sprint -&gt; cinematic + success overlay
+      if(capsuleMode &amp;&amp; (now() &gt;= capsuleEnd)){
+        hideToast();
+
+        // la missione finisce col timer: a questo punto la quota deve essere 500km.
+        altitude = 500;
+        updateHud();
+
+        for(const d of debris) d.active = false;
+        boosters.length = 0;
+
+        capsuleMode = false;
+        orbitCine = true;
+        orbitStart = now();
+        orbitEnd = orbitStart + 3.6;
+        rocket.shake = 0.10;
+        rocket.plume = 0.0;
+
+        setTimeout(() =&gt; {
+          orbitCine = false;
+          state = STATE.GAMEOVER;
+          showOverlay(&#x27;MISSIONE COMPIUTA&#x27;, getSuccessHtml(), &#x27;CONTINUA&#x27;);
+        }, 3600);
+      }
+    }
+
+    // debris update + collisions
+    if(!orbitCine &amp;&amp; (state===STATE.ASCENT || state===STATE.SEPARATION || state===STATE.CAPSULE)){
+      for(const d of debris){
+        if(!d.active) continue;
+        d.x += d.vx * (W*0.05) * dt;
+        d.y += d.vy * (H*0.90) * dt;
+        d.ang += d.spin * dt;
+
+        if(d.x &lt; -d.r) d.x = W + d.r;
+        if(d.x &gt; W + d.r) d.x = -d.r;
+
+        if(d.y &gt; H + 160*DPR){
+          d.active=false;
+          continue;
+        }
+
+        if(collides(d)){
+          d.active=false;
+          endGame(&#x27;Collisione con detriti: missione abortita.&#x27;);
+          break;
+        }
+      }
+    }
+
+    // particles update
+    for(const p of parts){
+      if(!p.active) continue;
+      p.t += dt;
+      p.x += p.vx * (W*0.40) * dt;
+      p.y += p.vy * (H*0.40) * dt;
+      p.vx *= (1 - dt*0.9);
+      p.vy *= (1 - dt*0.9);
+      if(p.t &gt;= p.life) p.active=false;
+    }
+
+    // boosters update
+    for(let i=boosters.length-1;i&gt;=0;i--){
+      const b = boosters[i];
+      b.life -= dt;
+      b.x += b.vx * (W*0.70) * dt;
+      b.y += b.vy * (H*0.70) * dt + dt*(H*0.03);
+      b.rot += b.vr * dt;
+      b.vx *= (1 - dt*0.55);
+      b.vy *= (1 - dt*0.55);
+      if(b.life &lt;= 0 || b.y &gt; H + 300*DPR) boosters.splice(i,1);
+    }
+
+    if(state!==STATE.INTRO){
+      updateHud();
+
+      // Houston: ogni tanto, solo durante gameplay e non durante cinematic/overlay
+      if(overlay.style.display === &#x27;none&#x27; &amp;&amp; !orbitCine &amp;&amp; state!==STATE.GAMEOVER){
+        if(now() &gt;= commTimer){
+          showComm(HOUSTON[Math.floor(Math.random()*HOUSTON.length)]);
+          scheduleComm();
+        }
+      }
+    }
+
+    render(t);
+    requestAnimationFrame(tick);
+  }
+
+  // ===== Start / Continue / Retry =====
+  function restoreIntroCopy(){
+    overlay.querySelector(&#x27;.h1&#x27;).textContent = &#x27;SLS Launch Dodge — “GO/NO-GO Arcade”&#x27;;
+    overlayCopy.innerHTML =
+      `Trascina il razzo con il dito (o col mouse) per schivare &lt;b&gt;rocce&lt;/b&gt; e &lt;b&gt;pezzi di satellite&lt;/b&gt;.&lt;br&gt;
+       Quando appare un messaggio di separazione, premi &lt;span class=&quot;kbd&quot;&gt;SGANCIA&lt;/span&gt; entro la finestra giusta.`;
+  }
+
+  btnStart.addEventListener(&#x27;click&#x27;, () =&gt; {
+
+    // Se abbiamo completato la missione e l&#x27;overlay mostra CONTINUA -&gt; vai alla missione 5
+    if (btnStart.textContent === &#x27;CONTINUA&#x27;) {
+      window.dispatchEvent(new CustomEvent(&#x27;mission4:complete&#x27;));
+      window.dispatchEvent(new CustomEvent(&#x27;nav:to&#x27;, { detail: { scene: &#x27;mission5&#x27; } }));
+      return;
+    }
+
+    // Altrimenti è start/restart normale
+    overlay.style.display = &#x27;none&#x27;;
+    overlay.style.opacity = &#x27;1&#x27;;
+    restoreIntroCopy();
+    btnStart.textContent = &#x27;AVVIA LANCIO&#x27;;
+    resetGame();
+  });
+// ===== Lightweight tests (console) =====
+  function runTests(){
+    const assert = (cond, msg) =&gt; { if(!cond) throw new Error(&#x27;TEST FAIL: &#x27; + msg); };
+
+    assert(typeof btnStart !== &#x27;undefined&#x27;, &#x27;btnStart exists&#x27;);
+    assert(Object.values(STATE).includes(STATE.CAPSULE), &#x27;STATE enum contains CAPSULE&#x27;);
+    assert(typeof render === &#x27;function&#x27;, &#x27;render() exists&#x27;);
+    assert(typeof tick === &#x27;function&#x27;, &#x27;tick() exists&#x27;);
+    assert(typeof getSuccessHtml === &#x27;function&#x27;, &#x27;getSuccessHtml() exists&#x27;);
+
+    const s = getSuccessHtml();
+    assert(s.includes(&#x27;Orion&#x27;) &amp;&amp; s.toLowerCase().includes(&#x27;orbita&#x27;), &#x27;Success html contains Orion + orbita&#x27;);
+    assert(!s.includes(&#x27;Punteggio&#x27;) &amp;&amp; !s.includes(&#x27;Best&#x27;), &#x27;Success html has no score/best&#x27;);
+
+    assert(!!hudAlt, &#x27;HUD element hudAlt exists&#x27;);
+    assert(!document.getElementById(&#x27;hudSpd&#x27;), &#x27;No speed HUD (km/s)&#x27;);
+    assert(comm &amp;&amp; commInner, &#x27;Houston comm elements exist&#x27;);
+    assert(typeof updateHud === &#x27;function&#x27;, &#x27;updateHud exists&#x27;);
+
+    // sanity: template literals not broken
+    updateHud();
+
+    console.log(&#x27;[TEST] OK&#x27;);
+  }
+  runTests();
+
+  // start loop
+  state = STATE.INTRO;
+  requestAnimationFrame(tick);
+})();
+&lt;/script&gt;
+
+&lt;script&gt;
+(() =&gt; {
+  const EVENTS = [&#x27;nav:to&#x27;, &#x27;intro:done&#x27;, &#x27;mission2:complete&#x27;, &#x27;mission3:complete&#x27;, &#x27;mission4:complete&#x27;, &#x27;mission:start&#x27;];
+  for (const name of EVENTS) {
+    window.addEventListener(name, (e) =&gt; {
+      try {
+        parent.postMessage({ type: name, detail: e.detail || null }, &quot;*&quot;);
+      } catch (err) {}
+    });
+  }
+})();
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe>
+    </div>
+    <div class="scene" id="scene-mission5">
+      <iframe id="frame-mission5" sandbox="allow-scripts allow-pointer-lock allow-same-origin" srcdoc="" data-srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;it&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot; /&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot; /&gt;
+  &lt;title&gt;Artemis Final Window – Preview&lt;/title&gt;
+  &lt;style&gt;
+    :root{
+      --bg0:#050914;
+      --bg1:#0b1430;
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.72);
+      --accent:#7cf0ff;
+      --accent2:#b8ff6a;
+      --shadow: 0 18px 45px rgba(0,0,0,.55);
+    }
+
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      background:
+        radial-gradient(1200px 800px at 50% 10%, rgba(124,240,255,.12), transparent 60%),
+        radial-gradient(900px 700px at 20% 85%, rgba(184,255,106,.12), transparent 60%),
+        linear-gradient(180deg, #02040b, #060a16);
+      color: rgba(255,255,255,.9);
+    }
+
+    .artemis-overlay{
+      position: fixed;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 14px;
+      background:
+        radial-gradient(1200px 800px at 50% 15%, rgba(124,240,255,.12), transparent 60%),
+        radial-gradient(900px 600px at 20% 85%, rgba(184,255,106,.10), transparent 55%),
+        linear-gradient(180deg, rgba(0,0,0,.65), rgba(0,0,0,.78));
+      z-index: 9999;
+    }
+    .artemis-overlay.is-hidden{ display:none; }
+
+    .artemis-card{
+      width: min(520px, 100%);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255,255,255,.12);
+      background: linear-gradient(180deg, #0f1a33, #0b1428);
+    }
+
+    .artemis-scene{
+      position: relative;
+      height: 240px;
+      background:
+        radial-gradient(900px 300px at 50% 120%, rgba(124,240,255,.20), transparent 60%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+    }
+
+    .artemis-content{ padding: 18px 18px 16px; color: var(--text); }
+
+    .title{
+      margin: 0 0 12px;
+      font: 900 20px/1.2 system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+    }
+
+    .lead{
+      margin: 0 0 14px;
+      color: rgba(255,255,255,.90);
+      font: 650 14px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Arial;
+    }
+
+    .steps{
+      margin: 0 0 16px;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.18);
+    }
+    .steps .label{
+      font: 850 12px/1 system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      letter-spacing: .35px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.86);
+      margin-bottom: 8px;
+    }
+    .steps ul{
+      margin: 0;
+      padding-left: 18px;
+      color: rgba(255,255,255,.76);
+      font: 650 13px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Arial;
+    }
+    .steps li{ margin: 6px 0; }
+
+    .cta{
+      padding: 0 18px 18px;
+      text-align:center;
+      font-weight:900;
+      font-size:15px;
+      letter-spacing:.3px;
+    }
+
+    .note{
+      text-align: center;
+      color: rgba(255,255,255,.62);
+      font: 650 12px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      padding: 0 18px 18px;
+    }
+
+    
+    .twinkle{ animation: twinkle 3.2s ease-in-out infinite; }
+    .twinkle.d2{ animation-duration: 4.4s; opacity:.9; }
+    .twinkle.d3{ animation-duration: 2.7s; opacity:.7; }
+    @keyframes twinkle{ 0%,100%{ opacity:.55; } 50%{ opacity:1; } }
+
+    
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+  &lt;div class=&quot;artemis-overlay&quot; id=&quot;artemisFinal&quot; aria-hidden=&quot;false&quot;&gt;
+    &lt;div class=&quot;artemis-card&quot; role=&quot;dialog&quot; aria-modal=&quot;true&quot; aria-labelledby=&quot;artemisTitle&quot;&gt;
+      &lt;div class=&quot;artemis-scene&quot;&gt;
+
+        
+
+        &lt;svg viewBox=&quot;0 0 520 240&quot; width=&quot;100%&quot; height=&quot;100%&quot; preserveAspectRatio=&quot;xMidYMid slice&quot; aria-hidden=&quot;true&quot;&gt;
+          &lt;g opacity=&quot;0.95&quot;&gt;
+            &lt;circle class=&quot;twinkle&quot; cx=&quot;60&quot; cy=&quot;40&quot; r=&quot;1.2&quot; fill=&quot;white&quot;/&gt;
+            &lt;circle class=&quot;twinkle d2&quot; cx=&quot;120&quot; cy=&quot;78&quot; r=&quot;1.6&quot; fill=&quot;white&quot;/&gt;
+            &lt;circle class=&quot;twinkle d3&quot; cx=&quot;190&quot; cy=&quot;32&quot; r=&quot;1.1&quot; fill=&quot;white&quot;/&gt;
+            &lt;circle class=&quot;twinkle&quot; cx=&quot;280&quot; cy=&quot;55&quot; r=&quot;1.4&quot; fill=&quot;white&quot;/&gt;
+            &lt;circle class=&quot;twinkle d2&quot; cx=&quot;360&quot; cy=&quot;26&quot; r=&quot;1.2&quot; fill=&quot;white&quot;/&gt;
+            &lt;circle class=&quot;twinkle d3&quot; cx=&quot;450&quot; cy=&quot;64&quot; r=&quot;1.6&quot; fill=&quot;white&quot;/&gt;
+          &lt;/g&gt;
+
+          &lt;defs&gt;
+            &lt;!-- Ocean shading --&gt;
+            &lt;radialGradient id=&quot;earthOcean&quot; cx=&quot;38%&quot; cy=&quot;32%&quot; r=&quot;72%&quot;&gt;
+              &lt;stop offset=&quot;0%&quot; stop-color=&quot;#8be8ff&quot;/&gt;
+              &lt;stop offset=&quot;45%&quot; stop-color=&quot;#1b79ff&quot;/&gt;
+              &lt;stop offset=&quot;100%&quot; stop-color=&quot;#071a46&quot;/&gt;
+            &lt;/radialGradient&gt;
+
+            &lt;!-- Day/night terminator + vignette --&gt;
+            &lt;radialGradient id=&quot;earthShade&quot; cx=&quot;25%&quot; cy=&quot;30%&quot; r=&quot;85%&quot;&gt;
+              &lt;stop offset=&quot;0%&quot; stop-color=&quot;rgba(0,0,0,0)&quot;/&gt;
+              &lt;stop offset=&quot;62%&quot; stop-color=&quot;rgba(0,0,0,0)&quot;/&gt;
+              &lt;stop offset=&quot;100%&quot; stop-color=&quot;rgba(0,0,0,.55)&quot;/&gt;
+            &lt;/radialGradient&gt;
+
+            &lt;!-- Atmosphere glow --&gt;
+            &lt;radialGradient id=&quot;earthAtmo&quot; cx=&quot;50%&quot; cy=&quot;50%&quot; r=&quot;60%&quot;&gt;
+              &lt;stop offset=&quot;55%&quot; stop-color=&quot;rgba(124,240,255,0)&quot;/&gt;
+              &lt;stop offset=&quot;78%&quot; stop-color=&quot;rgba(124,240,255,.30)&quot;/&gt;
+              &lt;stop offset=&quot;100%&quot; stop-color=&quot;rgba(124,240,255,0)&quot;/&gt;
+            &lt;/radialGradient&gt;
+
+            &lt;clipPath id=&quot;earthClip&quot;&gt;
+              &lt;circle cx=&quot;210&quot; cy=&quot;150&quot; r=&quot;72&quot;/&gt;
+            &lt;/clipPath&gt;
+
+            &lt;!-- Subtle ocean texture --&gt;
+            &lt;filter id=&quot;oceanNoise&quot; x=&quot;-30%&quot; y=&quot;-30%&quot; width=&quot;160%&quot; height=&quot;160%&quot;&gt;
+              &lt;feTurbulence type=&quot;fractalNoise&quot; baseFrequency=&quot;0.9&quot; numOctaves=&quot;3&quot; seed=&quot;7&quot; result=&quot;n&quot;/&gt;
+              &lt;feColorMatrix in=&quot;n&quot; type=&quot;matrix&quot; values=&quot;
+                0 0 0 0 0
+                0 0 0 0 0
+                0 0 0 0 0
+                0 0 0 .18 0&quot; result=&quot;a&quot;/&gt;
+            &lt;/filter&gt;
+
+            &lt;!-- Cloud texture (procedural, space-like) --&gt;
+            &lt;filter id=&quot;cloudNoise&quot; x=&quot;-30%&quot; y=&quot;-30%&quot; width=&quot;160%&quot; height=&quot;160%&quot;&gt;
+              &lt;feTurbulence type=&quot;fractalNoise&quot; baseFrequency=&quot;0.55&quot; numOctaves=&quot;4&quot; seed=&quot;11&quot; result=&quot;t&quot;/&gt;
+              &lt;feColorMatrix in=&quot;t&quot; type=&quot;matrix&quot; values=&quot;
+                1 0 0 0 0
+                0 1 0 0 0
+                0 0 1 0 0
+                0 0 0 .55 0&quot; result=&quot;tt&quot;/&gt;
+              &lt;feGaussianBlur in=&quot;tt&quot; stdDeviation=&quot;0.6&quot;/&gt;
+            &lt;/filter&gt;
+
+            &lt;!-- Soft specular highlight --&gt;
+            &lt;radialGradient id=&quot;spec&quot; cx=&quot;30%&quot; cy=&quot;28%&quot; r=&quot;45%&quot;&gt;
+              &lt;stop offset=&quot;0%&quot; stop-color=&quot;rgba(255,255,255,.22)&quot;/&gt;
+              &lt;stop offset=&quot;55%&quot; stop-color=&quot;rgba(255,255,255,.06)&quot;/&gt;
+              &lt;stop offset=&quot;100%&quot; stop-color=&quot;rgba(255,255,255,0)&quot;/&gt;
+            &lt;/radialGradient&gt;
+          &lt;/defs&gt;
+
+          &lt;!-- EARTH (more realistic: continents + clouds + shading) --&gt;
+          &lt;g clip-path=&quot;url(#earthClip)&quot;&gt;
+            &lt;!-- Ocean --&gt;
+            &lt;circle cx=&quot;210&quot; cy=&quot;150&quot; r=&quot;72&quot; fill=&quot;url(#earthOcean)&quot;/&gt;
+            &lt;!-- Ocean texture --&gt;
+            &lt;rect x=&quot;138&quot; y=&quot;78&quot; width=&quot;144&quot; height=&quot;144&quot; filter=&quot;url(#oceanNoise)&quot; opacity=&quot;0.35&quot;/&gt;
+
+            &lt;!-- Continents (stylized but &quot;space-like&quot;) --&gt;
+            &lt;g opacity=&quot;0.98&quot;&gt;
+              &lt;!-- Africa + Europe-ish --&gt;
+              &lt;path d=&quot;M214 112
+                       c10 2 18 8 20 16
+                       c2 9-4 14-7 18
+                       c-4 5-2 10 2 14
+                       c5 6 2 14-6 18
+                       c-11 6-22 0-25-8
+                       c-3-8 2-14 4-18
+                       c3-6-2-10-6-14
+                       c-6-6-6-22 18-26z&quot;
+                    fill=&quot;#3aa96f&quot;/&gt;
+              &lt;path d=&quot;M232 98
+                       c10 1 16 5 18 10
+                       c2 6-3 10-9 10
+                       c-7 0-10-3-12-6
+                       c-3-5-1-12 3-14z&quot;
+                    fill=&quot;#58c07c&quot;/&gt;
+
+              &lt;!-- South America-ish --&gt;
+              &lt;path d=&quot;M178 132
+                       c8-8 18-10 24-4
+                       c6 6 1 12-3 16
+                       c-5 5-3 10 0 14
+                       c3 4 1 10-5 14
+                       c-7 5-16 2-20-5
+                       c-5-8-3-17 4-23
+                       c3-3 3-8 0-12
+                       c-3-5-3-8 0-10z&quot;
+                    fill=&quot;#2f9d63&quot;/&gt;
+
+              &lt;!-- North America-ish --&gt;
+              &lt;path d=&quot;M164 106
+                       c10-8 24-6 30 3
+                       c4 7-2 12-10 14
+                       c-7 2-10 6-10 10
+                       c0 6-7 10-14 8
+                       c-8-3-10-14 4-35z&quot;
+                    fill=&quot;#49b875&quot;/&gt;
+
+              &lt;!-- Asia-ish --&gt;
+              &lt;path d=&quot;M250 118
+                       c10-8 24-8 34 0
+                       c8 6 10 14 4 18
+                       c-7 5-12 2-18 2
+                       c-8 0-10 4-12 8
+                       c-3 8-14 10-20 4
+                       c-7-7-1-24 12-32z&quot;
+                    fill=&quot;#36a66b&quot;/&gt;
+
+              &lt;!-- deserts highlight --&gt;
+              &lt;path d=&quot;M214 134
+                       c9-2 14 2 16 6
+                       c2 5-2 10-8 10
+                       c-6 0-10-3-10-7
+                       c0-4 1-7 2-9z&quot;
+                    fill=&quot;rgba(210,190,120,.35)&quot;/&gt;
+            &lt;/g&gt;
+
+            &lt;!-- Clouds (soft bands + procedural texture) --&gt;
+            &lt;g opacity=&quot;0.22&quot; fill=&quot;#ffffff&quot;&gt;
+              &lt;path d=&quot;M170 150c10-8 22-8 30-2c6 4 12 3 18-1c9-6 18-5 24 1c6 6 5 14-2 18c-9 5-20 4-28-2c-5-4-10-4-16-1c-10 5-22 2-26-5c-4-6-2-8 0-8z&quot;/&gt;
+              &lt;path d=&quot;M232 168c8-6 18-6 26-1c6 4 11 4 16 1c7-4 14-3 18 2c4 5 3 11-2 14c-7 4-16 3-22-2c-4-3-8-3-12-1c-8 4-18 2-22-4c-3-4-3-7-2-9z&quot;/&gt;
+            &lt;/g&gt;
+            &lt;rect x=&quot;138&quot; y=&quot;78&quot; width=&quot;144&quot; height=&quot;144&quot; filter=&quot;url(#cloudNoise)&quot; opacity=&quot;0.18&quot;/&gt;
+
+            &lt;!-- Polar caps (tiny, subtle) --&gt;
+            &lt;path d=&quot;M196 92c10-8 26-8 36 0c-4 6-10 10-18 11c-8-1-14-5-18-11z&quot; fill=&quot;rgba(255,255,255,.22)&quot;/&gt;
+            &lt;path d=&quot;M196 208c10 8 26 8 36 0c-4-6-10-10-18-11c-8 1-14 5-18 11z&quot; fill=&quot;rgba(255,255,255,.18)&quot;/&gt;
+
+            &lt;!-- Specular highlight --&gt;
+            &lt;circle cx=&quot;196&quot; cy=&quot;128&quot; r=&quot;56&quot; fill=&quot;url(#spec)&quot;/&gt;
+
+            &lt;!-- Shading --&gt;
+            &lt;rect x=&quot;138&quot; y=&quot;78&quot; width=&quot;144&quot; height=&quot;144&quot; fill=&quot;url(#earthShade)&quot;/&gt;
+          &lt;/g&gt;
+
+          &lt;!-- Atmosphere ring (outside clip) --&gt;
+          &lt;circle cx=&quot;210&quot; cy=&quot;150&quot; r=&quot;82&quot; fill=&quot;url(#earthAtmo)&quot;/&gt;
+          &lt;circle cx=&quot;210&quot; cy=&quot;150&quot; r=&quot;86&quot; fill=&quot;none&quot; stroke=&quot;rgba(124,240,255,.18)&quot; stroke-width=&quot;2&quot;/&gt;
+          &lt;ellipse cx=&quot;210&quot; cy=&quot;150&quot; rx=&quot;120&quot; ry=&quot;58&quot; fill=&quot;none&quot; stroke=&quot;rgba(255,255,255,.22)&quot; stroke-width=&quot;2&quot; stroke-dasharray=&quot;6 8&quot;/&gt;
+
+          &lt;!-- Orbiting capsule: ONLY cone, always inside the viewBox and exactly on the dashed ellipse --&gt;
+          &lt;g id=&quot;capsule&quot; transform=&quot;translate(330,150)&quot;&gt;
+            &lt;g transform=&quot;scale(0.30)&quot;&gt;
+              &lt;path d=&quot;M8,-16 L34,0 L8,16 Q2,0 8,-16 Z&quot;
+                    fill=&quot;rgba(255,255,255,.98)&quot;
+                    stroke=&quot;rgba(255,255,255,.95)&quot;
+                    stroke-width=&quot;2.2&quot;/&gt;
+            &lt;/g&gt;
+          &lt;/g&gt;
+        &lt;/svg&gt;
+      &lt;/div&gt;
+
+      &lt;div class=&quot;artemis-content&quot;&gt;
+        &lt;h2 class=&quot;title&quot; id=&quot;artemisTitle&quot;&gt;
+          Ora fai parte della generazione ARTEMIS
+        &lt;/h2&gt;
+
+        &lt;p class=&quot;lead&quot;&gt;
+          Orion ora è pronta per accendere i motori verso la Luna.&lt;br&gt;
+          Sei ufficialmente candidato alle prossime missioni.
+        &lt;/p&gt;
+
+        &lt;div class=&quot;steps&quot;&gt;
+          &lt;div class=&quot;label&quot;&gt;Prossimi step&lt;/div&gt;
+          &lt;ul&gt;
+            &lt;li&gt;Viaggio translunare&lt;/li&gt;
+            &lt;li&gt;Inserzione in orbita&lt;/li&gt;
+            &lt;li&gt;Rientro atmosferico controllato&lt;/li&gt;
+          &lt;/ul&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class=&quot;cta&quot;&gt;
+        Inviami su WhatsApp il messaggio: &lt;span style=&quot;color:var(--accent2)&quot;&gt;“LunarGateway”&lt;/span&gt; per procedere alle prossime sfide.
+      &lt;/div&gt;
+
+      &lt;div class=&quot;note&quot;&gt;
+        Nuove missioni in arrivo. Preparati: le prossime sfide non perdonano.
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;script&gt;
+    // Animazione su ellisse: x = cx + rx*cos(t), y = cy + ry*sin(t)
+    // Così la capsula segue DAVVERO la linea tratteggiata e resta sempre dentro lo schermo.
+    (function startOrbit(){
+      const cx = 210, cy = 150;
+      const rx = 120, ry = 58;
+      const periodMs = 6800; // un giro completo
+      const el = document.getElementById(&#x27;capsule&#x27;);
+      if (!el) return;
+
+      function tick(now){
+        const t = (now % periodMs) / periodMs * Math.PI * 2;
+        const x = cx + rx * Math.cos(t);
+        const y = cy + ry * Math.sin(t);
+        // Piccola rotazione per dare dinamica, ma senza uscire dall&#x27;orbita
+        const rot = (t * 180 / Math.PI) + 90;
+        el.setAttribute(&#x27;transform&#x27;, `translate(${x.toFixed(2)},${y.toFixed(2)}) rotate(${rot.toFixed(2)})`);
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    })();
+
+    function hideArtemisFinal(){
+      const overlay = document.getElementById(&#x27;artemisFinal&#x27;);
+      if (!overlay) return;
+      overlay.classList.add(&#x27;is-hidden&#x27;);
+      overlay.setAttribute(&#x27;aria-hidden&#x27;,&#x27;true&#x27;);
+    }
+  &lt;/script&gt;
+
+&lt;script&gt;
+(() =&gt; {
+  const EVENTS = [&#x27;nav:to&#x27;, &#x27;intro:done&#x27;, &#x27;mission2:complete&#x27;, &#x27;mission3:complete&#x27;, &#x27;mission4:complete&#x27;, &#x27;mission:start&#x27;];
+  for (const name of EVENTS) {
+    window.addEventListener(name, (e) =&gt; {
+      try {
+        parent.postMessage({ type: name, detail: e.detail || null }, &quot;*&quot;);
+      } catch (err) {}
+    });
+  }
+})();
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe>
+    </div>
+  </div>
+
+<script>
+(() => {
+  "use strict";
+  const scenes = ["intro","mission2","mission3","mission4","mission5"];
+  const els = Object.fromEntries(scenes.map(s => [s, document.getElementById("scene-"+s)]));
+
+  function goTo(scene) {
+    if (!els[scene]) return;
+
+    // Lazy-load: carica l'iframe solo quando serve (molto più leggero su GitHub Pages)
+    const frame = document.getElementById("frame-" + scene);
+    if (frame && !frame.srcdoc) {
+      const pending = frame.getAttribute("data-srcdoc");
+      if (pending) {
+        frame.srcdoc = pending;
+        frame.removeAttribute("data-srcdoc");
+      }
+    }
+
+    for (const s of scenes) els[s].classList.toggle("active", s === scene);
+  }
+
+  // Start sempre dall'intro (Missione 1) quando apri il file
+  try { localStorage.removeItem("intro_done"); } catch(e) {}
+  goTo("intro");
+
+  window.addEventListener("message", (ev) => {
+    const msg = ev.data;
+    if (!msg || typeof msg !== "object") return;
+
+    if (msg.type === "intro:done") {
+      localStorage.setItem("intro_done", "1");
+      return;
+    }
+
+    if (msg.type === "nav:to") {
+      const target = msg.detail && msg.detail.scene;
+      if (typeof target === "string") goTo(target);
+      return;
+    }
+
+    if (msg.type === "mission2:complete") localStorage.setItem("mission2_done","1");
+    if (msg.type === "mission3:complete") localStorage.setItem("mission3_done","1");
+    if (msg.type === "mission4:complete") localStorage.setItem("mission4_done","1");
+  }, false);
+
+  document.addEventListener("touchmove", (e) => e.preventDefault(), { passive:false });
+
+  window.Game = { goTo };
+})();
+</script>
+</body>
+</html>
